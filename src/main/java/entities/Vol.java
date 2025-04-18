@@ -9,13 +9,15 @@ public class Vol {
     private  String destination ;
     private Date date ;
     private double prix ;
+    private Categorie categorie;
 
-    public Vol(int id_vol, String depart, String destination, Date date, double prix) {
+    public Vol(int id_vol, String depart, String destination, Date date, double prix, Categorie categorie) {
         this.id_vol = id_vol;
         this.depart = depart;
         this.destination = destination;
         this.date = date;
         this.prix = prix;
+        this.categorie = categorie;
     }
 
     public int getId_vol() {
@@ -58,6 +60,14 @@ public class Vol {
         this.prix = prix;
     }
 
+    public Categorie getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
+    }
+
     @Override
     public String toString() {
         return "Vol{" +
@@ -66,6 +76,7 @@ public class Vol {
                 ", destination='" + destination + '\'' +
                 ", date=" + date +
                 ", prix=" + prix +
+                ", categorie=" + categorie +
                 '}';
     }
 }

@@ -1,5 +1,5 @@
 package entities;
 
 public enum Enumnom {
-    econmique,business,premiereclasse ;
+    economique,business,premiereclasse ;
 }

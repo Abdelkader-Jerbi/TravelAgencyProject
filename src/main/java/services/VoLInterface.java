@@ -8,4 +8,7 @@ import java.util.List;
 
 public interface VoLInterface {
     List<Vol> chercherVol(String depart, String destination,  String dateString, Enumnom categorie);
+    List<Vol> getAllVols();
+    void supprimerVol(int id);
+
 }

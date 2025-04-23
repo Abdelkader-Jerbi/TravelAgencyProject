@@ -8,6 +8,7 @@ import utils.MyDatabase;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,7 +35,7 @@ public class CrudVol implements VoLInterface {
         return volsTrouves;
     }
 
-    private List<Vol> getAllVols() {
+   public List<Vol> getAllVols() {
         List<Vol> vols = new ArrayList<>();
         String sql = "SELECT v.id_vol, v.depart, v.destination, v.date, v.prix, c.id, c.nom " +
                 "FROM vol v JOIN categorie c ON v.categorie_id = c.id";
@@ -73,6 +74,19 @@ public class CrudVol implements VoLInterface {
         }
 
         return vols;
+    }
+
+    @Override
+    public void supprimerVol(int id) {
+        String sql = "DELETE FROM vol WHERE id_vol = ?";
+        try (Connection conn = MyDatabase.getInstance().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            System.out.println("Suppression du vol avec ID : " + id);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(); // ou logger proprement selon ton projet
+        }
     }
 
 }

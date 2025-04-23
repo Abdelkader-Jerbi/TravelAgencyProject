@@ -31,6 +31,16 @@ public class MyDatabase {
     }
 
     public Connection getConnection() {
+        try {
+            if (connection == null || connection.isClosed()) {
+                connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
         return connection;
     }
 }

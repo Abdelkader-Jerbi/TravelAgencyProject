@@ -1,6 +1,7 @@
 package tests;
 
 import entities.Utilisateur;
+import services.CrudHotel;
 import services.CrudUtilisateur;
 
 import java.sql.SQLException;

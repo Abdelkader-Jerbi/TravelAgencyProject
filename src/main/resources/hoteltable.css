@@ -1,0 +1,33 @@
+.button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* Style for icons */
+.font-awesome-icon {
+    -fx-font-size: 16px;
+}
+
+/* Style the buttons for the icons */
+.button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.1); /* Add some hover effect */
+}
+
+/* Green icon for Edit */
+.button.edit:hover {
+    -fx-background-color: #e8f5e9;
+}
+
+/* Red icon for Delete */
+.button.delete:hover {
+    -fx-background-color: #ffebee;
+}
+
+/* Change color of icon */
+.button.edit .font-awesome-icon {
+    -fx-fill: green;
+}
+
+.button.delete .font-awesome-icon {
+    -fx-fill: red;
+}

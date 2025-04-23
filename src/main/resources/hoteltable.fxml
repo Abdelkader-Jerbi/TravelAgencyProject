@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HotelInfo">
+   <children>
+      <TableView fx:id="hotelTable" layoutX="-1.0" layoutY="75.0" prefHeight="200.0" prefWidth="716.0">
+        <columns>
+          <TableColumn fx:id="colNom" prefWidth="75.0" text="Nom Hotel" />
+          <TableColumn fx:id="colDestination" prefWidth="75.0" text="Destination" />
+            <TableColumn fx:id="colDate" prefWidth="53.60003662109375" text="Date" />
+            <TableColumn fx:id="colNbNuite" prefWidth="100.800048828125" text="Nombre nuité" />
+            <TableColumn fx:id="colNbChambre" prefWidth="105.5999755859375" text="Nombre chambre" />
+            <TableColumn fx:id="colEtoile" prefWidth="100.00006103515625" text="Nombre d'étoile" />
+            <TableColumn fx:id="colTarif" prefWidth="100.00006103515625" text="Tarif" />
+            <TableColumn fx:id="colAction" prefWidth="100.00006103515625" text="Action" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

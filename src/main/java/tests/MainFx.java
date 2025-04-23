@@ -15,7 +15,7 @@ public class MainFx extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterUtilisateur.fxml"));
         try {
             Parent parent = loader.load();
@@ -26,6 +26,15 @@ public class MainFx extends Application {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        Parent root = FXMLLoader.load(getClass().getResource("/hotel.fxml"));
+        Scene scene = new Scene(root);
+        primaryStage.setTitle("Hotel Booking");
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
     }
+
+
+
 }
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterUtilisateurController">
+   <children>
+      <Label layoutX="100.0" layoutY="50.0" text="Nom" textFill="#262525" AnchorPane.leftAnchor="100.0" />
+      <Label layoutX="99.0" layoutY="100.0" text="Prenom" />
+      <Label layoutX="99.0" layoutY="150.0" text="email" />
+      <Label layoutX="99.0" layoutY="200.0" text="Telephone" />
+      <Label layoutX="99.0" layoutY="250.0" text="role" />
+      <TextField fx:id="nomTF" layoutX="226.0" layoutY="48.0" />
+      <TextField fx:id="prenomTF" layoutX="227.0" layoutY="98.0" />
+      <TextField fx:id="emailTF" layoutX="227.0" layoutY="148.0" />
+      <TextField fx:id="telTF" layoutX="227.0" layoutY="198.0" />
+      <TextField fx:id="roleTF" layoutX="228.0" layoutY="248.0" />
+      <Button layoutX="447.0" layoutY="331.0" mnemonicParsing="false" onAction="#AjouterUtilisateur" prefHeight="26.0" prefWidth="122.0" text="Ajouter Utilisateur" />
+      <Button layoutX="294.0" layoutY="332.0" mnemonicParsing="false" onAction="#AfficherUtilisateur" text="Afficher Utilisateurs" />
+   </children>
+</AnchorPane>

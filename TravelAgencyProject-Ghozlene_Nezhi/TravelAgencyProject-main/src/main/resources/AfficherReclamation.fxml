@@ -17,6 +17,6 @@
       <!--
         <Button layoutX="416.0" layoutY="301.0" mnemonicParsing="false" onAction="#supprimerUtilisateur" text="Supprimer" />
         <Button layoutX="21.0" layoutY="28.0" mnemonicParsing="false" onAction="#RetourAjoutUtilisateur" text="Retour" />
-    for push-->
+    -->
     </children>
 </AnchorPane>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/15.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ModifierReclamation">
+    <children>
+        <TableView fx:id="tableReclamation" layoutX="350.0" layoutY="50.0" prefHeight="280.0" prefWidth="320.0">
+            <columns>
+                <TableColumn fx:id="idAvisColumn" prefWidth="60.0" text="ID Avis" />
+                <TableColumn fx:id="idUserColumn" prefWidth="60.0" text="ID User" />
+                <TableColumn fx:id="categorieColumn" prefWidth="80.0" text="Categorie" />
+                <TableColumn fx:id="dateColumn" prefWidth="60.0" text="Date" />
+                <TableColumn fx:id="commentaireColumn" prefWidth="120.0" text="Commentaire" />
+            </columns>
+        </TableView>
+        <VBox layoutX="50.0" layoutY="50.0" spacing="5.0" prefHeight="280.0" prefWidth="260.0">
+            <children>
+                <Text text="ID Avis" />
+                <TextField fx:id="idAvisInput" />
+                <Text text="ID User" />
+                <TextField fx:id="idUserInput" />
+                <Text text="Categorie" />
+                <TextField fx:id="categorieInput" />
+                <Text text="Date" />
+                <TextField fx:id="dateInput" />
+                <Text text="Commentaire" />
+                <TextField fx:id="commentaireInput" />
+                <Button text="Submit" onAction="#submit" prefWidth="200.0" />
+            </children>
+        </VBox>
+        <Button layoutX="500.0" layoutY="350.0" text="Remove" onAction="#removeReclamation" />
+    </children>
+</AnchorPane>

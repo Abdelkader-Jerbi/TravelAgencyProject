@@ -1,26 +1,32 @@
 package controllers;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import entities.Hotel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import services.CrudHotel;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
 public class HotelInfo {
     @FXML private TableView<Hotel> hotelTable;
-    @FXML
-    private TableColumn<Hotel, String> colNom;
+    @FXML private TableColumn<Hotel, String> colNom;
     @FXML private TableColumn<Hotel, String> colDestination;
     @FXML private TableColumn<Hotel, Date> colDate;
     @FXML private TableColumn<Hotel, Integer> colNbNuite;
@@ -29,8 +35,8 @@ public class HotelInfo {
     @FXML private TableColumn<Hotel, Float> colTarif;
     @FXML private TableColumn<Hotel, Void> colAction;
 
-
     CrudHotel crudHotel = new CrudHotel();
+
     @FXML
     public void initialize() {
         colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
@@ -61,30 +67,39 @@ public class HotelInfo {
             @Override
             public TableCell<Hotel, Void> call(final TableColumn<Hotel, Void> param) {
                 return new TableCell<>() {
-
-                    private final Button editButton = new Button("Edit");
-                    private final Button deleteButton = new Button("Delete");
+                    private final Button editButton = new Button();
+                    private final Button deleteButton = new Button();
                     private final HBox hBox = new HBox(10, editButton, deleteButton);
 
                     {
-                        // Optional styling
-                        editButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
-                        deleteButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: white;");
+                        FontAwesomeIconView editIcon = new FontAwesomeIconView(FontAwesomeIcon.PENCIL_SQUARE);
+                        FontAwesomeIconView deleteIcon = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
+
+                        editButton.setGraphic(editIcon);
+                        deleteButton.setGraphic(deleteIcon);
+
+                        editButton.getStyleClass().add("edit-button");
+                        deleteButton.getStyleClass().add("delete-button");
 
                         editButton.setOnAction(event -> {
-                            Hotel hotel = getTableView().getItems().get(getIndex());
-                            System.out.println("✏️ Edit hotel: " + hotel.getNom());
-                            // TODO: Open an edit form and pass `hotel`
+                            int index = getIndex();
+                            if (index >= 0 && index < getTableView().getItems().size()) {
+                                Hotel selectedHotel = getTableView().getItems().get(index);
+                                openEditHotelView(selectedHotel);
+                            }
                         });
 
                         deleteButton.setOnAction(event -> {
-                            Hotel hotel = getTableView().getItems().get(getIndex());
-                            try {
-                                crudHotel.delete(hotel.getIdHotel() );
-                                getTableView().getItems().remove(hotel);
-                                System.out.println("🗑️ Hotel deleted: " + hotel.getNom());
-                            } catch (SQLException e) {
-                                e.printStackTrace();
+                            int index = getIndex();
+                            if (index >= 0 && index < getTableView().getItems().size()) {
+                                Hotel hotel = getTableView().getItems().get(index);
+                                try {
+                                    crudHotel.delete(hotel.getIdHotel());
+                                    getTableView().getItems().remove(hotel);
+                                    System.out.println("🗑️ Hotel deleted: " + hotel.getNom());
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         });
                     }
@@ -103,9 +118,32 @@ public class HotelInfo {
         };
 
         colAction.setCellFactory(cellFactory);
+        hotelTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    }
+
+    private void openEditHotelView(Hotel hotel) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/edithotel.fxml"));
+            Parent root = loader.load();
+
+            EditHotel controller = loader.getController();
+            controller.setHotel(hotel);
+            controller.setRefreshCallback(() -> {
+                try {
+                    loadHotels();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            Stage stage = new Stage();
+            stage.setTitle("Edit Hotel");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            System.err.println("Error loading FXML: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
-
-
-
-

@@ -1,4 +1,5 @@
 package controllers;
+
 import entities.Hotel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,28 +12,29 @@ import services.CrudHotel;
 
 import javafx.event.ActionEvent;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.sql.Date;  // Import java.sql.Date
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.ZoneId;
+import java.util.Calendar;
+
 public class AddHotel {
 
-    @FXML private TableView<Hotel> hotelTable;
     @FXML private TextField nomHotelField;
     @FXML private TextField destinationField;
-    @FXML private TextField dateField;
+    @FXML private DatePicker datePicker; // Changed from TextField to DatePicker
     @FXML private TextField nbNuiteField;
     @FXML private TextField nombreChambreField;
     @FXML private TextField nbEtoilesField;
     @FXML private TextField tarifField;
     @FXML private Button addButton;
-    @FXML
 
     CrudHotel crudHotel = new CrudHotel();
+
     @FXML
     public void initialize() {
+        // Initialize the date picker with today's date
+        datePicker.setValue(LocalDate.now());
+
         addButton.setOnAction(e -> {
             try {
                 addHotel(e);
@@ -41,83 +43,77 @@ public class AddHotel {
             }
         });
     }
-    private void addHotel(ActionEvent event) throws SQLException{
-        String nom = nomHotelField.getText();
-        String dateString = dateField.getText();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        Date date = null;
 
-        try {
-            date = sdf.parse(dateString);
-        } catch (ParseException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Date Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Invalid date format! Use yyyy-MM-dd.");
-            alert.showAndWait();
-            return;
+    private void addHotel(ActionEvent event) throws SQLException {
+        String nom = nomHotelField.getText();
+        LocalDate localDate = datePicker.getValue();
+
+        // Convert LocalDate to java.sql.Date
+        Date date = null;
+        if (localDate != null) {
+            // Convert LocalDate to java.util.Date first, then to java.sql.Date
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(localDate.getYear(), localDate.getMonthValue() - 1, localDate.getDayOfMonth());
+            date = new Date(calendar.getTimeInMillis());
         }
 
-        String destination = destinationField.getText();
-        int nombreNuité = Integer.parseInt(nbNuiteField.getText());
-        int nbEtoile = Integer.parseInt(nbEtoilesField.getText());
-        int nombreChambre = Integer.parseInt(nombreChambreField.getText());
-        float tarif = Float.parseFloat(tarifField.getText());
-
-        Hotel hotel = new Hotel(nom, destination, date, nombreNuité, nbEtoile, nombreChambre, tarif);
-
-        crudHotel.add(hotel);
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Success");
-        alert.setHeaderText(null);
-        alert.setContentText("Hotel added successfully!");
-        alert.showAndWait();
-
-        // 👉 Navigate to table view
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/hoteltable.fxml"));
+            String destination = destinationField.getText();
+            int nombreNuité = Integer.parseInt(nbNuiteField.getText());
+            int nbEtoile = Integer.parseInt(nbEtoilesField.getText());
+            int nombreChambre = Integer.parseInt(nombreChambreField.getText());
+            float tarif = Float.parseFloat(tarifField.getText());
+
+            Hotel hotel = new Hotel(nom, destination, date, nombreNuité, nbEtoile, nombreChambre, tarif);
+            crudHotel.add(hotel);
+
+            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+            successAlert.setTitle("Success");
+            successAlert.setHeaderText(null);
+            successAlert.setContentText("Hotel added successfully!");
+            successAlert.showAndWait();
+        } catch (Exception e) {
+            // Show warning, but DO NOT return — allow navigation
+            showAlert("Warning", "Some fields were invalid or empty. Continuing anyway.", Alert.AlertType.WARNING);
+        }
+
+        // Always switch to hotel table, regardless of errors
+        switchToHotelTable(event);
+        clearFields();
+    }
+
+    private void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void switchToHotelTable(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/hoteltable.fxml"));
             Parent root = loader.load();
 
-            // Optional: Access the controller of the next view
+            // Access the controller of the next view
             HotelInfo controller = loader.getController();
-            controller.loadHotels(); // Make sure this method exists in HotelInfo
+            controller.loadHotels();
 
-            // Switch scenes
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        switchToHotelTable(event);
-        clearFields();
-        }
-
-
-    private void switchToHotelTable(ActionEvent event) {
-        try {
-            // Load the hotel table view FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/hoteltable.fxml"));
-            Parent root = loader.load();
-
-            // Set the new scene
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
-            private void clearFields () {
-                nomHotelField.clear();
-                destinationField.clear();
-                dateField.clear();
-                nbNuiteField.clear();
-                nbEtoilesField.clear();
-                nombreChambreField.clear();
-                tarifField.clear();
-            }
 
+    private void clearFields() {
+        nomHotelField.clear();
+        destinationField.clear();
+        datePicker.setValue(LocalDate.now()); // Reset to today's date
+        nbNuiteField.clear();
+        nbEtoilesField.clear();
+        nombreChambreField.clear();
+        tarifField.clear();
+    }
 }

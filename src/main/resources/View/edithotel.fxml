@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditHotel">
+    <stylesheets>
+        <URL value="@style.css" />
+    </stylesheets>
+
+    <center>
+        <VBox alignment="CENTER" spacing="20" style="-fx-padding: 30;">
+            <Label text="Edit Hotel" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+
+            <GridPane hgap="10" vgap="10" alignment="CENTER">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" minWidth="100"/>
+                    <ColumnConstraints minWidth="200"/>
+                </columnConstraints>
+
+                <Label text="Hotel Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="nomField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Destination:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="destinationField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Date:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="datePicker" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Nights:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="nbNuiteField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Rooms:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="nbChambreField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                <Label text="Stars:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <TextField fx:id="etoileField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                <Label text="Price:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <TextField fx:id="tarifField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <HBox spacing="20" alignment="CENTER">
+                <Button fx:id="saveButton" text="Save" style="-fx-min-width: 100;"/>
+                <Button fx:id="cancelButton" text="Cancel" style="-fx-min-width: 100;"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

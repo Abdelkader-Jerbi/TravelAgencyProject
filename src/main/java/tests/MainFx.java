@@ -15,26 +15,20 @@ public class MainFx extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterUtilisateur.fxml"));
+    public void start(Stage primaryStage) {
         try {
-            Parent parent = loader.load();
-            Scene scene = new Scene(parent);
+            // 👉 Change this to /AjouterUtilisateur.fxml if you want to start with that
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/hotel.fxml"));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/View/style.css").toExternalForm());
+
+            primaryStage.setTitle("Hotel Booking");
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Ajouter Utilisateur");
             primaryStage.show();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-        Parent root = FXMLLoader.load(getClass().getResource("/hotel.fxml"));
-        Scene scene = new Scene(root);
-        primaryStage.setTitle("Hotel Booking");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
     }
-
-
-
 }
-

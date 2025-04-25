@@ -1,6 +1,8 @@
 package entities;
 
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
+
 
 public class Hotel<H> {
 
@@ -65,7 +67,7 @@ public class Hotel<H> {
         return nbEtoile;
     }
 
-    public void setNbEtoiles(int nbEtoile) {
+    public void setNbEtoile(int nbEtoile) {
         this.nbEtoile = nbEtoile;
     }
 

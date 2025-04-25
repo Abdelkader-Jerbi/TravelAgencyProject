@@ -5,7 +5,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.DatePicker?>
+<?import java.net.URL?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddHotel">
+   <stylesheets>
+      <URL value="@style.css" />
+   </stylesheets>
+
    <children>
       <TextField fx:id="nomHotelField" layoutX="169.0" layoutY="59.0" />
       <Text layoutX="31.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom Hotel " />
@@ -16,7 +22,7 @@
       <TextField fx:id="tarifField" layoutX="169.0" layoutY="304.0" />
       <Text layoutX="31.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tarif" />
       <Text layoutX="38.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" />
-      <TextField fx:id="dateField" layoutX="169.0" layoutY="140.0" />
+      <DatePicker fx:id="datePicker" layoutX="169.0" layoutY="140.0" />
       <Button fx:id="addButton" layoutX="470.0" layoutY="328.0" mnemonicParsing="false" style="-fx-background-color: skyblue;" text="Add" />
       <Text layoutX="14.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre de chambre " />
       <TextField fx:id="nombreChambreField" layoutX="170.0" layoutY="225.0" />

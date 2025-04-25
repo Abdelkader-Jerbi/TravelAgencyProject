@@ -9,9 +9,11 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.ListVolController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="400.0" prefWidth="800.0"
+            style="-fx-background-color: #f0f2f5;">
 
-    <TableView fx:id="volTable" layoutX="25" layoutY="25" prefWidth="750" prefHeight="350" style="-fx-border-color: #ccc; -fx-background-color: #f9f9f9;">
+    <TableView fx:id="volTable" layoutX="25" layoutY="25" prefWidth="750" prefHeight="350"
+               style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #ddd; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
         <columns>
             <TableColumn fx:id="idCol" text="ID" prefWidth="50"/>
             <TableColumn fx:id="departCol" text="Départ" prefWidth="100"/>
@@ -19,8 +21,7 @@
             <TableColumn fx:id="dateCol" text="Date" prefWidth="120"/>
             <TableColumn fx:id="prixCol" text="Prix" prefWidth="80"/>
             <TableColumn fx:id="categorieCol" text="Catégorie" prefWidth="100"/>
-            <TableColumn fx:id="actionCol" text="Actions" prefWidth="100"   />
-
+            <TableColumn fx:id="actionCol" text="Actions" prefWidth="100"/>
         </columns>
     </TableView>
 </AnchorPane>

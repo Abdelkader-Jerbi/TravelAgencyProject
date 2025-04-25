@@ -5,10 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -73,11 +70,23 @@ public class ListVolController  implements Initializable {
     }
     private void ajouterBoutonSuppression() {
         actionCol.setCellFactory(col -> new TableCell<>() {
-            private final Button deleteButton = new Button("Supprimer");
+            private final Button deleteButton= new Button();  ;
 
             {
+        ImageView icon = new ImageView(
+                new Image(getClass().getResourceAsStream("/icones/delete.png"))
+        );
+        icon.setFitHeight(16);
+        icon.setFitWidth(16);
+                deleteButton.setText(" Supprimer");
+                deleteButton.setGraphic(icon);
+                deleteButton.setContentDisplay(ContentDisplay.RIGHT);
+
+                deleteButton.setStyle("-fx-background-color: #ff5c5c; -fx-text-fill: white; -fx-background-radius: 15;");
+
+
                 deleteButton.setStyle(
-                        "-fx-background-color: linear-gradient(to right, #e74c3c, #c0392b);" +
+                        "-fx-background-color: linear-gradient(to right,  #ff7f7f, #e74c3c);" +
                                 "-fx-text-fill: white;" +
                                 "-fx-font-weight: bold;" +
                                 "-fx-background-radius: 8;" +
@@ -86,7 +95,7 @@ public class ListVolController  implements Initializable {
                                 "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0.0, 0, 2);"
                        );
                 deleteButton.setOnMouseEntered(e -> deleteButton.setStyle(
-                        "-fx-background-color: linear-gradient(to right, #c0392b, #e74c3c);" +
+                        "-fx-background-color: linear-gradient(to right, #e74c3c,  #ff7f7f);" +
                                 "-fx-text-fill: white;" +
                                 "-fx-font-weight: bold;" +
                                 "-fx-background-radius: 8;" +
@@ -95,7 +104,7 @@ public class ListVolController  implements Initializable {
                                 "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 6, 0.0, 0, 2);"
                 ));
                 deleteButton.setOnMouseExited(e -> deleteButton.setStyle(
-                        "-fx-background-color: linear-gradient(to right, #e74c3c, #c0392b);" +
+                        "-fx-background-color: linear-gradient(to right, #ff7f7f,#e74c3c);" +
                                 "-fx-text-fill: white;" +
                                 "-fx-font-weight: bold;" +
                                 "-fx-background-radius: 8;" +

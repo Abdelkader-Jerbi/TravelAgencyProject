@@ -9,12 +9,25 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <AnchorPane prefHeight="450.0" prefWidth="700.0" style="-fx-background-color: linear-gradient(to bottom, #e0f7fa, #ffffff);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ChercherVolController">
+   <fx:define>
+      <ToggleGroup fx:id="typeVolGroup"/>
+   </fx:define>
 
    <children>
 
       <!-- Cadre central -->
       <Rectangle arcHeight="30" arcWidth="30" fill="#ffffff" height="340" layoutX="100" layoutY="50" stroke="#0097a7" strokeWidth="2" width="500" />
+
+
+      <RadioButton fx:id="allerSimpleRadio" layoutX="240.0" layoutY="100.0" text="Aller simple"
+                   toggleGroup="$typeVolGroup"  selected="true" />
+      <RadioButton fx:id="allerRetourRadio" layoutX="350.0" layoutY="100.0" text="Aller/Retour"
+                   toggleGroup="$typeVolGroup"/>
 
       <!-- Titre -->
       <Label layoutX="220.0" layoutY="65.0" text="🔍 Chercher un Vol" textFill="#00796b" underline="true">
@@ -23,25 +36,47 @@
          </font>
       </Label>
 
-      <!-- Labels et champs -->
-      <Label layoutX="160.0" layoutY="120.0" text="Départ :" textFill="#004d40" />
-      <TextField fx:id="departField" layoutX="240.0" layoutY="115.0" prefWidth="250.0" />
+      <!-- Icône Départ -->
+      <ImageView layoutX="160.0" layoutY="140.0" fitWidth="24" fitHeight="24" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icones/icons8-airplane-take-off-24.png" />
+         </image>
+      </ImageView>
+      <TextField  fx:id="departField" layoutX="200.0" layoutY="135.0" prefWidth="290.0" promptText="Départ de..."
+                  style="-fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);"
+                 />
 
-      <Label layoutX="160.0" layoutY="165.0" text="Destination :" textFill="#004d40" />
-      <TextField fx:id="destinationField" layoutX="240.0" layoutY="160.0" prefWidth="250.0" />
+      <!-- Icône Destination -->
+      <ImageView layoutX="160.0" layoutY="185.0" fitWidth="24" fitHeight="24" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icones/icons8-airplane-landing-24.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="destinationField" layoutX="200.0" layoutY="180.0" prefWidth="290.0"  promptText="Arrivée à..."
+                 style="-fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);"
+      />
 
-      <Label layoutX="160.0" layoutY="210.0" text="Date :" textFill="#004d40" />
+      <!-- Date -->
+      <!-- Date aller -->
+      <Label layoutX="160.0" layoutY="230.0" text="Date :" textFill="#004d40" />
+      <DatePicker fx:id="dateField" layoutX="239.0" layoutY="227.0" prefHeight="26.0" prefWidth="120.0" promptText="Aller" />
 
-      <Label layoutX="160.0" layoutY="255.0" text="Catégorie :" textFill="#004d40" />
-      <ChoiceBox fx:id="categorieChoiceBox" layoutX="240.0" layoutY="250.0" prefWidth="250.0" />
+      <!-- Date retour -->
+      <Label layoutX="160.0" layoutY="270.0"  textFill="#004d40" />
+      <DatePicker fx:id="dateField1" layoutX="389.0" layoutY="227.0" prefHeight="26.0" prefWidth="120.0" promptText="Retour" />
+
+
+      <!-- Classe -->
+      <Label layoutX="160.0" layoutY="275.0" text="Classe :" textFill="#004d40" />
+      <ChoiceBox fx:id="categorieChoiceBox" layoutX="240.0" layoutY="270.0" prefWidth="250.0" />
 
       <!-- Bouton -->
-      <Button fx:id="rechercherButton" layoutX="290.0" layoutY="310.0" style="-fx-background-color: #00796b; -fx-background-radius: 20px; -fx-padding: 8 20; -fx-cursor: hand;" text="Rechercher" textFill="white">
+      <Button fx:id="rechercherButton" layoutX="290.0" layoutY="330.0" style="-fx-background-color: #00796b; -fx-background-radius: 20px; -fx-padding: 8 20; -fx-cursor: hand;" text="Rechercher" textFill="white">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
       </Button>
-      <DatePicker fx:id="dateField" layoutX="239.0" layoutY="207.0" prefHeight="26.0" prefWidth="250.0" />
 
    </children>
 </AnchorPane>
+

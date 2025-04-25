@@ -120,6 +120,30 @@ public class HotelInfo {
         colAction.setCellFactory(cellFactory);
         hotelTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
+    @FXML
+    private void handleAddHotel() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/hotel.fxml"));
+            Parent root = loader.load();
+
+            AddHotel controller = loader.getController();
+            controller.setRefreshCallback(() -> {
+                try {
+                    loadHotels();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            Stage stage = new Stage();
+            stage.setTitle("Add Hotel");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void openEditHotelView(Hotel hotel) {
         try {

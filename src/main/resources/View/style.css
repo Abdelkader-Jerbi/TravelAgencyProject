@@ -205,3 +205,10 @@
 #cancelButton:hover {
     -fx-background-color: #d33a2e;
 }
+.add-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 15;
+    -fx-background-radius: 5;
+}

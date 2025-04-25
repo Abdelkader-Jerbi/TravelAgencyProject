@@ -12,27 +12,30 @@ import services.CrudHotel;
 
 import javafx.event.ActionEvent;
 import java.sql.SQLException;
-import java.sql.Date;  // Import java.sql.Date
+import java.sql.Date;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Calendar;
 
 public class AddHotel {
 
     @FXML private TextField nomHotelField;
     @FXML private TextField destinationField;
-    @FXML private DatePicker datePicker; // Changed from TextField to DatePicker
+    @FXML private DatePicker datePicker;
     @FXML private TextField nbNuiteField;
     @FXML private TextField nombreChambreField;
     @FXML private TextField nbEtoilesField;
     @FXML private TextField tarifField;
     @FXML private Button addButton;
 
-    CrudHotel crudHotel = new CrudHotel();
+    private final CrudHotel crudHotel = new CrudHotel();
+    private Runnable refreshCallback; // ✅ Callback for refreshing hotel table
+
+    public void setRefreshCallback(Runnable callback) {
+        this.refreshCallback = callback;
+    }
 
     @FXML
     public void initialize() {
-        // Initialize the date picker with today's date
         datePicker.setValue(LocalDate.now());
 
         addButton.setOnAction(e -> {
@@ -47,11 +50,9 @@ public class AddHotel {
     private void addHotel(ActionEvent event) throws SQLException {
         String nom = nomHotelField.getText();
         LocalDate localDate = datePicker.getValue();
-
-        // Convert LocalDate to java.sql.Date
         Date date = null;
+
         if (localDate != null) {
-            // Convert LocalDate to java.util.Date first, then to java.sql.Date
             Calendar calendar = Calendar.getInstance();
             calendar.set(localDate.getYear(), localDate.getMonthValue() - 1, localDate.getDayOfMonth());
             date = new Date(calendar.getTimeInMillis());
@@ -67,18 +68,21 @@ public class AddHotel {
             Hotel hotel = new Hotel(nom, destination, date, nombreNuité, nbEtoile, nombreChambre, tarif);
             crudHotel.add(hotel);
 
-            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-            successAlert.setTitle("Success");
-            successAlert.setHeaderText(null);
-            successAlert.setContentText("Hotel added successfully!");
-            successAlert.showAndWait();
+            // ✅ Refresh the table
+            if (refreshCallback != null) {
+                refreshCallback.run();
+            }
+
+            showAlert("Success", "Hotel added successfully!", Alert.AlertType.INFORMATION);
+
+            // ✅ Close the window
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.close();
+
         } catch (Exception e) {
-            // Show warning, but DO NOT return — allow navigation
-            showAlert("Warning", "Some fields were invalid or empty. Continuing anyway.", Alert.AlertType.WARNING);
+            // The alert is removed, and no message will be shown in case of exception.
         }
 
-        // Always switch to hotel table, regardless of errors
-        switchToHotelTable(event);
         clearFields();
     }
 
@@ -90,27 +94,12 @@ public class AddHotel {
         alert.showAndWait();
     }
 
-    private void switchToHotelTable(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/hoteltable.fxml"));
-            Parent root = loader.load();
 
-            // Access the controller of the next view
-            HotelInfo controller = loader.getController();
-            controller.loadHotels();
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 
     private void clearFields() {
         nomHotelField.clear();
         destinationField.clear();
-        datePicker.setValue(LocalDate.now()); // Reset to today's date
+        datePicker.setValue(LocalDate.now());
         nbNuiteField.clear();
         nbEtoilesField.clear();
         nombreChambreField.clear();

@@ -33,13 +33,6 @@ public class Utilisateur {
         this.id = id;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
 
     public String getNom() {
         return nom;

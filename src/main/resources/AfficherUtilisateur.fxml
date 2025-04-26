@@ -19,7 +19,7 @@
       </TableView>
       <Button layoutX="416.0" layoutY="301.0" mnemonicParsing="false" onAction="#supprimerUtilisateur" text="Supprimer" />
       <Button layoutX="21.0" layoutY="28.0" mnemonicParsing="false" onAction="#RetourAjoutUtilisateur" text="Retour" />
-      <Button layoutX="349.0" layoutY="301.0" mnemonicParsing="false" onAction="#ModifierCompte" text="Modifier" />
+      <Button layoutX="349.0" layoutY="301.0" mnemonicParsing="false" onAction="#modifierUtilisateur" text="Modifier" />
       <Button fx:id="afficherUtilisateur" onAction="#afficherUtilisateur" layoutX="282.0" layoutY="301.0" mnemonicParsing="false" text="Afficher" />
    </children>
 </AnchorPane>

@@ -117,12 +117,11 @@ public class LoginController implements Initializable {
 
     private void loadDashboard() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/AjouterUtilisateur.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/AfficherUtilisateur.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
 
-            // Close current window
             ((Stage) emailUsername.getScene().getWindow()).close();
         } catch (IOException e) {
             e.printStackTrace();

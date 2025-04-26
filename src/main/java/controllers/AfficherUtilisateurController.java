@@ -110,6 +110,38 @@ public class AfficherUtilisateurController {
         }
     }
 
+    public void modifierUtilisateur(ActionEvent actionEvent) {
+        Utilisateur utilisateurSelectionne = (Utilisateur) tvpersonne.getSelectionModel().getSelectedItem();
+
+        if (utilisateurSelectionne != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierUtilisateur.fxml"));
+                Parent root = loader.load();
+
+                // Get the controller of the new scene
+                ModifierUtilisateur controller = loader.getController();
+
+                // Send the selected user to the controller
+                controller.setUtilisateur(utilisateurSelectionne);
+
+                // Switch scenes
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Optional: Alert if nothing is selected
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a user to update.");
+            alert.showAndWait();
+        }
+    }
+
     public void RetourAjoutUtilisateur(ActionEvent Event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/AjouterUtilisateur.fxml"));
@@ -120,19 +152,6 @@ public class AfficherUtilisateurController {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
-
     }
 
-    public void ModifierCompte(ActionEvent Event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/AjouterUtilisateur.fxml"));
-            Stage stage = (Stage)((Node) Event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ModifierUtilisateur">
+   <children>
+      <Label layoutX="200.0" layoutY="41.0" prefHeight="17.0" prefWidth="200.0" text="Modifier Utilisateur" textFill="#f80707">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="97.0" layoutY="124.0" prefHeight="17.0" prefWidth="67.0" text="Nom :" />
+      <Label layoutX="97.0" layoutY="160.0" prefHeight="17.0" prefWidth="67.0" text="Prenom :" />
+      <Label layoutX="97.0" layoutY="196.0" prefHeight="17.0" prefWidth="67.0" text="Email :" />
+      <Label layoutX="97.0" layoutY="232.0" prefHeight="17.0" prefWidth="67.0" text="Telephone :" />
+      <TextField fx:id="nomFieldUpdate" layoutX="200.0" layoutY="120.0" />
+      <TextField fx:id="prenomFieldUpdate" layoutX="200.0" layoutY="156.0" />
+      <TextField fx:id="emailFieldUpdate" layoutX="200.0" layoutY="192.0" />
+      <TextField fx:id="telephoneFieldUpdate" layoutX="200.0" layoutY="228.0" />
+      <Button fx:id="retourUpdateButton" layoutX="32.0" layoutY="29.0" mnemonicParsing="false" onAction="#retourAfficherUtilisateursUpdate" text="retour" />
+      <Button fx:id="buttonModifier"  onAction="#modifierUtilisateur" layoutX="249.0" layoutY="287.0" mnemonicParsing="false" text="Modifier" />
+   </children>
+</AnchorPane>

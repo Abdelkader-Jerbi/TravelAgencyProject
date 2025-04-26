@@ -24,6 +24,15 @@ public class Utilisateur {
         this.tel = tel;
         this.role = role;
     }
+    public Utilisateur(int id, int tel, String nom, String prenom,String email) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.tel = tel;
+
+    }
+
 
     public int getId() {
         return id;

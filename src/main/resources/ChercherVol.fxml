@@ -13,6 +13,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
 <AnchorPane prefHeight="450.0" prefWidth="700.0" style="-fx-background-color: linear-gradient(to bottom, #e0f7fa, #ffffff);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ChercherVolController">
    <fx:define>
       <ToggleGroup fx:id="typeVolGroup"/>
@@ -75,6 +76,16 @@
          <font>
             <Font name="Arial" size="14.0" />
          </font>
+         <graphic>
+            <HBox spacing="10">
+               <!-- Icône de recherche -->
+               <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@icones/icons8-search-96.png" />
+                  </image>
+               </ImageView>
+            </HBox>
+         </graphic>
       </Button>
 
    </children>

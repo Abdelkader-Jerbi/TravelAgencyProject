@@ -1,13 +1,18 @@
 package controllers;
 import entities.Enumnom;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import services.CrudVol;
 
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -26,7 +31,7 @@ public class ChercherVolController implements Initializable {
     private DatePicker dateField;
 
     @FXML
-    private Button rechercherButton; // tu peux aussi ajouter un fx:id="rechercherButton" dans le bouton du FXML
+    private Button rechercherButton;
     private final CrudVol crudVol = new CrudVol();
 
 
@@ -45,7 +50,7 @@ public class ChercherVolController implements Initializable {
         String destination = destinationField.getText();
         Enumnom categorie = categorieChoiceBox.getValue();
 
-        // Vérifications des champs
+
         if (depart == null || depart.trim().isEmpty()) {
             afficherAlerte("Champ manquant", "Départ vide", "Veuillez saisir un lieu de départ.");
             return;
@@ -68,7 +73,7 @@ public class ChercherVolController implements Initializable {
         }
 
         try {
-            // Conversion directe depuis LocalDate
+
             String dbDateString = localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
             System.out.println("Départ : " + depart);
@@ -84,13 +89,26 @@ public class ChercherVolController implements Initializable {
             if (!volsTrouves.isEmpty()) {
                 System.out.println("existe");
                 afficherAlerte("Succès", "Vol(s) trouvé(s)", "Nombre de vols trouvés : " + volsTrouves.size());
+
+
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ReserverVol.fxml"));
+                    Parent root = loader.load();
+
+                    ReserverVolController controller = loader.getController();
+                    controller.setVols(volsTrouves);
+
+                    Stage stage = (Stage) rechercherButton.getScene().getWindow();
+                    stage.setScene(new Scene(root));
+                    stage.show();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             } else {
                 System.out.println("n'existe pas");
                 afficherAlerte("Aucun vol", "Aucun vol trouvé", "Veuillez modifier les critères de recherche.");
-            }
-
-            for (var vol : volsTrouves) {
-                System.out.println(vol);
             }
 
         } catch (Exception e) {

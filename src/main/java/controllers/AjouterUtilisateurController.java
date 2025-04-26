@@ -43,9 +43,11 @@ public class AjouterUtilisateurController {
             try {
                 Parent parent = loader.load();
                 UtilisateurInfo utilInfo = loader.getController();
-                utilInfo.setAge(telTF.getText());
+                utilInfo.setTel(telTF.getText());
                 utilInfo.setNom(nomTF.getText());
                 utilInfo.setPrenom(prenomTF.getText());
+                utilInfo.setEmail(emailTF.getText());
+                utilInfo.setRole(roleTF.getText());
                 nomTF.getScene().setRoot(parent);
             } catch (IOException e) {
                 throw new RuntimeException(e);

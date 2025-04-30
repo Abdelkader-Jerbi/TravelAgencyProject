@@ -22,6 +22,15 @@ import java.util.ResourceBundle;
 
 public class ChercherVolController implements Initializable {
     @FXML
+    private javafx.scene.control.RadioButton allerSimpleRadio;
+
+    @FXML
+    private javafx.scene.control.RadioButton allerRetourRadio;
+
+    @FXML
+    private javafx.scene.control.Label labelRetour;
+
+    @FXML
     private TextField departField;
 
     @FXML
@@ -29,6 +38,8 @@ public class ChercherVolController implements Initializable {
 
     @FXML
     private DatePicker dateField;
+    @FXML
+    private DatePicker dateRetourField;
 
     @FXML
     private Button rechercherButton;
@@ -40,6 +51,7 @@ public class ChercherVolController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         categorieChoiceBox.getItems().addAll(Enumnom.values());
+
         rechercherButton.setOnAction(event -> {
             System.out.println("Bouton cliqué !");
             chercherVol();});
@@ -75,14 +87,15 @@ public class ChercherVolController implements Initializable {
         try {
 
             String dbDateString = localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
+            LocalDate retourDate = dateRetourField.getValue();
+            String dateRetourString = retourDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             System.out.println("Départ : " + depart);
             System.out.println("Destination : " + destination);
             System.out.println("Date : " + dbDateString);
             System.out.println("Catégorie : " + categorie);
 
             System.out.println("Avant appel à crudVol...");
-            var volsTrouves = crudVol.chercherVol(depart, destination, dbDateString, categorie);
+            var volsTrouves = crudVol.chercherVol(depart, destination, dbDateString, dateRetourString,categorie);
             System.out.println("Après appel à crudVol...");
             System.out.println("Résultats: " + volsTrouves);
 

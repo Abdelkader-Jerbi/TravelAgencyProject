@@ -4,15 +4,22 @@ import entities.Vol;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import services.CrudVol;
 import services.VoLInterface;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -20,8 +27,7 @@ public class ListVolController  implements Initializable {
     @FXML
     private TableView<Vol> volTable;
 
-    @FXML
-    private TableColumn<Vol, Integer> idCol;
+
 
     @FXML
     private TableColumn<Vol, String> departCol;
@@ -31,6 +37,10 @@ public class ListVolController  implements Initializable {
 
     @FXML
     private TableColumn<Vol, String> dateCol;
+
+    @FXML
+    private TableColumn<Vol, String> dateRetourCol;
+
 
     @FXML
     private TableColumn<Vol, Double> prixCol;
@@ -44,8 +54,16 @@ public class ListVolController  implements Initializable {
     private VoLInterface volService = new CrudVol();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        idCol.setCellValueFactory(new PropertyValueFactory<>("id_vol"));
+
         departCol.setCellValueFactory(new PropertyValueFactory<>("depart"));
+        dateRetourCol.setCellValueFactory(cellData -> {
+            Date retourDate = cellData.getValue().getDateRetour();
+            String formattedRetour = retourDate != null
+                    ? new java.text.SimpleDateFormat("yyyy-MM-dd").format(retourDate)
+                    : "—"; // ou "" si tu préfères
+            return new javafx.beans.property.SimpleStringProperty(formattedRetour);
+        });
+
         destinationCol.setCellValueFactory(new PropertyValueFactory<>("destination"));
         dateCol.setCellValueFactory(cellData -> {
             // On formate la date en String
@@ -71,7 +89,8 @@ public class ListVolController  implements Initializable {
     private void ajouterBoutonSuppression() {
         actionCol.setCellFactory(col -> new TableCell<>() {
             private final Button deleteButton= new Button();  ;
-
+            private final Button editButton = new Button(" Modifier");
+            private final HBox buttonBox = new HBox(10);
             {
         ImageView icon = new ImageView(
                 new Image(getClass().getResourceAsStream("/icones/delete.png"))
@@ -112,12 +131,53 @@ public class ListVolController  implements Initializable {
                                 "-fx-padding: 5 10;" +
                                 "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0.0, 0, 2);"
                 ));
+
                 deleteButton.setOnAction(event -> {
                     Vol vol = getTableView().getItems().get(getIndex());
-                    // Supprimer le vol de la base de données si nécessaire
+
                      volService.supprimerVol(vol.getId_vol());
                     getTableView().getItems().remove(vol);
                 });
+                ImageView editIcon = new ImageView(
+                        new Image(getClass().getResourceAsStream("/icones/icons8-edit-30.png")) // à créer/ajouter dans resources
+                );
+                editIcon.setFitHeight(16);
+                editIcon.setFitWidth(16);
+                editButton.setGraphic(editIcon);
+                editButton.setContentDisplay(ContentDisplay.RIGHT);
+                editButton.setStyle(
+                        "-fx-background-color: linear-gradient(to right, #4facfe, #00f2fe);" +
+                                "-fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;" +
+                                "-fx-cursor: hand; -fx-padding: 5 10;" +
+                                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0.0, 0, 2);"
+                );
+
+                editButton.setOnAction(event -> {
+                    Vol vol = getTableView().getItems().get(getIndex());
+                    System.out.println("ID du vol sélectionné : " + vol.getId_vol());
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierVol.fxml"));
+                        Parent root = loader.load();
+
+                        ModifierVolController controller = loader.getController();
+                        controller.setVol(vol);
+
+                        Stage stage = new Stage();
+                        stage.setTitle("Modifier Vol");
+                        Scene scene = new Scene(root);
+                        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+                        stage.setScene(scene);
+                        stage.showAndWait();
+
+                        // Rafraîchir la table après modification
+                        afficherVols();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+                buttonBox.getChildren().addAll(editButton, deleteButton);
             }
 
             @Override
@@ -126,7 +186,7 @@ public class ListVolController  implements Initializable {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    setGraphic(deleteButton);
+                    setGraphic(buttonBox); // ← Affiche les deux boutons
                 }
             }
         });

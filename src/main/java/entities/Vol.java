@@ -8,16 +8,28 @@ public class Vol {
     private  String depart ;
     private  String destination ;
     private Date date ;
+    private Date dateRetour;
     private double prix ;
     private Categorie categorie;
 
-    public Vol(int id_vol, String depart, String destination, Date date, double prix, Categorie categorie) {
+
+
+    public Vol(int id_vol, String depart, String destination, Date date, Date dateRetour, double prix, Categorie categorie) {
         this.id_vol = id_vol;
         this.depart = depart;
         this.destination = destination;
         this.date = date;
+        this.dateRetour = dateRetour;
         this.prix = prix;
         this.categorie = categorie;
+    }
+
+    public Date getDateRetour() {
+        return dateRetour;
+    }
+
+    public void setDateRetour(Date dateRetour) {
+        this.dateRetour = dateRetour;
     }
 
     public int getId_vol() {

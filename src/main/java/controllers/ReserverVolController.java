@@ -61,7 +61,7 @@ public class ReserverVolController implements Initializable {
 
     }
     private void afficherVols() {
-        volListContainer.getChildren().clear(); // On vide d'abord
+        volListContainer.getChildren().clear();
         for (Vol vol : vols) {
             VBox card = createVolCard(vol);
             volListContainer.getChildren().add(card);
@@ -123,7 +123,7 @@ public class ReserverVolController implements Initializable {
             reserverButton.setScaleX(1.05);
             reserverButton.setScaleY(1.05);
             reserverButton.setStyle(
-                    "-fx-background-color: #27ae60; " +  // Un vert légèrement plus foncé
+                    "-fx-background-color: #27ae60; " +
                             "-fx-text-fill: white; " +
                             "-fx-font-weight: bold; " +
                             "-fx-background-radius: 10; " +

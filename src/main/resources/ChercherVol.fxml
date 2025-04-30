@@ -30,14 +30,14 @@
       <RadioButton fx:id="allerRetourRadio" layoutX="350.0" layoutY="100.0" text="Aller/Retour"
                    toggleGroup="$typeVolGroup"/>
 
-      <!-- Titre -->
+
       <Label layoutX="220.0" layoutY="65.0" text="🔍 Chercher un Vol" textFill="#00796b" underline="true">
          <font>
             <Font name="Arial Bold" size="20.0" />
          </font>
       </Label>
 
-      <!-- Icône Départ -->
+
       <ImageView layoutX="160.0" layoutY="140.0" fitWidth="24" fitHeight="24" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@icones/icons8-airplane-take-off-24.png" />
@@ -47,7 +47,7 @@
                   style="-fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);"
                  />
 
-      <!-- Icône Destination -->
+
       <ImageView layoutX="160.0" layoutY="185.0" fitWidth="24" fitHeight="24" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@icones/icons8-airplane-landing-24.png" />
@@ -57,28 +57,27 @@
                  style="-fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);"
       />
 
-      <!-- Date -->
-      <!-- Date aller -->
+
       <Label layoutX="160.0" layoutY="230.0" text="Date :" textFill="#004d40" />
       <DatePicker fx:id="dateField" layoutX="239.0" layoutY="227.0" prefHeight="26.0" prefWidth="120.0" promptText="Aller" />
 
-      <!-- Date retour -->
+
       <Label layoutX="160.0" layoutY="270.0"  textFill="#004d40" />
-      <DatePicker fx:id="dateField1" layoutX="389.0" layoutY="227.0" prefHeight="26.0" prefWidth="120.0" promptText="Retour" />
+      <DatePicker fx:id="dateRetourField" layoutX="389.0" layoutY="227.0" prefHeight="26.0" prefWidth="120.0" promptText="Retour" />
 
 
-      <!-- Classe -->
+
       <Label layoutX="160.0" layoutY="275.0" text="Classe :" textFill="#004d40" />
       <ChoiceBox fx:id="categorieChoiceBox" layoutX="240.0" layoutY="270.0" prefWidth="250.0" />
 
-      <!-- Bouton -->
+
       <Button fx:id="rechercherButton" layoutX="290.0" layoutY="330.0" style="-fx-background-color: #00796b; -fx-background-radius: 20px; -fx-padding: 8 20; -fx-cursor: hand;" text="Rechercher" textFill="white">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
          <graphic>
             <HBox spacing="10">
-               <!-- Icône de recherche -->
+
                <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
                   <image>
                      <Image url="@icones/icons8-search-96.png" />

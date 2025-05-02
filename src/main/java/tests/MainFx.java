@@ -16,12 +16,12 @@ public class MainFx extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterUtilisateur.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherVehicule.fxml"));
         try {
             Parent parent = loader.load();
             Scene scene = new Scene(parent);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Ajouter Utilisateur");
+            primaryStage.setTitle("Afficher Vehicule");
             primaryStage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);

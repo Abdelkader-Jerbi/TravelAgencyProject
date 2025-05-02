@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.VoitureController"
+            style="-fx-background-color: #f0f4f8;">
+
+   <!-- Haut : (vide, car le titre a été supprimé) -->
+   <top>
+      <VBox spacing="10" alignment="CENTER" style="-fx-padding: 20;">
+         <!-- Vous pouvez ajouter d'autres éléments ici si nécessaire -->
+      </VBox>
+   </top>
+
+   <!-- Centre : Table -->
+   <center>
+      <VBox spacing="20" BorderPane.alignment="CENTER" style="-fx-padding: 20;">
+         <!-- Table des voitures -->
+         <TableView fx:id="voitureTable" prefHeight="400"
+                    style="-fx-background-color: white; -fx-border-color: #cccccc;">
+            <columns>
+               <TableColumn fx:id="imageCol" text="Image" prefWidth="120"/>
+               <TableColumn fx:id="modelCol" text="Modèle"/>
+               <TableColumn fx:id="marqueCol" text="Marque" prefWidth="120"/>
+               <TableColumn fx:id="matriculeCol" text="Matricule" prefWidth="120"/>
+               <TableColumn fx:id="prixCol" text="Prix/Jour" prefWidth="100"/>
+               <TableColumn fx:id="disponibiliteCol" text="Disponibilité" prefWidth="120"/>
+               <TableColumn fx:id="actionCol" text="Actions" prefWidth="180"/>
+            </columns>
+         </TableView>
+         <!-- Bouton Ajouter à la fin du tableau -->
+         <HBox spacing="10" alignment="CENTER_RIGHT" style="-fx-padding: 10;">
+            <Button fx:id="addOrUpdateButton" text="Ajouter"
+                    style="-fx-background-color: #007BFF; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+         </HBox>
+      </VBox>
+   </center>
+</BorderPane>

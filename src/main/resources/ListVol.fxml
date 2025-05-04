@@ -12,17 +12,37 @@
             prefHeight="400.0" prefWidth="800.0"
             style="-fx-background-color: #f0f2f5;">
 
-    <TableView fx:id="volTable" layoutX="25" layoutY="25" prefWidth="750" prefHeight="350"
-               style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #ddd; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
-        <columns>
+    <VBox spacing="10"
+          layoutX="25" layoutY="25"
+          AnchorPane.topAnchor="10.0"
+          AnchorPane.leftAnchor="10.0"
+          AnchorPane.rightAnchor="10.0"
+          AnchorPane.bottomAnchor="10.0">
 
-            <TableColumn fx:id="departCol" text="Départ" prefWidth="100"/>
-            <TableColumn fx:id="destinationCol" text="Destination" prefWidth="100"/>
-            <TableColumn fx:id="dateCol" text="Date" prefWidth="120"/>
-            <TableColumn fx:id="dateRetourCol" text="Date Retour" prefWidth="120"/>
-            <TableColumn fx:id="prixCol" text="Prix" prefWidth="80"/>
-            <TableColumn fx:id="categorieCol" text="Catégorie" prefWidth="100"/>
-            <TableColumn fx:id="actionCol" text="Actions" prefWidth="200"/>
-        </columns>
-    </TableView>
+        <TableView fx:id="volTable" prefWidth="750" prefHeight="330"
+                   style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #ddd; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+            <columns>
+                <TableColumn fx:id="departCol" text="Départ" prefWidth="100"/>
+                <TableColumn fx:id="destinationCol" text="Destination" prefWidth="100"/>
+                <TableColumn fx:id="dateCol" text="Date" prefWidth="120"/>
+                <TableColumn fx:id="dateRetourCol" text="Date Retour" prefWidth="120"/>
+                <TableColumn fx:id="prixCol" text="Prix" prefWidth="80"/>
+                <TableColumn fx:id="categorieCol" text="Catégorie" prefWidth="100"/>
+                <TableColumn fx:id="actionCol" text="Actions" prefWidth="200"/>
+            </columns>
+        </TableView>
+
+        <!-- HBox avec alignement à gauche -->
+        <HBox alignment="CENTER_RIGHT">
+            <Button text="Ajouter Vol" fx:id="ajouterButton"
+                    onAction="#ajouterVol"
+                    style="-fx-background-color: #28a745;
+                     -fx-text-fill: white;
+                      -fx-font-weight: bold;
+                       -fx-padding: 8 16;
+                       -fx-background-radius: 8;
+                      -fx-cursor: hand;
+                     -fx-transition: all 0.3s ease;"/>
+        </HBox>
+    </VBox>
 </AnchorPane>

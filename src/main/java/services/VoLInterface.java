@@ -14,4 +14,6 @@ public interface VoLInterface {
     void supprimerVol(int id);
     void modifierVol(Vol vol);
     Categorie getCategorieByNom(String nom) throws SQLException;
+    void ajouterVol(Vol vol) throws SQLException;
+
 }

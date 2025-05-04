@@ -24,6 +24,15 @@ public class Vol {
         this.categorie = categorie;
     }
 
+    public Vol(String depart, String destination, Date date, Date dateRetour, double prix, Categorie categorie) {
+        this.depart = depart;
+        this.destination = destination;
+        this.date = date;
+        this.dateRetour = dateRetour;
+        this.prix = prix;
+        this.categorie = categorie;
+    }
+
     public Date getDateRetour() {
         return dateRetour;
     }

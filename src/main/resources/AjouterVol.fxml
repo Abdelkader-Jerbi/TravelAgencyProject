@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.AjouterVolController"
+            stylesheets="@style.css"
+            prefHeight="450" prefWidth="600"
+            styleClass="anchor-pane">
+    <VBox alignment="CENTER" spacing="15" styleClass="form-container" AnchorPane.topAnchor="30" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+        <Label text="Ajouter un Vol" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+        <TextField fx:id="departField" promptText="Ville de départ" styleClass="input-field"/>
+        <TextField fx:id="destinationField" promptText="Ville de destination" styleClass="input-field"/>
+
+        <DatePicker fx:id="datePicker" promptText="Date de départ" styleClass="input-field"/>
+        <DatePicker fx:id="dateRetourPicker" promptText="Date de retour" styleClass="input-field"/>
+
+        <TextField fx:id="prixField" promptText="Prix" styleClass="input-field"/>
+
+        <ComboBox fx:id="categorieComboBox" promptText="Catégorie" styleClass="input-field"/>
+
+        <Button text="Enregistrer" styleClass="submit-button" onAction="#ajouterVol"
+                style="-fx-background-color: #007bff;
+                 -fx-text-fill: white;
+                  -fx-font-weight: bold;
+                   -fx-padding: 10px 20px;
+                 -fx-background-radius: 30px;"/>
+    </VBox>
+</AnchorPane>

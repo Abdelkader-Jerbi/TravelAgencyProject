@@ -132,4 +132,22 @@ public class CrudVol implements VoLInterface {
         return null;
     }
 
+    @Override
+    public void ajouterVol(Vol vol) throws SQLException {
+        String sql = "INSERT INTO vol (depart, destination, date, dateRetour, prix, categorie_id) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = MyDatabase.getInstance().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, vol.getDepart());
+            ps.setString(2, vol.getDestination());
+            ps.setDate(3, new java.sql.Date(vol.getDate().getTime()));
+            ps.setDate(4, vol.getDateRetour() != null ? new java.sql.Date(vol.getDateRetour().getTime()) : null);
+            ps.setDouble(5, vol.getPrix());
+            ps.setInt(6, vol.getCategorie().getId()); // car tu stockes une FK catégorie
+
+            ps.executeUpdate();
+        }
+    }
+
 }

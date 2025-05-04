@@ -9,6 +9,10 @@ public class Categorie {
         this.nom = nom;
     }
 
+    public Categorie(Enumnom nom) {
+        this.nom = nom;
+    }
+
     public int getId() {
         return id;
     }
@@ -16,6 +20,7 @@ public class Categorie {
     public void setId(int id) {
         this.id = id;
     }
+
 
     public Enumnom getNom() {
         return nom;

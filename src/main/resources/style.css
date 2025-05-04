@@ -58,3 +58,25 @@
 .submit-button:hover {
     -fx-background-color: #0056b3;
 }
+.input-field {
+    -fx-pref-height: 40px;
+    -fx-font-size: 14px;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 0 10px;
+}
+
+.input-field:focused {
+    -fx-border-color: #007bff;
+    -fx-background-color: #eef6ff;
+}
+
+.submit-button {
+    -fx-cursor: hand;
+     -fx-background-color: #007bff;
+        -fx-text-fill: white;
+        -fx-font-weight: bold;
+        -fx-background-radius: 25px;
+        -fx-padding: 10px 30px;
+}

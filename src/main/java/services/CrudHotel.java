@@ -19,12 +19,12 @@ public class CrudHotel implements HotelBooking<Hotel> {
 
     @Override
     public void add(Hotel hotel) throws SQLException {
-        String query = "INSERT INTO hotel (nom, Destination, Date, nombreNuité, nombreChambre, nbEtoile, tarif) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO hotel (nom, Localisation, Date, nombreNuité, nombreChambre, nbEtoile, tarif) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         // Use try-with-resources to ensure that the PreparedStatement is closed properly
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, hotel.getNom());
-            ps.setString(2, hotel.getDestination());
+            ps.setString(2, hotel.getLocalisation());
             ps.setDate(3, new java.sql.Date(hotel.getDate().getTime()));  // Ensure the correct Date conversion
             ps.setInt(4, hotel.getNombreNuité());
             ps.setInt(5, hotel.getNombreChambre());
@@ -41,11 +41,11 @@ public class CrudHotel implements HotelBooking<Hotel> {
 
     @Override
     public void modify(Hotel hotel) throws SQLException {
-        String query = "UPDATE hotel SET nom = ?, Destination = ?, Date = ?, nombreNuité = ?, nombreChambre = ?, nbEtoile = ?, tarif = ? WHERE idHotel = ?";
+        String query = "UPDATE hotel SET nom = ?, Localisation = ?, Date = ?, nombreNuité = ?, nombreChambre = ?, nbEtoile = ?, tarif = ? WHERE idHotel = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, hotel.getNom());
-            ps.setString(2, hotel.getDestination());
+            ps.setString(2, hotel.getLocalisation());
             ps.setDate(3, new java.sql.Date(hotel.getDate().getTime()));  // Ensure the correct Date conversion
             ps.setInt(4, hotel.getNombreNuité());
             ps.setInt(5, hotel.getNombreChambre());
@@ -94,14 +94,14 @@ public class CrudHotel implements HotelBooking<Hotel> {
             while (rs.next()) {
                 int idHotel = rs.getInt("idHotel");
                 String nom = rs.getString("nom");
-                String destination = rs.getString("Destination");
+                String Localisation = rs.getString("Localisation");
                 Date date = rs.getDate("Date");
                 int nombreNuite = rs.getInt("nombreNuité");
                 int nombreChambre = rs.getInt("nombreChambre");
                 int nbEtoile = rs.getInt("nbEtoile");
                 float tarif = rs.getFloat("tarif");
 
-                Hotel hotel = new Hotel(idHotel, nom, destination, date, nombreNuite, nombreChambre, nbEtoile, tarif);
+                Hotel hotel = new Hotel(idHotel, nom, Localisation, date, nombreNuite, nombreChambre, nbEtoile, tarif);
                 hotels.add(hotel);
             }
         } catch (SQLException e) {

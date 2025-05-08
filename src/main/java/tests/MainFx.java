@@ -18,11 +18,11 @@ public class MainFx extends Application {
     public void start(Stage primaryStage) {
         try {
             // 👉 Change this to /AjouterUtilisateur.fxml if you want to start with that
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/hoteltable.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/AllHotels.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("/View/style.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/View/css/style.css").toExternalForm());
 
             primaryStage.setTitle("Hotel Booking");
             primaryStage.setScene(scene);

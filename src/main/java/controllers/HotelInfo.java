@@ -9,10 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -40,7 +37,7 @@ public class HotelInfo {
     @FXML
     public void initialize() {
         colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        colDestination.setCellValueFactory(new PropertyValueFactory<>("destination"));
+        colDestination.setCellValueFactory(new PropertyValueFactory<>("Localisation"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colNbNuite.setCellValueFactory(new PropertyValueFactory<>("nombreNuité"));
         colNbChambre.setCellValueFactory(new PropertyValueFactory<>("nombreChambre"));
@@ -93,13 +90,30 @@ public class HotelInfo {
                             int index = getIndex();
                             if (index >= 0 && index < getTableView().getItems().size()) {
                                 Hotel hotel = getTableView().getItems().get(index);
-                                try {
-                                    crudHotel.delete(hotel.getIdHotel());
-                                    getTableView().getItems().remove(hotel);
-                                    System.out.println("🗑️ Hotel deleted: " + hotel.getNom());
-                                } catch (SQLException e) {
-                                    e.printStackTrace();
-                                }
+
+                                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                                alert.setTitle("Delete Confirmation");
+                                alert.setHeaderText("Are you sure you want to delete this hotel?");
+                                alert.setContentText("Hotel: " + hotel.getNom());
+
+                                alert.showAndWait().ifPresent(response -> {
+                                    if (response == ButtonType.OK) {
+                                        try {
+                                            crudHotel.delete(hotel.getIdHotel());
+                                            getTableView().getItems().remove(hotel);
+                                            System.out.println("🗑️ Hotel deleted: " + hotel.getNom());
+
+                                            // Optional: Show success alert
+                                            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                                            successAlert.setTitle("Success");
+                                            successAlert.setHeaderText(null);
+                                            successAlert.setContentText("Hotel deleted successfully!");
+                                            successAlert.showAndWait();
+                                        } catch (SQLException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
                             }
                         });
                     }
@@ -120,6 +134,7 @@ public class HotelInfo {
         colAction.setCellFactory(cellFactory);
         hotelTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
+
     @FXML
     private void handleAddHotel() {
         try {

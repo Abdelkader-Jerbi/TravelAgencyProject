@@ -59,13 +59,13 @@ public class AddHotel {
         }
 
         try {
-            String destination = destinationField.getText();
+            String Localisation = destinationField.getText();
             int nombreNuité = Integer.parseInt(nbNuiteField.getText());
             int nbEtoile = Integer.parseInt(nbEtoilesField.getText());
             int nombreChambre = Integer.parseInt(nombreChambreField.getText());
             float tarif = Float.parseFloat(tarifField.getText());
 
-            Hotel hotel = new Hotel(nom, destination, date, nombreNuité, nbEtoile, nombreChambre, tarif);
+            Hotel hotel = new Hotel(nom, Localisation, date, nombreNuité, nbEtoile, nombreChambre, tarif);
             crudHotel.add(hotel);
 
             // ✅ Refresh the table

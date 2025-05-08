@@ -18,7 +18,7 @@
             fx:controller="controllers.HotelInfo">
 
     <stylesheets>
-        <URL value="@style.css" />
+        <URL value="@css/style.css" />
     </stylesheets>
 
     <!-- Top toolbar -->
@@ -42,13 +42,18 @@
                 <TableView fx:id="hotelTable" style="-fx-font-size: 14px;">
                     <columns>
                         <TableColumn fx:id="colNom" text="Hotel Name" style="-fx-alignment: CENTER_LEFT;" />
-                        <TableColumn fx:id="colDestination" text="Destination" style="-fx-alignment: CENTER_LEFT;" />
+                        <TableColumn fx:id="colDestination" text="Localisation" style="-fx-alignment: CENTER_LEFT;" />
                         <TableColumn fx:id="colDate" text="Date" style="-fx-alignment: CENTER;" />
                         <TableColumn fx:id="colNbNuite" text="Nombre de nuit" style="-fx-alignment: CENTER;" />
                         <TableColumn fx:id="colNbChambre" text="Nombre de chambre" style="-fx-alignment: CENTER;" />
                         <TableColumn fx:id="colEtoile" text="Nombre d'étoile" style="-fx-alignment: CENTER;" />
                         <TableColumn fx:id="colTarif" text="Tarif" style="-fx-alignment: CENTER_RIGHT;" />
-                        <TableColumn fx:id="colAction" text="Actions" style="-fx-alignment: CENTER;" />
+                        <TableColumn fx:id="colAction"
+                                     text="Actions"
+                                     style="-fx-alignment: CENTER;"
+                                     prefWidth="200"
+                                     minWidth="150"
+                                     maxWidth="190" />
                     </columns>
                     <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

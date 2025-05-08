@@ -30,7 +30,7 @@ public class EditHotel {
         this.currentHotel = hotel;
         if (hotel != null) {
             nomField.setText(hotel.getNom());
-            destinationField.setText(hotel.getDestination());
+            destinationField.setText(hotel.getLocalisation());
             datePicker.setValue(hotel.getDate().toLocalDate());  // Convert java.sql.Date to LocalDate
             nbNuiteField.setText(String.valueOf(hotel.getNombreNuité()));
             nbChambreField.setText(String.valueOf(hotel.getNombreChambre()));
@@ -50,7 +50,7 @@ public class EditHotel {
         saveButton.setOnAction(event -> {
             if (currentHotel != null) {
                 currentHotel.setNom(nomField.getText());
-                currentHotel.setDestination(destinationField.getText());
+                currentHotel.setLocalisation(destinationField.getText());
 
                 // Convert LocalDate to java.sql.Date
                 Date date = Date.valueOf(datePicker.getValue());  // Convert LocalDate to java.sql.Date

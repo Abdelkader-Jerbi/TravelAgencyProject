@@ -1,10 +1,13 @@
 package tests;
 
+import controllers.ShowHotel;
+import entities.Hotel;
 import entities.Utilisateur;
 import services.CrudHotel;
 import services.CrudUtilisateur;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,6 +22,7 @@ public class Main {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
 
     }
 }

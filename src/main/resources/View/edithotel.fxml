@@ -8,12 +8,12 @@
 <?import java.net.URL?>
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditHotel">
     <stylesheets>
-        <URL value="@style.css" />
+        <URL value="@css/style.css" />
     </stylesheets>
 
     <center>
         <VBox alignment="CENTER" spacing="20" style="-fx-padding: 30;">
-            <Label text="Edit Hotel" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+            <Label text="Edit Hotel" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill:#4285f4"/>
 
             <GridPane hgap="10" vgap="10" alignment="CENTER">
                 <columnConstraints>

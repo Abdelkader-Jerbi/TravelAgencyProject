@@ -9,17 +9,18 @@ public class Hotel<H> {
     private int idHotel;
     private String nom;
     private Date date;
-    private String destination;
+    private String Localisation;
     private int nbEtoile;
     private int nombreChambre;
     private  int nombreNuité;
     private float tarif;
+    private String image;
 
 
-    public Hotel(String nom, String destination, Date date,int nombreNuité,int nombreChambre, int nbEtoile, float tarif ) {
+    public Hotel(String nom, String Localisation, Date date,int nombreNuité,int nombreChambre, int nbEtoile, float tarif ) {
 
         this.nom = nom;
-        this.destination = destination;
+        this.Localisation = Localisation;
         this.date = date;
         this.nombreNuité=nombreNuité;
         this.nombreChambre = nombreChambre;
@@ -27,10 +28,10 @@ public class Hotel<H> {
         this.tarif = tarif;
     }
 
-    public Hotel(int idHotel, String nom, String destination, Date date,int nombreNuité,int nombreChambre, int nbEtoile, float tarif ) {
+    public Hotel(int idHotel, String nom, String Localisation, Date date,int nombreNuité,int nombreChambre, int nbEtoile, float tarif ) {
         this.idHotel = idHotel;
         this.nom = nom;
-        this.destination = destination;
+        this.Localisation = Localisation;
         this.date = date;
         this.nombreNuité=nombreNuité;
         this.nombreChambre = nombreChambre;
@@ -55,12 +56,12 @@ public class Hotel<H> {
         this.nom = nom;
     }
 
-    public String getDestination() {
-        return destination;
+    public String getLocalisation() {
+        return Localisation;
     }
 
-    public void setDestination(String destination) {
-        this.destination = destination;
+    public void setLocalisation(String Localisation) {
+        this.Localisation = Localisation;
     }
 
     public int getNbEtoile() {
@@ -103,13 +104,16 @@ public class Hotel<H> {
         this.nombreChambre = nombreChambre;
     }
 
+    public String getImageUrl() { return image; }
+    public void setImage (String image) { this.image = image; }
+
     @Override
     public String toString() {
         return "Hotel{" +
                 "idHotel=" + idHotel +
                 ", nom='" + nom + '\'' +
                 ", date=" + date +
-                ", destination='" + destination + '\'' +
+                ", Localisation='" + Localisation + '\'' +
                 ", nbEtoile=" + nbEtoile +
                 ", tarif=" + tarif +
                 ", nombreChambre=" + nombreChambre +

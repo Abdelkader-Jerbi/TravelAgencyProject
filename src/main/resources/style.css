@@ -1,0 +1,82 @@
+#reserverButton {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 8 16;
+    -fx-cursor: hand;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-transition: all 0.3s ease;
+}
+
+#reserverButton:hover {
+    -fx-background-color: #27ae60;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+/* Appliquer à l'AnchorPane principal */
+.anchor-pane {
+    -fx-background-color: #f4f4f9;
+    -fx-padding: 20px;
+}
+
+/* Conteneur principal du formulaire */
+.form-container {
+    -fx-background-color: white;
+    -fx-border-radius: 10px;
+    -fx-padding: 30px;
+    -fx-effect: dropshadow(gaussian, #888888, 10, 0.5, 0, 0);
+}
+
+/* Champs de texte et ComboBox */
+.input-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-pref-width: 250px;
+}
+
+/* Effet de focus sur les champs */
+.input-field:focused {
+    -fx-border-color: #007bff;
+    -fx-background-color: #f0f8ff;
+}
+
+/* Bouton "Enregistrer" */
+.submit-button {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.submit-button:hover {
+    -fx-background-color: #0056b3;
+}
+.input-field {
+    -fx-pref-height: 40px;
+    -fx-font-size: 14px;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 0 10px;
+}
+
+.input-field:focused {
+    -fx-border-color: #007bff;
+    -fx-background-color: #eef6ff;
+}
+
+.submit-button {
+    -fx-cursor: hand;
+     -fx-background-color: #007bff;
+        -fx-text-fill: white;
+        -fx-font-weight: bold;
+        -fx-background-radius: 25px;
+        -fx-padding: 10px 30px;
+}

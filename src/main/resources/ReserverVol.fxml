@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import java.net.URL?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.ReserverVolController">
+
+   <StackPane fx:id="volCard"
+              AnchorPane.leftAnchor="125.0"
+              AnchorPane.topAnchor="50.0"
+              AnchorPane.rightAnchor="125.0"
+              AnchorPane.bottomAnchor="50.0"
+              style="-fx-padding: 15;">
+
+      <stylesheets>
+         <URL value="@style.css" />
+      </stylesheets>
+
+      <ScrollPane fitToWidth="true" fitToHeight="true"
+                  style="-fx-background-color:transparent;">
+         <VBox fx:id="volListContainer"
+               spacing="10"
+               alignment="CENTER_LEFT"
+               style="-fx-padding: 20;
+                   -fx-border-color: #e0e0e0;
+                   -fx-border-width: 1;
+                   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 4);"
+               prefWidth="350"/>
+      </ScrollPane>
+
+   </StackPane>
+
+   <Button fx:id="retourButton" text="Retour"
+           style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-weight: bold;
+               -fx-background-radius: 10; -fx-padding: 8 16;"
+           AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0"/>
+</AnchorPane>

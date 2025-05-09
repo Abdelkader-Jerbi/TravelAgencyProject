@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
    <left>
-      <AnchorPane prefHeight="200.0" prefWidth="250.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="400.0" prefWidth="282.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="brandingView" fitHeight="209.0" fitWidth="242.0" layoutX="10.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="brandingView" fitHeight="209.0" fitWidth="242.0" layoutX="30.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../Images/lastMinuteTravel.jpg" />
                </image>

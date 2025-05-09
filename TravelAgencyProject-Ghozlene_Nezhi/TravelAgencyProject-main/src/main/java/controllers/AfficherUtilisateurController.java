@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -78,7 +77,7 @@ public class AfficherUtilisateurController {
 
     public void RetourAjoutUtilisateur(ActionEvent Event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/AjouterReclamation.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/Reclamation/AjouterReclamation.fxml"));
             Stage stage = (Stage)((Node) Event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);

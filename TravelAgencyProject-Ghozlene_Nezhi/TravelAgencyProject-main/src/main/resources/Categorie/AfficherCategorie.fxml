@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Categorie.AfficherCategorie" style="-fx-background-color: linear-gradient(to bottom, #e3f2fd, #ffffff);">
+    <children>
+        <VBox alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="600.0" prefWidth="800.0" spacing="20.0">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <children>
+                <Label text="Liste des Catégories" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1976D2; -fx-font-family: 'Segoe UI';"/>
+                
+                <TableView fx:id="categorieTableView" VBox.vgrow="ALWAYS" style="-fx-background-color: white; -fx-border-color: #E0E0E0; -fx-border-radius: 5;">
+                    <columns>
+                        <TableColumn fx:id="idColumn" prefWidth="100.0" text="ID" style="-fx-background-color: #1976D2; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';" />
+                        <TableColumn fx:id="descriptionColumn" prefWidth="600.0" text="Description" style="-fx-background-color: #1976D2; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';" />
+                    </columns>
+                </TableView>
+                
+                <Button fx:id="fermerButton" mnemonicParsing="false" onAction="#handleFermer" text="Fermer" style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 16; -fx-font-family: 'Segoe UI';"/>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

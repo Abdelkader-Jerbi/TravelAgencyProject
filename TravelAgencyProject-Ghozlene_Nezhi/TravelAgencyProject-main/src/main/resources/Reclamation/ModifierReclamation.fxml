@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.Reclamation.ModifierReclamation"
+            style="-fx-background-color: linear-gradient(to bottom, #e3f2fd, #ffffff);">
+    
+    <VBox spacing="20" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" 
+          AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+        
+        <Label text="Modifier les Réclamations" 
+               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1976D2; -fx-font-family: 'Segoe UI';"/>
+        
+        <TableView fx:id="tableReclamation" VBox.vgrow="ALWAYS"
+                  style="-fx-background-color: white; -fx-border-color: #E0E0E0; -fx-border-radius: 5;">
+            <columns>
+                <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
+                <TableColumn fx:id="idUserColumn" text="ID Utilisateur" prefWidth="100"/>
+                <TableColumn fx:id="categorieColumn" text="Catégorie" prefWidth="150"/>
+                <TableColumn fx:id="dateColumn" text="Date" prefWidth="100"/>
+                <TableColumn fx:id="commentaireColumn" text="Commentaire" prefWidth="200"/>
+                <TableColumn fx:id="statutColumn" text="Statut" prefWidth="150"/>
+            </columns>
+        </TableView>
+        
+        <VBox spacing="10" style="-fx-padding: 20; -fx-background-color: white; -fx-border-color: #E0E0E0; -fx-border-radius: 5;">
+            <Label text="Modifier le statut" 
+                   style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1976D2; -fx-font-family: 'Segoe UI';"/>
+            
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Nouveau Statut:" 
+                       style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px;"/>
+                <ComboBox fx:id="statutComboBox" prefWidth="200"
+                          style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px;"/>
+            </HBox>
+            
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button fx:id="modifierButton" text="Modifier" onAction="#handleModifier"
+                        style="-fx-background-color: #1976D2; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 16; -fx-font-family: 'Segoe UI';"/>
+                <Button fx:id="fermerButton" text="Fermer" onAction="#handleFermer"
+                        style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 16; -fx-font-family: 'Segoe UI';"/>
+            </HBox>
+        </VBox>
+    </VBox>
+</AnchorPane>

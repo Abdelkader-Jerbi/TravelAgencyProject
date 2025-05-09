@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import java.net.URL?>
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddHotel"
+      spacing="15" alignment="TOP_CENTER" styleClass="add-hotel">
+   <stylesheets>
+      <URL value="@css/style.css" />
+   </stylesheets>
+
+   <Label text="Add Hotel" styleClass="header-label"/>
+
+   <GridPane hgap="10" vgap="10" alignment="CENTER">
+      <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
+
+      <!-- Row 0: Hotel Name -->
+      <Label text="Nom Hotel:" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label"/>
+      <TextField fx:id="nomHotelField" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="form-field"/>
+
+      <!-- Row 1: Destination -->
+      <Label text="Destination:" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="field-label"/>
+      <TextField fx:id="destinationField" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="form-field"/>
+
+      <!-- Row 2: Date -->
+      <Label text="Date:" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="field-label"/>
+      <DatePicker fx:id="datePicker" GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="form-field"/>
+
+      <!-- Row 3: Number of Nights -->
+      <Label text="Nombre de nuité:" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="field-label"/>
+      <TextField fx:id="nbNuiteField" GridPane.rowIndex="3" GridPane.columnIndex="1" styleClass="form-field"/>
+
+      <!-- Row 4: Number of Rooms -->
+      <Label text="Nombre de chambre:" GridPane.rowIndex="4" GridPane.columnIndex="0" styleClass="field-label"/>
+      <TextField fx:id="nombreChambreField" GridPane.rowIndex="4" GridPane.columnIndex="1" styleClass="form-field"/>
+
+      <!-- Row 5: Star Rating -->
+      <Label text="Nombre d'Etoiles:" GridPane.rowIndex="5" GridPane.columnIndex="0" styleClass="field-label"/>
+      <TextField fx:id="nbEtoilesField" GridPane.rowIndex="5" GridPane.columnIndex="1" styleClass="form-field"/>
+
+      <!-- Row 6: Price -->
+      <Label text="Tarif:" GridPane.rowIndex="6" GridPane.columnIndex="0" styleClass="field-label"/>
+      <TextField fx:id="tarifField" GridPane.rowIndex="6" GridPane.columnIndex="1" styleClass="form-field"/>
+   </GridPane>
+
+   <Button fx:id="addButton" text="Add" styleClass="submit-button"/>
+</VBox>

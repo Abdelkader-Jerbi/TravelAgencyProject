@@ -1,0 +1,344 @@
+
+/* ========== TABLE VIEW ENHANCEMENTS ========== */
+.table-view {
+    -fx-font-size: 14px;
+    -fx-background-color: white;
+    -fx-border-color: -fx-medium-gray;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 0, 2, 4, 0);
+    -fx-padding: 2px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #5c9df5, #4285f4);
+    -fx-background-radius: 6px 6px 0 0;
+    -fx-padding: 0 0 4px 0;
+}
+
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: transparent;
+    -fx-size: 40px;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: rgba(255,255,255,0.3);
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 10px;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: rgba(0,0,0,0.05);
+    -fx-border-width: 0 0 1px 0;
+    -fx-cell-size: 40px;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #fcfcfc;
+}
+
+.table-view .table-row-cell:filled:selected {
+    -fx-background-color: #e3f2fd;
+    -fx-text-background-color: -fx-dark-gray;
+}
+
+.table-view .table-row-cell:filled:hover {
+    -fx-background-color: #f1f8fe;
+}
+
+/* ========== BUTTON STYLES ========== */
+.button {
+    -fx-font-family: -fx-font-main;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 0, 1, 2, 0);
+    -fx-transition: all 0.2s ease;
+}
+
+.button:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 4, 0);
+}
+
+.button:pressed {
+    -fx-translate-y: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 0, 1, 2, 0);
+}
+
+/* Success Button */
+.edit-button {
+    -fx-background-color: linear-gradient(to bottom, #71d475, #5cc760);
+    -fx-text-fill: white;
+    -fx-padding: 6px 12px;
+    -fx-min-width: 80px;
+}
+
+.edit-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #60c36a, #4db155);
+}
+
+/* Danger Button */
+.delete-button {
+    -fx-background-color: linear-gradient(to bottom, #e6877e, #df746a);
+    -fx-text-fill: white;
+    -fx-background-radius: 5px;
+    -fx-padding: 6px 12px;
+    -fx-min-width: 80px;
+}
+
+.delete-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #d97169, #d15e55);
+}
+
+/* Icon Buttons */
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 6px;
+    -fx-background-radius: 4px;
+}
+
+.icon-button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.08);
+}
+
+.icon-button:pressed {
+    -fx-background-color: rgba(0, 0, 0, 0.12);
+}
+
+/* ========== SCROLL BAR ENHANCEMENTS ========== */
+.scroll-bar:horizontal,
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: rgba(0,0,0,0.2);
+    -fx-background-radius: 4px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: rgba(0,0,0,0.3);
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
+
+/* ========== ADDITIONAL ENHANCEMENTS ========== */
+/* Text field styling */
+.text-field {
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+    -fx-border-color: -fx-medium-gray;
+    -fx-border-width: 1px;
+    -fx-padding: 6px 10px;
+}
+
+.text-field:focused {
+    -fx-border-color: -fx-primary-color;
+    -fx-effect: dropshadow(gaussian, rgba(66,133,244,0.2), 0, 0, 0, 2);
+}
+
+/* Date picker styling */
+.date-picker {
+    -fx-background-radius: 4px;
+}
+
+.date-picker .arrow-button {
+    -fx-background-radius: 0 4px 4px 0;
+}
+
+.date-picker .text-field {
+    -fx-background-radius: 4px 0 0 4px;
+}
+
+
+.text-field:focused, .date-picker:focused {
+    -fx-border-color: #4285f4;
+    -fx-effect: dropshadow(gaussian, rgba(66,133,244,0.2), 0, 0, 0, 2);
+}
+
+#saveButton {
+    -fx-background-color: #34a853;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+#saveButton:hover {
+    -fx-background-color: #2d9248;
+}
+
+#cancelButton {
+    -fx-background-color: #ea4335;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+#cancelButton:hover {
+    -fx-background-color: #d33a2e;
+}
+.add-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 15;
+    -fx-background-radius: 5;
+}
+.add-hotel {
+    -fx-padding: 20;
+    -fx-background-color: white;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+}
+
+.header-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4285f4;
+    -fx-padding: 0 0 15 0;
+}
+
+.field-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555;
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.form-field {
+    -fx-min-width: 250px;
+    -fx-pref-height: 35px;
+    -fx-font-size: 14px;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1;
+    -fx-padding: 5 10;
+}
+
+.form-field:focused {
+    -fx-border-color: #4285f4;
+    -fx-effect: dropshadow(gaussian, rgba(66,133,244,0.2), 0, 0, 0, 2);
+}
+
+.submit-button {
+        -fx-background-color: #4285f4;
+        -fx-text-fill: white;
+        -fx-font-weight: bold;
+        -fx-padding: 8 20;
+        -fx-background-radius: 5;
+        -fx-font-size: 14px;
+        -fx-cursor: hand;
+    }
+
+    .submit-button:hover {
+        -fx-background-color: #4285f4;
+}
+.hotels-grid {
+    -fx-background-color: transparent;
+}
+
+/* Hotel Card Styles */
+.hotel-card {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+    -fx-padding: 10;
+    -fx-pref-width: 270;
+    -fx-min-width: 270;
+    -fx-max-width: 270;
+}
+
+.hotel-card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 8, 0, 0, 1);
+    -fx-translate-y: -2px;
+}
+
+.hotel-image {
+    -fx-background-radius: 8 8 0 0;
+}
+
+.hotel-details {
+    -fx-padding: 5 10 10 10;
+}
+
+.hotel-name {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2a5885;
+}
+
+.hotel-rating {
+    -fx-font-size: 14px;
+    -fx-text-fill: #ffc107;
+}
+
+.hotel-location {
+    -fx-font-size: 12px;
+    -fx-text-fill: #666;
+}
+
+.hotel-description {
+    -fx-font-size: 13px;
+    -fx-text-fill: #444;
+    -fx-line-spacing: 2px;
+}
+
+.hotel-price {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2a5885;
+}
+
+.book-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 6 15;
+    -fx-background-radius: 15;
+    -fx-cursor: hand;
+}
+
+.book-button:hover {
+    -fx-background-color: #3e8e41;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

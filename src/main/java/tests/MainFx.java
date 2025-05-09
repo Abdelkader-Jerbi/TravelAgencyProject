@@ -17,6 +17,7 @@ public class MainFx extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
         try {
             Parent parent = loader.load();
@@ -24,10 +25,10 @@ public class MainFx extends Application {
             primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Login");
+
             primaryStage.show();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-
     }
 }

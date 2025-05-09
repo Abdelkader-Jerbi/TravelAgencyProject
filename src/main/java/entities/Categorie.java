@@ -21,7 +21,9 @@ public class Categorie {
         this.id = id;
     }
 
-
+    public double getTaux() {
+        return nom.getTaux();
+    }
     public Enumnom getNom() {
         return nom;
     }

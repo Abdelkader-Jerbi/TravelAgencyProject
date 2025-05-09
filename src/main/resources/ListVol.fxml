@@ -27,6 +27,8 @@
                 <TableColumn fx:id="dateCol" text="Date" prefWidth="120"/>
                 <TableColumn fx:id="dateRetourCol" text="Date Retour" prefWidth="120"/>
                 <TableColumn fx:id="prixCol" text="Prix" prefWidth="80"/>
+                <TableColumn fx:id="prixFinalCol" text="Prix Final" />
+
                 <TableColumn fx:id="categorieCol" text="Catégorie" prefWidth="100"/>
                 <TableColumn fx:id="actionCol" text="Actions" prefWidth="200"/>
             </columns>

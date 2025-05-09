@@ -42,6 +42,8 @@ public class ListVolController  implements Initializable {
     @FXML
     private TableColumn<Vol, String> dateRetourCol;
 
+    @FXML
+    private TableColumn<Vol, String> prixFinalCol;
 
     @FXML
     private TableColumn<Vol, Double> prixCol;
@@ -78,6 +80,12 @@ public class ListVolController  implements Initializable {
                         cellData.getValue().getCategorie().getNom().toString()
                 )
         );
+        prixFinalCol.setCellValueFactory(cellData ->
+        {
+            double prixFinal = volService.calculerPrixFinal(cellData.getValue());
+            String prixFormate = String.format("%.2f DT", prixFinal);
+            return new javafx.beans.property.SimpleStringProperty(prixFormate);
+        });
 
         afficherVols();
         ajouterBoutonSuppression();

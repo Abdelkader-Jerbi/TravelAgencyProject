@@ -61,6 +61,10 @@ public class AjouterVolController  implements Initializable {
             showAlert(Alert.AlertType.ERROR, "Veuillez remplir tous les champs.");
             return;
         }
+        if (dateRetour.isBefore(dateDepart)) {
+            showAlert(Alert.AlertType.ERROR, "La date de retour doit être postérieure à la date de départ.");
+            return;
+        }
 
         double prix;
         try {

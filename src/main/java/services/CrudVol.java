@@ -149,5 +149,26 @@ public class CrudVol implements VoLInterface {
             ps.executeUpdate();
         }
     }
+//taux
+    @Override
+    public double calculerPrixFinal(Vol vol) {
+        return vol.getPrix() * vol.getCategorie().getTaux();
+    }
+
+    @Override
+    public List<Vol> chercherVolParDepartEtDestination(String depart, String destination) {
+        List<Vol> volsTrouves = new ArrayList<>();
+        List<Vol> allVols = getAllVols();
+
+        for (Vol vol : allVols) {
+            if (vol.getDepart().equalsIgnoreCase(depart) &&
+                    vol.getDestination().equalsIgnoreCase(destination)) {
+                volsTrouves.add(vol);
+            }
+        }
+
+        return volsTrouves;
+    }
+
 
 }

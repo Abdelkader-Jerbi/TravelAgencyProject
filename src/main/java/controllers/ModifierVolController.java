@@ -53,22 +53,20 @@ public class ModifierVolController {
         }
 
         vol.setPrix(Double.parseDouble(prixField.getText()));
-        // Récupérer la catégorie en fonction du nom sélectionné dans le ComboBox
         Enumnom selectedNom = categorieComboBox.getValue();
         Categorie categorie = null;
-        // À adapter selon ta classe `Categorie`
         try {
-            categorie = crudVol.getCategorieByNom(selectedNom.name()); // Récupérer la catégorie par son nom
+            categorie = crudVol.getCategorieByNom(selectedNom.name());
         } catch (SQLException e) {
             e.printStackTrace();
-            // Gérer l'exception, par exemple, afficher un message d'erreur ou utiliser une catégorie par défaut
+
         }
 
         if (categorie != null) {
-            vol.setCategorie(categorie); // Mettre à jour la catégorie du vol avec l'objet récupéré
+            vol.setCategorie(categorie);
         } else {
             System.out.println("Catégorie non trouvée !");
-            // Traiter le cas où la catégorie n'est pas trouvée (par exemple, afficher un message d'erreur)
+
         }
         crudVol.modifierVol(vol);
         ((Stage) departField.getScene().getWindow()).close();

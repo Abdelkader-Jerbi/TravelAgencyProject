@@ -15,5 +15,7 @@ public interface VoLInterface {
     void modifierVol(Vol vol);
     Categorie getCategorieByNom(String nom) throws SQLException;
     void ajouterVol(Vol vol) throws SQLException;
+    double calculerPrixFinal(Vol vol);
+    List<Vol> chercherVolParDepartEtDestination(String depart, String destination);
 
 }

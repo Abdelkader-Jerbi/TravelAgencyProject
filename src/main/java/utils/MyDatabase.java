@@ -1,36 +1,55 @@
 package utils;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Database utility class that provides access to database connections.
+ * This class uses a connection pool to improve performance.
+ */
 public class MyDatabase {
+    private static MyDatabase instance;
+    private final DatabaseConnectionPool connectionPool;
 
-    final String URL="jdbc:mysql://localhost:3306/pi";
-
-    final String USERNAME="root";
-    final String PASSWORD="";
-    Connection connection;
-
-    static MyDatabase instance;
-
-    private MyDatabase(){
-        try {
-            connection= DriverManager.getConnection(URL,USERNAME,PASSWORD);
-            System.out.println("Connexion établie");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+    /**
+     * Private constructor to initialize the database connection
+     */
+    private MyDatabase() {
+        connectionPool = DatabaseConnectionPool.getInstance();
     }
 
-    public static   MyDatabase getInstance(){
-        if (instance==null){
-            instance= new MyDatabase();
+    /**
+     * Get the singleton instance of the database utility
+     * 
+     * @return The database utility instance
+     */
+    public static synchronized MyDatabase getInstance() {
+        if (instance == null) {
+            instance = new MyDatabase();
         }
-      return instance;
+        return instance;
     }
 
+    /**
+     * Get a database connection from the pool
+     * 
+     * @return A database connection
+     */
     public Connection getConnection() {
-        return connection;
+        try {
+            return connectionPool.getConnection();
+        } catch (SQLException e) {
+            System.err.println("Failed to get database connection: " + e.getMessage());
+            throw new RuntimeException("Failed to get database connection", e);
+        }
+    }
+    
+    /**
+     * Release a connection back to the pool
+     * 
+     * @param connection The connection to release
+     */
+    public void releaseConnection(Connection connection) {
+        connectionPool.releaseConnection(connection);
     }
 }

@@ -1,0 +1,47 @@
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #E0E0E0;
+    -fx-border-radius: 5;
+}
+
+.table-view .column-header {
+    -fx-background-color: #1976D2;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Segoe UI';
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-family: 'Segoe UI';
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-font-family: 'Segoe UI';
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #F5F5F5;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #E3F2FD;
+    -fx-text-fill: black;
+}
+
+.table-view .table-cell {
+    -fx-text-fill: black;
+    -fx-alignment: center;
+    -fx-font-family: 'Segoe UI';
+    -fx-padding: 10;
+}
+
+.table-view .table-row-cell:selected .table-cell {
+    -fx-text-fill: black;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #E3F2FD;
+} 

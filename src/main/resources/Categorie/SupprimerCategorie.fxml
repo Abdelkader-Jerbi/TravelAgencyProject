@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.Categorie.SupprimerCategorie"
+            prefWidth="600" prefHeight="500"
+            style="-fx-background-color: #e3f2fd;">
+    
+    <VBox spacing="20" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+        <!-- Titre -->
+        <Label text="Supprimer une Catégorie" 
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #d32f2f;"/>
+        
+        <!-- Liste des catégories -->
+        <TableView fx:id="categorieTable" VBox.vgrow="ALWAYS" 
+                  style="-fx-background-color: white; -fx-border-color: #E0E0E0;">
+            <columns>
+                <TableColumn fx:id="idColumn" text="ID" prefWidth="100"/>
+                <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="400"/>
+            </columns>
+        </TableView>
+
+        <!-- Boutons d'action -->
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button fx:id="annulerButton" text="Annuler" 
+                    style="-fx-background-color: #9E9E9E; -fx-text-fill: white;"/>
+            <Button fx:id="supprimerButton" text="Supprimer" 
+                    style="-fx-background-color: #d32f2f; -fx-text-fill: white;"/>
+        </HBox>
+    </VBox>
+</AnchorPane>

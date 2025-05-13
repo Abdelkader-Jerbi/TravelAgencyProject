@@ -6,6 +6,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.ListVolController"
@@ -18,6 +20,37 @@
           AnchorPane.leftAnchor="10.0"
           AnchorPane.rightAnchor="10.0"
           AnchorPane.bottomAnchor="10.0">
+        <HBox spacing="12" alignment="CENTER_LEFT" style="-fx-padding: 15;   -fx-border-radius: 8; -fx-background-radius: 8;">
+            <DatePicker fx:id="dateAllerDebutPicker" promptText="Date Aller Du" />
+            <DatePicker fx:id="dateRetourPicker" promptText="Retour avant" />
+            <TextField fx:id="destinationField" promptText="Destination" />
+            <ComboBox fx:id="categorieCombo" promptText="Catégorie" prefWidth="120"/>
+            <TextField fx:id="prixMaxField" promptText="Prix Max" prefWidth="80"/>
+
+            <Button onAction="#filtrerVols" style="-fx-text-fill: white; -fx-padding: 8 14; -fx-cursor: hand;">
+                <graphic>
+                    <ImageView fitWidth="15" fitHeight="15">
+                        <image >
+                            <Image url="@/icones/icons8-view-40.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button
+                    onAction="#reinitialiserFiltres"
+                    style=" -fx-padding: 8 14; -fx-background-radius: 6; -fx-cursor: hand;">
+                <graphic>
+                    <ImageView fitWidth="15" fitHeight="15">
+                        <image >
+                            <Image url="@/icones/icons8-rotate-50.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+        </Button>
+        </HBox>
+
+
 
         <TableView fx:id="volTable" prefWidth="750" prefHeight="330"
                    style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #ddd; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
@@ -28,10 +61,12 @@
                 <TableColumn fx:id="dateRetourCol" text="Date Retour" prefWidth="120"/>
                 <TableColumn fx:id="prixCol" text="Prix" prefWidth="80"/>
                 <TableColumn fx:id="prixFinalCol" text="Prix Final" />
-
                 <TableColumn fx:id="categorieCol" text="Catégorie" prefWidth="100"/>
-                <TableColumn fx:id="actionCol" text="Actions" prefWidth="200"/>
+                <TableColumn fx:id="actionCol" text="Actions" prefWidth="100"/>
             </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
         </TableView>
 
         <!-- HBox avec alignement à gauche -->

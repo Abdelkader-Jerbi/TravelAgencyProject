@@ -1,6 +1,9 @@
 package controllers;
 
+import entities.Categorie;
+import entities.Enumnom;
 import entities.Vol;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,15 +23,16 @@ import services.VoLInterface;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class ListVolController  implements Initializable {
     @FXML
     private TableView<Vol> volTable;
-
-
 
     @FXML
     private TableColumn<Vol, String> departCol;
@@ -53,30 +57,45 @@ public class ListVolController  implements Initializable {
     @FXML
     private TableColumn<Vol, Void> actionCol;
 
+    @FXML
+    private DatePicker dateAllerDebutPicker;
+    @FXML
+    private DatePicker dateRetourPicker;
+    @FXML
+    private TextField destinationField;
+    @FXML
+    private ComboBox<String> categorieCombo;
+    @FXML
+    private TextField prixMaxField;
 
     private VoLInterface volService = new CrudVol();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        categorieCombo.setItems(FXCollections.observableArrayList(
+                Arrays.stream(Enumnom.values())
+                        .map(Enum::name)
+                        .collect(Collectors.toList())
+        ));
 
         departCol.setCellValueFactory(new PropertyValueFactory<>("depart"));
         dateRetourCol.setCellValueFactory(cellData -> {
             Date retourDate = cellData.getValue().getDateRetour();
             String formattedRetour = retourDate != null
-                    ? new java.text.SimpleDateFormat("yyyy-MM-dd").format(retourDate)
-                    : "—"; // ou "" si tu préfères
-            return new javafx.beans.property.SimpleStringProperty(formattedRetour);
+                    ? new SimpleDateFormat("yyyy-MM-dd").format(retourDate)
+                    : "—";
+            return new SimpleStringProperty(formattedRetour);
         });
 
         destinationCol.setCellValueFactory(new PropertyValueFactory<>("destination"));
         dateCol.setCellValueFactory(cellData -> {
             // On formate la date en String
-            String formattedDate = new java.text.SimpleDateFormat("yyyy-MM-dd")
+            String formattedDate = new SimpleDateFormat("yyyy-MM-dd")
                     .format(cellData.getValue().getDate());
-            return new javafx.beans.property.SimpleStringProperty(formattedDate);
+            return new SimpleStringProperty(formattedDate);
         });
         prixCol.setCellValueFactory(new PropertyValueFactory<>("prix"));
         categorieCol.setCellValueFactory(cellData ->
-                new javafx.beans.property.SimpleStringProperty(
+                new SimpleStringProperty(
                         cellData.getValue().getCategorie().getNom().toString()
                 )
         );
@@ -84,7 +103,7 @@ public class ListVolController  implements Initializable {
         {
             double prixFinal = volService.calculerPrixFinal(cellData.getValue());
             String prixFormate = String.format("%.2f DT", prixFinal);
-            return new javafx.beans.property.SimpleStringProperty(prixFormate);
+            return new SimpleStringProperty(prixFormate);
         });
 
         afficherVols();
@@ -200,8 +219,7 @@ public class ListVolController  implements Initializable {
             }
         });
     }
-
-
+    //ajouter vol
     public void ajouterVol(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterVol.fxml"));
@@ -215,4 +233,76 @@ public class ListVolController  implements Initializable {
             e.printStackTrace();
         }
     }
+    //filter les vols
+    @FXML
+    private void filtrerVols(ActionEvent event) {
+        List<Vol> tousLesVols = volService.getAllVols();
+
+        List<Vol> volsFiltres = tousLesVols.stream().filter(vol -> {
+
+            // Date aller >= début sélectionnée
+            if (dateAllerDebutPicker.getValue() != null) {
+                Date minDate = java.sql.Date.valueOf(dateAllerDebutPicker.getValue());
+                if (vol.getDate().before(minDate)) {
+                    return false;
+                }
+            }
+
+            // Date retour <= date retour sélectionnée
+            if (dateRetourPicker.getValue() != null) {
+                Date maxRetour = java.sql.Date.valueOf(dateRetourPicker.getValue());
+                if (vol.getDateRetour() == null || vol.getDateRetour().after(maxRetour)) {
+                    return false;
+                }
+            }
+
+            // Destination contient
+            if (!destinationField.getText().isEmpty()) {
+                if (!vol.getDestination().toLowerCase().contains(destinationField.getText().toLowerCase())) {
+                    return false;
+                }
+            }
+
+            // Catégorie exacte
+            if (categorieCombo.getValue() != null) {
+                String valeurChoisie = categorieCombo.getValue().toUpperCase();
+                if (!vol.getCategorie().getNom().name().equalsIgnoreCase(valeurChoisie)) {
+                    return false;
+                }
+            }
+
+
+            // Prix <= max
+            if (!prixMaxField.getText().isEmpty()) {
+                try {
+                    double prixMax = Double.parseDouble(prixMaxField.getText());
+                    if (vol.getPrix() > prixMax) {
+                        return false;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Prix max invalide.");
+                    return false;
+                }
+            }
+
+            return true;
+        }).toList();
+
+        volTable.setItems(FXCollections.observableArrayList(volsFiltres));
+    }
+    @FXML
+    private void reinitialiserFiltres(ActionEvent event) {
+        dateAllerDebutPicker.setValue(null);
+        dateRetourPicker.setValue(null);
+        destinationField.clear();
+        categorieCombo.setValue(null);
+        prixMaxField.clear();
+
+        // Recharger tous les vols
+        List<Vol> tousLesVols = volService.getAllVols();
+        volTable.setItems(FXCollections.observableArrayList(tousLesVols));
+    }
+
+
+
 }

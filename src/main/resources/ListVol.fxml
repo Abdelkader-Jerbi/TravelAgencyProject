@@ -68,6 +68,11 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TableView>
+        <Pagination fx:id="pagination" pageCount="3" maxPageIndicatorCount="5"
+                    AnchorPane.leftAnchor="10.0"
+                    AnchorPane.rightAnchor="10.0"
+                    style="-fx-page-information-visible: false;"
+                    VBox.vgrow="NEVER"/>
 
         <!-- HBox avec alignement à gauche -->
         <HBox alignment="CENTER_RIGHT">
@@ -81,5 +86,6 @@
                       -fx-cursor: hand;
                      -fx-transition: all 0.3s ease;"/>
         </HBox>
+
     </VBox>
 </AnchorPane>

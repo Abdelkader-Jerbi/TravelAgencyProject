@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -17,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import services.CrudVol;
 import services.VoLInterface;
@@ -67,6 +69,13 @@ public class ListVolController  implements Initializable {
     private ComboBox<String> categorieCombo;
     @FXML
     private TextField prixMaxField;
+    @FXML
+    private Pagination pagination;
+
+    private List<Vol> volsAffiches = FXCollections.observableArrayList();
+
+    // la taille d'une page
+    private static final int ROWS_PER_PAGE = 5;
 
     private VoLInterface volService = new CrudVol();
     @Override
@@ -113,7 +122,29 @@ public class ListVolController  implements Initializable {
         List<Vol> vols = volService.getAllVols();
         ObservableList<Vol> observableVols = FXCollections.observableArrayList(vols);
         volTable.setItems(observableVols);
+        volsAffiches = vols;
+        System.out.println(volsAffiches.size());
+        setupPagination();
     }
+    private void setupPagination() {
+        int pageCount = (int) Math.ceil((double) volsAffiches.size() / ROWS_PER_PAGE);
+        pagination.setPageCount(pageCount);
+        pagination.setPageFactory(this::createPage);
+    }
+    private Node createPage(int pageIndex) {
+        int fromIndex = pageIndex * ROWS_PER_PAGE;
+        int toIndex = Math.min(fromIndex + ROWS_PER_PAGE, volsAffiches.size());
+
+        List<Vol> pageData = volsAffiches.subList(fromIndex, toIndex);
+        volTable.setItems(FXCollections.observableArrayList(pageData));
+
+        // Utilise un conteneur pour que JavaFX redessine correctement la page
+        VBox tableContainer = new VBox(volTable);
+        return tableContainer;
+    }
+
+
+
     private void ajouterBoutonSuppression() {
         actionCol.setCellFactory(col -> new TableCell<>() {
             private final Button deleteButton= new Button();  ;
@@ -162,6 +193,7 @@ public class ListVolController  implements Initializable {
 
                 deleteButton.setOnAction(event -> {
                     Vol vol = getTableView().getItems().get(getIndex());
+
 
                      volService.supprimerVol(vol.getId_vol());
                     getTableView().getItems().remove(vol);
@@ -285,10 +317,15 @@ public class ListVolController  implements Initializable {
                 }
             }
 
+
             return true;
         }).toList();
 
-        volTable.setItems(FXCollections.observableArrayList(volsFiltres));
+
+        volsAffiches = volsFiltres;
+        setupPagination();
+        pagination.setCurrentPageIndex(0);
+
     }
     @FXML
     private void reinitialiserFiltres(ActionEvent event) {
@@ -299,8 +336,9 @@ public class ListVolController  implements Initializable {
         prixMaxField.clear();
 
         // Recharger tous les vols
-        List<Vol> tousLesVols = volService.getAllVols();
-        volTable.setItems(FXCollections.observableArrayList(tousLesVols));
+        volsAffiches = volService.getAllVols();
+        setupPagination();
+
     }
 
 

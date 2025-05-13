@@ -1,5 +1,6 @@
 package controllers;
 
+import entities.Role;
 import entities.Utilisateur;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -47,6 +48,7 @@ public class UtilisateurInfo {
         this.emailFieldLabel.setText(email);
     }
 
+
     public void setRole(String role) {
         this.roleFieldLabel.setText(role);
     }
@@ -56,7 +58,6 @@ public class UtilisateurInfo {
         nomFieldLabel.setText(u.getNom());
         prenomFieldLabel.setText(u.getPrenom());
         emailFieldLabel.setText(u.getEmail());
-        roleFieldLabel.setText(u.getRole());
     }
 
     public void retourAfficherUtilisateurss(ActionEvent Event) {

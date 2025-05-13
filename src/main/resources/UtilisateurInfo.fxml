@@ -63,11 +63,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="roleFieldLabel" layoutX="245.0" layoutY="200.0" prefHeight="20.0" prefWidth="149.0">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
+
       <Button fx:id="retourAfficherUtilisateurss" onAction="#retourAfficherUtilisateurss" layoutX="24.0" layoutY="27.0" mnemonicParsing="false" text="retour" />
 
       

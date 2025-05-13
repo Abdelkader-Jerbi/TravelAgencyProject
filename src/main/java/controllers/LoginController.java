@@ -1,19 +1,23 @@
 package controllers;
 
 
+import entities.Session;
+import entities.Utilisateur;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
-import javafx.scene.control.TextField;
+import services.CrudUtilisateur;
 import utils.MyDatabase;
 
 import java.awt.*;
@@ -41,6 +45,10 @@ public class LoginController implements Initializable {
     private TextField emailUsername;
     @FXML
     private PasswordField passwordField;
+    @FXML
+    private TextField showPasswordField;
+    @FXML
+    private CheckBox showPasswordCheckBox;
 
 
 
@@ -91,7 +99,9 @@ public class LoginController implements Initializable {
         }
 
         // SQL query
-        String verifyLogin = "SELECT COUNT(*) FROM utilisateur WHERE email = ? AND tel = ?";
+        String verifyLogin = "SELECT COUNT(*) FROM utilisateur WHERE email = ? AND password = ?";
+        String roleQuery = "SELECT role FROM utilisateur WHERE email = ?";
+        CrudUtilisateur crudUtilisateur = new CrudUtilisateur();
 
         try (Connection connection = MyDatabase.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(verifyLogin)) {
@@ -102,9 +112,26 @@ public class LoginController implements Initializable {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
+
             if (resultSet.next() && resultSet.getInt(1) == 1) {
                 loginErrorMsg.setText("Login successful!");
-                 loadDashboard();
+                PreparedStatement roleStatement = connection.prepareStatement(roleQuery);
+                roleStatement.setString(1, email);
+                ResultSet roleResult = roleStatement.executeQuery();
+
+                if (roleResult.next()) {
+                    String role = roleResult.getString("role");
+                    loginErrorMsg.setText("Login successful!");
+
+                    if ("USER".equalsIgnoreCase(role)) {
+                        Utilisateur user = crudUtilisateur.getUserFromDatabase(email, password);  // Example login logic
+                        Session.setLoggedInUser(user);
+                        loadDashboard(); // HomePage.fxml
+                    } else if ("ADMIN".equalsIgnoreCase(role)) {
+                        loadDashboardAdmin(); // afficherUtilisateur.fxml
+                    }
+                }
+
             } else {
                 loginErrorMsg.setText("Invalid email or password.");
             }
@@ -115,9 +142,53 @@ public class LoginController implements Initializable {
         }
     }
 
+    public void showPassword() {
+        if (showPasswordCheckBox.isSelected()) {
+            showPasswordField.setText(passwordField.getText());
+            showPasswordField.setVisible(true);
+            showPasswordField.setManaged(true);
+
+            passwordField.setVisible(false);
+            passwordField.setManaged(false);
+        } else {
+            passwordField.setText(showPasswordField.getText());
+            passwordField.setVisible(true);
+            passwordField.setManaged(true);
+
+            showPasswordField.setVisible(false);
+            showPasswordField.setManaged(false);
+        }
+    }
+
+    public void registerUser(ActionEvent Event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/AjouterUtilisateur.fxml"));
+            Stage stage = (Stage)((Node) Event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     private void loadDashboard() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/HomePage.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            ((Stage) emailUsername.getScene().getWindow()).close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadDashboardAdmin() {
+        try {
+
+            Parent root = FXMLLoader.load(getClass().getResource("/AfficherUtilisateur.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();

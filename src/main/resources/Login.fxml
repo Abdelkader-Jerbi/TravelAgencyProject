@@ -40,7 +40,7 @@
             <Button fx:id="cancelButton" defaultButton="true" layoutX="256.0" layoutY="353.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="33.0" prefWidth="80.0" style="-fx-background-color: #f46624;" text="Cancel" textFill="WHITE" />
             <TextField fx:id="emailUsername" layoutX="139.0" layoutY="116.0" promptText="email@email.com" />
             <CheckBox fx:id="showPasswordCheckBox" layoutX="60.0" layoutY="192.0" mnemonicParsing="false" onAction="#showPassword" text="Show Password" />
-            <Hyperlink layoutX="184.0" layoutY="189.0" text="Forgot password?" />
+            <Hyperlink layoutX="184.0" onAction="#openForgotPassword" layoutY="189.0" text="Forgot password?" />
             <TextField fx:id="showPasswordField" layoutX="139.0" layoutY="158.0" managed="false" promptText="Password" visible="false" />
          </children>
       </AnchorPane>

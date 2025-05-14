@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Hyperlink?>
+
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -31,12 +35,17 @@
             </ImageView>
             <Label layoutX="58.0" layoutY="120.0" text="Username : " />
             <Label layoutX="58.0" layoutY="162.0" text="Password :" />
-            <PasswordField fx:id="passwordField" layoutX="139.0" layoutY="158.0" promptText="password" />
+
+            <PasswordField fx:id="passwordField" layoutX="139.0" layoutY="158.0" promptText="Password" />
             <Button fx:id="loginButton" defaultButton="true" layoutX="60.0" layoutY="246.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="33.0" prefWidth="230.0" style="-fx-background-color: #f46624;" text="Login" textFill="WHITE" />
-            <Button fx:id="registerButton" defaultButton="true" layoutX="60.0" layoutY="294.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="230.0" style="-fx-background-color: #f46624;" text="Register" textFill="WHITE" />
-            <Label fx:id="loginErrorMsg" layoutX="58.0" layoutY="200.0" prefHeight="17.0" prefWidth="282.0" textFill="#ff0202" />
+            <Button fx:id="registerButton" defaultButton="true" layoutX="60.0" layoutY="294.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="33.0" prefWidth="230.0" style="-fx-background-color: #f46624;" text="Register" textFill="WHITE" />
+            <Label fx:id="loginErrorMsg" layoutX="58.0" layoutY="218.0" prefHeight="17.0" prefWidth="282.0" textFill="#ff0202" />
             <Button fx:id="cancelButton" defaultButton="true" layoutX="256.0" layoutY="353.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="33.0" prefWidth="80.0" style="-fx-background-color: #f46624;" text="Cancel" textFill="WHITE" />
             <TextField fx:id="emailUsername" layoutX="139.0" layoutY="116.0" promptText="email@email.com" />
+            <CheckBox fx:id="showPasswordCheckBox" layoutX="60.0" layoutY="192.0" mnemonicParsing="false" onAction="#showPassword" text="Show Password" />
+            <Hyperlink layoutX="184.0" onAction="#openForgotPassword" layoutY="189.0" text="Forgot password?" />
+            <TextField fx:id="showPasswordField" layoutX="139.0" layoutY="158.0" managed="false" promptText="Password" visible="false" />
+
          </children>
       </AnchorPane>
    </right>

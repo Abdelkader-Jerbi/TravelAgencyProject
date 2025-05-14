@@ -28,7 +28,9 @@ public class MainFx extends Application {
 
             primaryStage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
+
+
     }
 }

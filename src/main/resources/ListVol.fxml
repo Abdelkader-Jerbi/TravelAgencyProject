@@ -85,15 +85,18 @@
                        -fx-background-radius: 8;
                       -fx-cursor: hand;
                      -fx-transition: all 0.3s ease;"/>
-            <Button text="Générer Fichier PDF" fx:id="genererPdfButton"
+            <Button fx:id="genererPdfButton"
                     onAction="#genererPdf"
-                    style="-fx-background-color: #007bff;
-                   -fx-text-fill: white;
-                   -fx-font-weight: bold;
-                   -fx-padding: 8 16;
-                   -fx-background-radius: 8;
-                   -fx-cursor: hand;
-                   -fx-transition: all 0.3s ease;"/>
+                    style="-fx-background-color: transparent; -fx-cursor: hand;">
+                <graphic>
+                    <ImageView fitWidth="25" fitHeight="25">
+                        <image>
+                            <Image url="/icones/icons8-pdf.gif" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
         </HBox>
 
     </VBox>

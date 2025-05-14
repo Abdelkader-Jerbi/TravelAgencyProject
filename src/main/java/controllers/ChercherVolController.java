@@ -6,18 +6,25 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import services.CrudVol;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import javafx.application.Platform;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import javafx.scene.control.ComboBox;
 
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -31,12 +38,14 @@ public class ChercherVolController implements Initializable {
 
     @FXML
     private javafx.scene.control.Label labelRetour;
+    @FXML
+    private ComboBox<String> departField;
+
+
 
     @FXML
-    private TextField departField;
+    private ComboBox<String> destinationField;
 
-    @FXML
-    private TextField destinationField;
 
     @FXML
     private DatePicker dateField;
@@ -52,6 +61,32 @@ public class ChercherVolController implements Initializable {
     private ChoiceBox<Enumnom> categorieChoiceBox;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Charger la liste des pays pour les ComboBox
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://restcountries.com/v3.1/all"))
+                .build();
+
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .thenAccept(json -> {
+                    try {
+                        JSONArray array = new JSONArray(json);
+                        List<String> pays = new ArrayList<>();
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject country = array.getJSONObject(i);
+                            String name = country.getJSONObject("name").getString("common");
+                            pays.add(name);
+                        }
+                        Platform.runLater(() -> {
+                            departField.getItems().addAll(pays);
+                            destinationField.getItems().addAll(pays);
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                });
+
         categorieChoiceBox.getItems().addAll(Enumnom.values());
 
         rechercherButton.setOnAction(event -> {
@@ -60,8 +95,10 @@ public class ChercherVolController implements Initializable {
     }
     private void chercherVol() {
         System.out.println("Début recherche...");
-        String depart = departField.getText();
-        String destination = destinationField.getText();
+        String depart = departField.getValue();
+
+        String destination = destinationField.getValue();
+
         Enumnom categorie = categorieChoiceBox.getValue();
 
 

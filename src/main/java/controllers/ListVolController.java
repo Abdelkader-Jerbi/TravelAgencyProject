@@ -1,12 +1,6 @@
 package controllers;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 import entities.Categorie;
 import entities.Enumnom;
 import entities.Vol;
@@ -21,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -354,19 +349,27 @@ public class ListVolController  implements Initializable {
     private void genererPdf(ActionEvent event) {
         Document document = new Document();
         try {
-            // Créer le chemin automatiquement dans le dossier Documents
+            // Créer le chemin dans "Documents"
             String userHome = System.getProperty("user.home");
             String path = userHome + "/Documents/Liste_des_vols.pdf";
 
-            // Génération du PDF
-            PdfWriter.getInstance(document, new FileOutputStream(path));
+            // Initialiser le writer
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
             document.open();
 
-            // Titre
-            document.add(new Paragraph("Liste des Vols", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18)));
+            // === DATE EN HAUT À DROITE ===
+            String date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+            Paragraph dateParagraph = new Paragraph("Tunis, le " + date,
+                    FontFactory.getFont(FontFactory.HELVETICA, 10));
+            dateParagraph.setAlignment(Element.ALIGN_RIGHT);
+            document.add(dateParagraph);
+
+            // === Titre ===
+            document.add(new Paragraph("Liste des Vols",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18)));
             document.add(new Paragraph(" ")); // Ligne vide
 
-            // Tableau
+            // === TABLEAU ===
             PdfPTable table = new PdfPTable(7); // 7 colonnes
             table.setWidthPercentage(100);
 
@@ -378,28 +381,45 @@ public class ListVolController  implements Initializable {
                         table.addCell(cell);
                     });
 
-            // Données
+            // Lignes de données
             for (Vol vol : volsAffiches) {
                 table.addCell(vol.getDepart());
                 table.addCell(vol.getDestination());
                 table.addCell(new SimpleDateFormat("yyyy-MM-dd").format(vol.getDate()));
-                table.addCell(vol.getDateRetour() != null ? new SimpleDateFormat("yyyy-MM-dd").format(vol.getDateRetour()) : "—");
+                table.addCell(vol.getDateRetour() != null
+                        ? new SimpleDateFormat("yyyy-MM-dd").format(vol.getDateRetour()) : "—");
                 table.addCell(String.valueOf(vol.getPrix()));
                 table.addCell(String.format("%.2f", volService.calculerPrixFinal(vol)));
                 table.addCell(vol.getCategorie().getNom().name());
             }
 
-            document.add(table);
+            document.add(table); // Ajouter le tableau
+
+            // === SIGNATURE EN BAS DE PAGE ===
+            PdfContentByte canvas = writer.getDirectContent();
+            Font font = new Font(Font.FontFamily.HELVETICA, 12, Font.ITALIC);
+            Phrase signaturePhrase = new Phrase("Signature : Agence TravelX", font);
+
+            ColumnText.showTextAligned(
+                    canvas,
+                    Element.ALIGN_RIGHT,
+                    signaturePhrase,
+                    document.right(),
+                    document.bottom() + 30, // 30 points du bas
+                    0
+            );
+
             document.close();
 
-            // Ouvre automatiquement le PDF
+            // Ouvrir le PDF
             java.awt.Desktop.getDesktop().open(new java.io.File(path));
-
-            System.out.println("PDF généré et ouvert avec succès !");
+            System.out.println("PDF généré avec succès !");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
 
 
 

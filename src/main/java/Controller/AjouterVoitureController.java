@@ -1,7 +1,6 @@
-package controllers;
+package DetailVoitureController;
 
 import entities.Voiture;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;

@@ -1,73 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableCell?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
-<?import javafx.util.Callback?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.image.Image?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ReservationVoiture" style="-fx-background-color: #f0f4f8;">
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="$CONTROLLER_NAME$"
+            prefHeight="400.0" prefWidth="600.0" >
 
-    <!-- Icône de panier en haut de la page -->
-    <ImageView layoutX="20" layoutY="10" fitHeight="40" fitWidth="40" pickOnBounds="true" preserveRatio="true">
-        <image>
-            <Image url="@/images/pannier.png"/> <!-- Remplacez par le chemin de votre icône -->
-        </image>
-    </ImageView>
-
-    <TableView fx:id="voitureTable" layoutX="20" layoutY="60" prefHeight="300" prefWidth="600" style="-fx-background-color: white; -fx-border-color: #cccccc;">
-        <columns>
-            <!-- Colonne pour le modèle -->
-            <TableColumn fx:id="modelColumn" text="Modèle" prefWidth="150">
-                <cellValueFactory>
-                    <PropertyValueFactory property="modele"/>
-                </cellValueFactory>
-            </TableColumn>
-
-            <!-- Colonne pour le prix -->
-            <TableColumn fx:id="priceColumn" text="Prix par jour" prefWidth="150">
-                <cellValueFactory>
-                    <PropertyValueFactory property="prixParJour"/>
-                </cellValueFactory>
-            </TableColumn>
-
-            <!-- Colonne pour la disponibilité -->
-            <TableColumn fx:id="availabilityColumn" text="Disponibilité" prefWidth="150">
-                <cellValueFactory>
-                    <PropertyValueFactory property="disponible"/>
-                </cellValueFactory>
-            </TableColumn>
-
-            <!-- Colonne pour l'image -->
-            <TableColumn fx:id="imageColumn" text="Image" prefWidth="150">
-                <cellValueFactory>
-                    <PropertyValueFactory property="imagePath"/>
-                </cellValueFactory>
-            </TableColumn>
-        </columns>
-    </TableView>
-
-    <!-- Section pour la réservation -->
-    <GridPane layoutX="20" layoutY="370" hgap="10" vgap="10" style="-fx-padding: 10; -fx-background-color: #ffffff; -fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-radius: 5;">
-        <Label text="Sélectionnez la date de début:" style="-fx-font-weight: bold;"/>
-        <DatePicker fx:id="startDatePicker" GridPane.columnIndex="1"/>
-
-        <Label text="Sélectionnez la date de fin:" style="-fx-font-weight: bold;" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-        <DatePicker fx:id="endDatePicker" GridPane.columnIndex="3"/>
-
-        <Label fx:id="totalPriceLabel" text="Prix total: 0.0 €" style="-fx-font-weight: bold;" GridPane.rowIndex="1" GridPane.columnSpan="4" GridPane.halignment="CENTER"/>
-
-        <Button fx:id="calculateButton" text="Calculer le prix total" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;" GridPane.rowIndex="2" GridPane.columnSpan="4" GridPane.halignment="CENTER"/>
-
-        <Button fx:id="reserveButton" text="Réserver" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;" GridPane.rowIndex="3" GridPane.columnSpan="4" GridPane.halignment="CENTER"/>
-    </GridPane>
 </AnchorPane>

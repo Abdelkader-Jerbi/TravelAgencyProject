@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ReservationVoiture" style="-fx-background-color: #f5f5f5;">
+
+    <!-- Barre de navigation -->
+    <HBox alignment="CENTER_LEFT" layoutX="0" layoutY="-4.0" prefHeight="76.0" prefWidth="1000.0" spacing="20" style="-fx-background-color: #3e50b4; -fx-padding: 10; -fx-border-width: 0 0 2 0; -fx-border-color: #303f9f;">
+        <ImageView fitHeight="100" fitWidth="100" layoutX="50" layoutY="50" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@/images/logo2.png" />
+            </image>
+        </ImageView>
+
+        <TextField fx:id="searchField" promptText="Rechercher" style="-fx-pref-width: 300px; -fx-padding: 5;" HBox.hgrow="ALWAYS">
+            <cursor>
+                <Cursor fx:constant="DISAPPEAR" />
+            </cursor>
+        </TextField>
+
+        <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-hgap: 10;">
+            <ImageView fitHeight="40" fitWidth="40" layoutX="10" layoutY="10" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@/images/pannier.png" />
+                </image>
+            </ImageView>
+            <ImageView fitHeight="40" fitWidth="40" layoutX="10" layoutY="10" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@/images/profil.png" />
+                </image>
+            </ImageView>
+        </HBox>
+    </HBox>
+
+    <!-- Catégories -->
+    <HBox alignment="CENTER" layoutX="0" layoutY="70" prefHeight="48.0" prefWidth="1000.0" spacing="30" style="-fx-background-color: #5c6bc0; -fx-padding: 10; -fx-border-width: 0 0 2 0; -fx-border-color: #3e50b4;">
+        <Button fx:id="hotelButton" style="-fx-background-color: #ff9800; -fx-text-fill: white;" text="Hôtel" />
+        <Button fx:id="voitureButton" style="-fx-background-color: #ff9800; -fx-text-fill: white;" text="Voiture" />
+        <Button fx:id="billetButton" style="-fx-background-color: #ff9800; -fx-text-fill: white;" text="Billet" />
+    </HBox>
+
+    <!-- Sidebar pour les filtres -->
+    <VBox layoutX="0" layoutY="120" prefHeight="500.0" prefWidth="180" spacing="20" style="-fx-background-color: #ffffff; -fx-padding: 15; -fx-border-width: 1; -fx-border-color: #5c6bc0; -fx-border-radius: 0;">
+        <ComboBox fx:id="brandFilter" prefWidth="150" promptText="Marque" />
+        <Slider fx:id="priceFilter" blockIncrement="10" majorTickUnit="100" max="1000" min="0" minorTickCount="1" prefHeight="38.0" prefWidth="153.0" showTickLabels="true" showTickMarks="true" value="500">
+            <tooltip>
+                <Tooltip text="Filtrer par prix" />
+            </tooltip>
+        </Slider>
+        <Button fx:id="searchButton" style="-fx-background-color: #ff9800; -fx-text-fill: white;" text="Rechercher" />
+    </VBox>
+
+    <!-- Zone des cartes de voitures -->
+    <TilePane fx:id="voitureTilePane" hgap="15" layoutX="240" layoutY="120" prefColumns="3" prefHeight="500" prefWidth="760" style="-fx-padding: 10;" vgap="15">
+        <!-- Les cartes de voitures seront ajoutées dynamiquement ici -->
+    </TilePane>
+
+</AnchorPane>

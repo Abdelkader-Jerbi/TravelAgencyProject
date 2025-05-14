@@ -85,6 +85,15 @@
                        -fx-background-radius: 8;
                       -fx-cursor: hand;
                      -fx-transition: all 0.3s ease;"/>
+            <Button text="Générer Fichier PDF" fx:id="genererPdfButton"
+                    onAction="#genererPdf"
+                    style="-fx-background-color: #007bff;
+                   -fx-text-fill: white;
+                   -fx-font-weight: bold;
+                   -fx-padding: 8 16;
+                   -fx-background-radius: 8;
+                   -fx-cursor: hand;
+                   -fx-transition: all 0.3s ease;"/>
         </HBox>
 
     </VBox>

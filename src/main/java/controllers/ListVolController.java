@@ -1,5 +1,12 @@
 package controllers;
-
+import com.itextpdf.text.Document;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import entities.Categorie;
 import entities.Enumnom;
 import entities.Vol;
@@ -22,7 +29,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import services.CrudVol;
 import services.VoLInterface;
-
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -31,6 +38,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ListVolController  implements Initializable {
     @FXML
@@ -340,6 +348,59 @@ public class ListVolController  implements Initializable {
         setupPagination();
 
     }
+
+
+    @FXML
+    private void genererPdf(ActionEvent event) {
+        Document document = new Document();
+        try {
+            // Créer le chemin automatiquement dans le dossier Documents
+            String userHome = System.getProperty("user.home");
+            String path = userHome + "/Documents/Liste_des_vols.pdf";
+
+            // Génération du PDF
+            PdfWriter.getInstance(document, new FileOutputStream(path));
+            document.open();
+
+            // Titre
+            document.add(new Paragraph("Liste des Vols", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18)));
+            document.add(new Paragraph(" ")); // Ligne vide
+
+            // Tableau
+            PdfPTable table = new PdfPTable(7); // 7 colonnes
+            table.setWidthPercentage(100);
+
+            // En-têtes
+            Stream.of("Départ", "Destination", "Date", "Date Retour", "Prix", "Prix Final", "Catégorie")
+                    .forEach(header -> {
+                        PdfPCell cell = new PdfPCell(new Phrase(header));
+                        cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                        table.addCell(cell);
+                    });
+
+            // Données
+            for (Vol vol : volsAffiches) {
+                table.addCell(vol.getDepart());
+                table.addCell(vol.getDestination());
+                table.addCell(new SimpleDateFormat("yyyy-MM-dd").format(vol.getDate()));
+                table.addCell(vol.getDateRetour() != null ? new SimpleDateFormat("yyyy-MM-dd").format(vol.getDateRetour()) : "—");
+                table.addCell(String.valueOf(vol.getPrix()));
+                table.addCell(String.format("%.2f", volService.calculerPrixFinal(vol)));
+                table.addCell(vol.getCategorie().getNom().name());
+            }
+
+            document.add(table);
+            document.close();
+
+            // Ouvre automatiquement le PDF
+            java.awt.Desktop.getDesktop().open(new java.io.File(path));
+
+            System.out.println("PDF généré et ouvert avec succès !");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 

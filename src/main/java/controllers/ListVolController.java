@@ -3,6 +3,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import entities.Categorie;
 import entities.Enumnom;
+import entities.StatutVol;
 import entities.Vol;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -74,6 +75,9 @@ public class ListVolController  implements Initializable {
     private TextField prixMaxField;
     @FXML
     private Pagination pagination;
+    @FXML
+    private TableColumn<Vol, StatutVol> statutCol;
+
 
     private List<Vol> volsAffiches = FXCollections.observableArrayList();
 
@@ -83,6 +87,8 @@ public class ListVolController  implements Initializable {
     private VoLInterface volService = new CrudVol();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        statutCol.setCellValueFactory(new PropertyValueFactory<>("statut"));
+
         categorieCombo.setItems(FXCollections.observableArrayList(
                 Arrays.stream(Enumnom.values())
                         .map(Enum::name)

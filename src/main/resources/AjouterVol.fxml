@@ -20,7 +20,7 @@
 
         <DatePicker fx:id="datePicker" promptText="Date de départ" styleClass="input-field"/>
         <DatePicker fx:id="dateRetourPicker" promptText="Date de retour" styleClass="input-field"/>
-
+        <ComboBox fx:id="statutComboBox" promptText="Statut" styleClass="input-field"/>
         <TextField fx:id="prixField" promptText="Prix" styleClass="input-field"/>
 
         <ComboBox fx:id="categorieComboBox" promptText="Catégorie" styleClass="input-field"/>

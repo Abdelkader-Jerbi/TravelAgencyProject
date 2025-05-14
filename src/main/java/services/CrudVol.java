@@ -4,6 +4,7 @@ import entities.Categorie;
 import entities.Enumnom;
 import entities.Vol;
 import utils.MyDatabase;
+import entities.StatutVol;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,9 +41,8 @@ public class CrudVol implements VoLInterface {
 
    public List<Vol> getAllVols() {
         List<Vol> vols = new ArrayList<>();
-       String sql = "SELECT v.id_vol, v.depart, v.destination, v.date, v.dateRetour, v.prix, c.id, c.nom " +
+       String sql = "SELECT v.id_vol, v.depart, v.destination, v.date, v.dateRetour, v.prix, v.statut, c.id, c.nom " +
                "FROM vol v JOIN categorie c ON v.categorie_id = c.id";
-
 
        try (Connection conn = MyDatabase.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -56,6 +56,18 @@ public class CrudVol implements VoLInterface {
                 Date dateRetour = rs.getDate("dateRetour");
 
                 double prix = rs.getDouble("prix");
+
+
+                // Récupération et conversion du statut
+                String statutStr = rs.getString("statut").trim();
+                StatutVol statut;
+                try {
+                    statut = StatutVol.valueOf(statutStr);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Statut invalide: " + statutStr);
+                    continue; // On ignore cette entrée si le statut est invalide
+                }
+
 
                 int catId = rs.getInt("id");
                 String nomCatStr = rs.getString("nom").trim().toLowerCase(); // Utiliser trim() pour enlever les espaces inutiles
@@ -71,7 +83,9 @@ public class CrudVol implements VoLInterface {
                 }
 
                 Categorie cat = new Categorie(catId, nomCat);
-                Vol vol = new Vol(id, depart, destination, date,dateRetour, prix, cat);
+
+                Vol vol = new Vol(id, depart, destination, date, dateRetour, prix, cat, statut);
+
                 vols.add(vol);
             }
 
@@ -134,7 +148,7 @@ public class CrudVol implements VoLInterface {
 
     @Override
     public void ajouterVol(Vol vol) throws SQLException {
-        String sql = "INSERT INTO vol (depart, destination, date, dateRetour, prix, categorie_id) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO vol (depart, destination, date, dateRetour, prix, categorie_id, statut) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = MyDatabase.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -144,12 +158,14 @@ public class CrudVol implements VoLInterface {
             ps.setDate(3, new java.sql.Date(vol.getDate().getTime()));
             ps.setDate(4, vol.getDateRetour() != null ? new java.sql.Date(vol.getDateRetour().getTime()) : null);
             ps.setDouble(5, vol.getPrix());
-            ps.setInt(6, vol.getCategorie().getId()); // car tu stockes une FK catégorie
+            ps.setInt(6, vol.getCategorie().getId());
+            ps.setString(7, vol.getStatut().name()); // Ajout du statut
 
             ps.executeUpdate();
         }
     }
-//taux
+
+    //taux
     @Override
     public double calculerPrixFinal(Vol vol) {
         return vol.getPrix() * vol.getCategorie().getTaux();

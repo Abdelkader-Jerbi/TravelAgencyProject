@@ -2,6 +2,7 @@ package controllers;
 
 import entities.Categorie;
 import entities.Enumnom;
+import entities.StatutVol;
 import entities.Vol;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,21 +42,31 @@ public class AjouterVolController  implements Initializable {
 
     @FXML
     private ComboBox<Enumnom> categorieComboBox;
+    @FXML
+    private ComboBox<StatutVol> statutComboBox;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         categorieComboBox.getItems().setAll(Enumnom.values());
+        statutComboBox.getItems().setAll(StatutVol.values());
     }
 
 
     @FXML
     public void ajouterVol(ActionEvent event) {
         String depart = departField.getText();
+        StatutVol statut = statutComboBox.getValue();
         String destination = destinationField.getText();
         LocalDate dateDepart = datePicker.getValue();
         LocalDate dateRetour = dateRetourPicker.getValue();
         String prixText = prixField.getText();
         Enumnom selectedNom = categorieComboBox.getValue();
+
+        if (statut == null) {
+            showAlert(Alert.AlertType.ERROR, "Veuillez sélectionner un statut.");
+            return;
+        }
 
         if (depart.isEmpty() || destination.isEmpty() || dateDepart == null || dateRetour == null || prixText.isEmpty() || selectedNom == null) {
             showAlert(Alert.AlertType.ERROR, "Veuillez remplir tous les champs.");
@@ -94,7 +105,8 @@ public class AjouterVolController  implements Initializable {
         // Création du vol avec la catégorie existante
         Date dateDepartConverted = java.sql.Date.valueOf(dateDepart);
         Date dateRetourConverted = java.sql.Date.valueOf(dateRetour);
-        Vol vol = new Vol(depart, destination, dateDepartConverted, dateRetourConverted, prix, categorie);
+        Vol vol = new Vol(depart, destination, dateDepartConverted, dateRetourConverted, prix, categorie, statut);
+
 
         try {
             crudVol.ajouterVol(vol); // Appel à la méthode ajouterVol du service

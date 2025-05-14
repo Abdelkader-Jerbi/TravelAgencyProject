@@ -1,6 +1,8 @@
 package controllers;
 import entities.Enumnom;
 import entities.Vol;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -61,6 +63,16 @@ public class ChercherVolController implements Initializable {
     private ChoiceBox<Enumnom> categorieChoiceBox;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        destinationField.setEditable(true);
+        departField.setEditable(true);
+        departField.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            filterComboBox(departField, newValue);
+        });
+
+        destinationField.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            filterComboBox(destinationField, newValue);
+        });
+
         // Charger la liste des pays pour les ComboBox
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -78,9 +90,12 @@ public class ChercherVolController implements Initializable {
                             String name = country.getJSONObject("name").getString("common");
                             pays.add(name);
                         }
+                        // Mettre à jour les ComboBox sur le thread JavaFX
                         Platform.runLater(() -> {
-                            departField.getItems().addAll(pays);
-                            destinationField.getItems().addAll(pays);
+                            departField.getItems().clear();  // Vider les éléments existants
+                            destinationField.getItems().clear();  // Vider les éléments existants
+                            departField.getItems().addAll(pays);  // Ajouter la liste des pays dans le departField
+                            destinationField.getItems().addAll(pays);  // Ajouter la liste des pays dans le destinationField
                         });
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -170,5 +185,15 @@ public class ChercherVolController implements Initializable {
         alert.setContentText(contenu);
         alert.showAndWait();
     }
+    private void filterComboBox(ComboBox<String> comboBox, String filter) {
+        ObservableList<String> items = FXCollections.observableArrayList();
+        for (String item : comboBox.getItems()) {
+            if (item.toLowerCase().contains(filter.toLowerCase())) {
+                items.add(item);
+            }
+        }
+        comboBox.setItems(items);
+    }
+
 
 }

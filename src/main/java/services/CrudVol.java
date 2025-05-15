@@ -111,7 +111,7 @@ public class CrudVol implements VoLInterface {
 
     @Override
     public void modifierVol(Vol vol) {
-        String sql = "UPDATE vol SET depart = ?, destination = ?, date = ?, dateRetour = ?, prix = ?, categorie_id = ? WHERE id_vol = ?";
+        String sql = "UPDATE vol SET depart = ?, destination = ?, date = ?, dateRetour = ?, prix = ?, categorie_id = ?, statut = ? WHERE id_vol = ?";
         try (Connection conn = MyDatabase.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -121,7 +121,8 @@ public class CrudVol implements VoLInterface {
             stmt.setDate(4, vol.getDateRetour() != null ? new java.sql.Date(vol.getDateRetour().getTime()) : null);
             stmt.setDouble(5, vol.getPrix());
             stmt.setInt(6, vol.getCategorie().getId()); // selon ta structure
-            stmt.setInt(7, vol.getId_vol());
+            stmt.setString(7, vol.getStatut().name());
+            stmt.setInt(8, vol.getId_vol());
 
             stmt.executeUpdate();
         } catch (SQLException e) {

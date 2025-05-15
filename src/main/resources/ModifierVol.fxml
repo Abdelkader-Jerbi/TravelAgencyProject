@@ -12,12 +12,14 @@
             prefHeight="400.0" prefWidth="400.0">
     <StackPane prefWidth="350" prefHeight="350">
     <VBox spacing="10" alignment="CENTER" style="-fx-padding: 20px;">
-        <TextField fx:id="departField" promptText="Départ" styleClass="input-field"/>
-        <TextField fx:id="destinationField" promptText="Destination" styleClass="input-field"/>
+        <ComboBox fx:id="departField" promptText="Départ" styleClass="input-field" editable="true"/>
+        <ComboBox fx:id="destinationField" promptText="Destination" styleClass="input-field" editable="true"/>
+
         <DatePicker fx:id="datePicker" promptText="Date départ" styleClass="input-field"/>
         <DatePicker fx:id="dateRetourPicker" promptText="Date retour" styleClass="input-field"/>
         <TextField fx:id="prixField" promptText="Prix" styleClass="input-field"/>
         <ComboBox fx:id="categorieComboBox" promptText="Catégorie" styleClass="input-field"/>
+        <ComboBox fx:id="statutComboBox" promptText="Statut" styleClass="input-field"/>
         <Button text="Enregistrer" onAction="#modifierVol" styleClass="submit-button"/>
     </VBox>
     </StackPane>

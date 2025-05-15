@@ -11,9 +11,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.ListVolController"
-            prefHeight="400.0" prefWidth="800.0"
-            style="-fx-background-color: #f0f2f5;">
-
+            prefHeight="400.0" prefWidth="800.0" style="-fx-background-color: #f0f2f5;">
     <VBox spacing="10"
           layoutX="25" layoutY="25"
           AnchorPane.topAnchor="10.0"

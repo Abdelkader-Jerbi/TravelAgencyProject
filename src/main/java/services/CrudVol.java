@@ -21,18 +21,19 @@ public class CrudVol implements VoLInterface {
     @Override
     public List<Vol> chercherVol(String depart, String destination, String dateString, String dateRetourString, Enumnom categorie) {
         List<Vol> volsTrouves = new ArrayList<>();
-        List<Vol> allVols = getAllVols(); // Appel correct
-
+        List<Vol> allVols = getAllVols();
         SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-
 
         for (Vol vol : allVols) {
             String volDate = dbFormat.format(vol.getDate());
-            if (vol.getDepart().equalsIgnoreCase(depart) &&
-                    vol.getDestination().equalsIgnoreCase(destination) &&
-                    volDate.equals(dateString) &&
-                    vol.getCategorie().getNom().equals(categorie)) {
+            boolean matchesDepart = vol.getDepart().equalsIgnoreCase(depart);
+            boolean matchesDestination = vol.getDestination().equalsIgnoreCase(destination);
+            boolean matchesDate = volDate.equals(dateString);
+            boolean matchesCategorie = categorie == null || vol.getCategorie().getNom().equals(categorie);
+            boolean matchesDateRetour = dateRetourString == null || 
+                (vol.getDateRetour() != null && dbFormat.format(vol.getDateRetour()).equals(dateRetourString));
+
+            if (matchesDepart && matchesDestination && matchesDate && matchesCategorie && matchesDateRetour) {
                 volsTrouves.add(vol);
             }
         }
@@ -178,12 +179,11 @@ public class CrudVol implements VoLInterface {
         List<Vol> allVols = getAllVols();
 
         for (Vol vol : allVols) {
-            if (vol.getDepart().equalsIgnoreCase(depart) &&
-                    vol.getDestination().equalsIgnoreCase(destination)) {
+            if (vol.getDepart().equalsIgnoreCase(depart) && 
+                vol.getDestination().equalsIgnoreCase(destination)) {
                 volsTrouves.add(vol);
             }
         }
-
         return volsTrouves;
     }
 

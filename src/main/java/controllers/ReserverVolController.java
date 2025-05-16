@@ -2,6 +2,7 @@ package controllers;
 
 import entities.Enumnom;
 import entities.Vol;
+import entities.reservation;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import services.CrudReservation;
 import services.CrudVol;
 
 import java.io.IOException;
@@ -168,6 +170,20 @@ public class ReserverVolController implements Initializable {
 
     private void handleReservation(Vol vol) {
         try {
+            // Enregistrer la réservation dans la base
+            CrudReservation crudReservation = new CrudReservation();
+            reservation r = new reservation(
+                    0, // idReservation (auto-incrémenté)
+                    vol.getPrix(), // prix total = prix du vol
+                    "En attente", // statut
+                    new Date(), // date du jour
+                    0, // idHotel
+                    vol.getId_vol(), // idVol
+                    0, // idUser
+                    0  // idVoiture
+            );
+            crudReservation.ajouterReservationVolSeulement(r);
+            // Charger la confirmation
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ConfirmationReservation.fxml"));
             Parent root = loader.load();
             ConfirmationReservation controller = loader.getController();

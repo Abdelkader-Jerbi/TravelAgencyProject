@@ -1,6 +1,7 @@
-package DetailVoitureController;
+package Controller;
 
 import entities.Voiture;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -60,7 +61,7 @@ public class AjouterVoitureController {
         String modele = modeleField.getText();
         String matricule = matriculeField.getText();
         Double prix;
-      
+
 
         // Vérification du prix
         try {

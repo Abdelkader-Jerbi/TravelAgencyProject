@@ -1,4 +1,4 @@
-package DetailVoitureController;
+package Controller;
 
 import entities.Voiture;
 import javafx.fxml.FXML;

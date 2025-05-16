@@ -1,41 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
+
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controllers.VoitureController"
-            style="-fx-background-color: #f0f4f8;">
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller.VoitureController"
+            style="-fx-background-color: #F5F7FA;">
 
-   <!-- Haut : (vide, car le titre a été supprimé) -->
    <top>
-      <VBox spacing="10" alignment="CENTER" style="-fx-padding: 20;">
-         <!-- Vous pouvez ajouter d'autres éléments ici si nécessaire -->
-      </VBox>
+      <HBox spacing="15" style="-fx-background-color: white; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+         <children>
+            <Label text="Recherche :" style="-fx-font-weight: bold; -fx-text-fill: #333333; -fx-font-size: 14px;"/>
+            <TextField fx:id="searchField" promptText="Marque, Modèle, Matricule..." style="-fx-pref-width: 250px; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #CCC;"/>
+
+            <Label text="Disponibilité :" style="-fx-font-weight: bold; -fx-text-fill: #333333; -fx-font-size: 14px;"/>
+            <ComboBox fx:id="disponibiliteFilter" prefWidth="150" style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button fx:id="refreshButton" text="Rafraîchir"
+                    style="-fx-background-color: #27AE60; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-cursor: hand;"/>
+
+            <Button fx:id="addOrUpdateButton" text="Ajouter"
+                    style="-fx-background-color: #4A90E2; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-cursor: hand;"/>
+
+            <!-- Nouveau bouton Export PDF -->
+            <Button fx:id="btnExportPdf" text="Exporter PDF"
+                    style="-fx-background-color: #D35400; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-cursor: hand;"/>
+         </children>
+
+      </HBox>
    </top>
 
-   <!-- Centre : Table -->
    <center>
-      <VBox spacing="20" BorderPane.alignment="CENTER" style="-fx-padding: 20;">
-         <!-- Table des voitures -->
-         <TableView fx:id="voitureTable" prefHeight="400"
-                    style="-fx-background-color: white; -fx-border-color: #cccccc;">
+      <VBox spacing="5" style="-fx-padding: 20;">
+         <TableView fx:id="voitureTable" prefHeight="420" style="-fx-background-color: white; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);">
             <columns>
-               <TableColumn fx:id="imageCol" text="Image" prefWidth="120"/>
-               <TableColumn fx:id="modelCol" text="Modèle"/>
-               <TableColumn fx:id="marqueCol" text="Marque" prefWidth="120"/>
-               <TableColumn fx:id="matriculeCol" text="Matricule" prefWidth="120"/>
-               <TableColumn fx:id="prixCol" text="Prix/Jour" prefWidth="100"/>
-               <TableColumn fx:id="disponibiliteCol" text="Disponibilité" prefWidth="120"/>
+               <TableColumn fx:id="imagePath" text="Image" prefWidth="130" />
+               <TableColumn fx:id="marqueCol" text="Marque" prefWidth="130"/>
+               <TableColumn fx:id="modelCol" text="Modèle" prefWidth="130"/>
+               <TableColumn fx:id="prixCol" text="Prix par jour" prefWidth="110"/>
+               <TableColumn fx:id="matriculeCol" text="Matricule" prefWidth="130"/>
+               <TableColumn fx:id="disponible" text="Disponible" prefWidth="110"/>
                <TableColumn fx:id="actionCol" text="Actions" prefWidth="180"/>
             </columns>
          </TableView>
-         <!-- Bouton Ajouter à la fin du tableau -->
-         <HBox spacing="10" alignment="CENTER_RIGHT" style="-fx-padding: 10;">
-            <Button fx:id="addOrUpdateButton" text="Ajouter"
-                    style="-fx-background-color: #007BFF; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
-         </HBox>
+
+         <Pagination fx:id="pagination" pageCount="1" maxPageIndicatorCount="7" style="-fx-background-color: transparent;" />
       </VBox>
    </center>
+
 </BorderPane>

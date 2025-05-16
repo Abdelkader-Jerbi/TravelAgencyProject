@@ -28,7 +28,7 @@ public class MyDatabase implements Connection {
         if (instance==null){
             instance= new MyDatabase();
         }
-      return instance;
+        return instance;
     }
 
     public static Connection getConnection() {
@@ -306,4 +306,3 @@ public class MyDatabase implements Connection {
         return false;
     }
 }
-

@@ -34,30 +34,28 @@ public class CrudVoiture {
             System.out.println("Voiture ajoutée avec succès !");
         }
     }
-
     // Récupérer toutes les voitures
     public List<Voiture> getAllVoitures() throws SQLException {
         List<Voiture> voitures = new ArrayList<>();
-        String sql = "SELECT id, marque, modele, matricule, prixParJour, imagePath , disponible FROM voiture";  // Ajout de 'imagePath' si nécessaire
+        String req = "SELECT * FROM voiture";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(req);
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-                Voiture voiture = new Voiture();
-                voiture.setId(rs.getInt("id"));
-                voiture.setMarque(rs.getString("marque"));
-                voiture.setModele(rs.getString("modele"));
-                voiture.setMatricule(rs.getString("matricule"));
-                voiture.setPrixParJour(rs.getDouble("prixParJour"));
-                voiture.setImagePath(rs.getString("imagePath"));  // Assurez-vous que 'imagePath' existe dans votre base de données
-                voiture.setDisponible(rs.getBoolean("disponible"));
-                voitures.add(voiture);
-            }
+        while (rs.next()) {
+            Voiture v = new Voiture(
+                    rs.getInt("id"),
+                    rs.getString("marque"),
+                    rs.getString("modele"),
+                    rs.getString("matricule"),
+                    rs.getDouble("prixParJour"),
+                    rs.getString("imagePath"), // très important !
+                    rs.getBoolean("disponible")
+            );
+            voitures.add(v);
         }
-
         return voitures;
     }
+
 
     // Modifier une voiture
     public void updateVoiture(Voiture voiture) throws SQLException {
@@ -73,6 +71,19 @@ public class CrudVoiture {
         }
     }
 
+    // Mettre à jour la disponibilité de la voiture
+    public void mettreAJourVoiture(Voiture voiture) {
+        String req = "UPDATE voiture SET disponible = ? WHERE id = ?";
+        try (PreparedStatement pst = conn.prepareStatement(req)) {
+            pst.setBoolean(1, voiture.isDisponible());
+            pst.setInt(2, voiture.getId());
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la mise à jour de la voiture avec ID " + voiture.getId() + ": " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     // Supprimer une voiture
     public void deleteVoiture(int id) throws SQLException {
         String sql = "DELETE FROM voiture WHERE id = ?";
@@ -82,18 +93,65 @@ public class CrudVoiture {
         }
     }
 
-    // Vérifier si un ID existe déjà
-    public boolean idExiste(int id) {
-        String query = "SELECT COUNT(*) FROM voiture WHERE id = ?";
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
-                return rs.next() && rs.getInt(1) > 0;
+    // Récupérer une voiture par ID
+    public Voiture getVoitureById(int id) throws SQLException {
+        String sql = "SELECT id, marque, modele, matricule, prixParJour, imagePath, disponible FROM voiture WHERE id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Voiture voiture = new Voiture();
+                    voiture.setId(rs.getInt("id"));
+                    voiture.setMarque(rs.getString("marque"));
+                    voiture.setModele(rs.getString("modele"));
+                    voiture.setMatricule(rs.getString("matricule"));
+                    voiture.setPrixParJour(rs.getDouble("prixParJour"));
+                    voiture.setImagePath(rs.getString("imagePath"));
+                    voiture.setDisponible(rs.getBoolean("disponible"));
+                    return voiture;
+                }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return false;
+        return null; // Retourne null si la voiture n'est pas trouvée
+    }
+    // Exemple dans CrudVoiture
+    public List<Voiture> getVoituresPage(int page, int size) throws SQLException {
+        int offset = page * size;
+        List<Voiture> voitures = new ArrayList<>();
+
+        String sql = "SELECT * FROM voiture LIMIT ? OFFSET ?";
+        try (PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setInt(1, size);
+            pst.setInt(2, offset);
+
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    Voiture v = new Voiture(
+                            rs.getInt("id"),
+                            rs.getString("marque"),
+                            rs.getString("modele"),
+                            rs.getString("matricule"),
+                            rs.getDouble("prixParJour"),
+                            rs.getString("imagePath"),
+                            rs.getBoolean("disponible")
+                    );
+                    voitures.add(v);
+                }
+            }
+        }
+
+        return voitures;
+    }
+
+    // Vérifier si une voiture existe par ID
+    public boolean checkIfVoitureExistsById(int id) throws SQLException {
+        String sql = "SELECT 1 FROM voiture WHERE id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next(); // Si le résultat existe, la voiture est présente
+            }
+        }
     }
 
 }

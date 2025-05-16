@@ -2,9 +2,10 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.ModifierVoitureController"> <!-- Remplace par ton vrai package -->
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="Controller.ModifierVoitureController">
     <children>
         <VBox spacing="15.0" alignment="CENTER"
               AnchorPane.topAnchor="20.0"
@@ -36,11 +37,21 @@
 
                     <Label text="Prix :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
                     <TextField fx:id="prixField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                    <!-- Importation de l'image -->
+                    <Label text="Image :" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <Button text="Importer Image" fx:id="importImageButton" onAction="#importerImage" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                    <Label text="Disponible :" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <CheckBox fx:id="disponibleCheckBox" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                    <!-- Aperçu de l’image -->
+                    <ImageView fx:id="imageView" fitHeight="100" fitWidth="150" preserveRatio="true"
+                               GridPane.rowIndex="6" GridPane.columnIndex="1"/>
                 </GridPane>
 
                 <HBox spacing="20" alignment="CENTER">
                     <Button text="Enregistrer" onAction="#enregistrerModification"/>
-
                 </HBox>
             </children>
         </VBox>

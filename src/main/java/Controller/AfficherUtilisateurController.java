@@ -1,4 +1,4 @@
-package DetailVoitureController;
+package Controller;
 
 import entities.Utilisateur;
 import javafx.collections.FXCollections;

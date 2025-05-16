@@ -1,13 +1,11 @@
-package DetailVoitureController;
+package Controller;
 
-import com.example.DetailVoitureController;
 import entities.Voiture;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
@@ -16,86 +14,120 @@ import javafx.stage.Stage;
 import services.CrudVoiture;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class AfficherVoitureVisiteurController {
 
-    @FXML
-    private TilePane voitureTilePane;
+    @FXML private TilePane voitureTilePane;
+    @FXML private TextField searchField;
+    @FXML private Button searchButton;
+    @FXML private ComboBox<String> brandFilter;
+    @FXML private Slider priceFilter;
+    @FXML private Button searchButton2;
 
     private final CrudVoiture crudVoiture = new CrudVoiture();
+    private List<Voiture> masterList = new ArrayList<>();
 
     @FXML
     public void initialize() {
         loadVoitures();
+        setupBrandFilter();
+        searchField.textProperty().addListener((obs, old, neu) -> applyFilter());
+        searchButton.setOnAction(e -> applyFilter());
+        searchButton2.setOnAction(e -> applyFilter());
     }
 
     private void loadVoitures() {
         try {
-            List<Voiture> voitures = crudVoiture.getAllVoitures();
-
-            for (Voiture voiture : voitures) {
-                VBox card = createVoitureCard(voiture);
-                voitureTilePane.getChildren().add(card);
-            }
+            masterList = crudVoiture.getAllVoitures();
+            applyFilter();
         } catch (Exception e) {
-            System.err.println("Erreur lors du chargement des voitures : " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    private void setupBrandFilter() {
+        Set<String> marques = masterList.stream()
+                .map(Voiture::getMarque)
+                .collect(Collectors.toSet());
+        brandFilter.getItems().setAll(marques);
+        brandFilter.setPromptText("Marque");
+    }
+
+    private void applyFilter() {
+        String text = searchField.getText() != null ? searchField.getText().toLowerCase().trim() : "";
+        String brand = brandFilter.getValue();
+        double maxPrice = priceFilter.getValue();
+
+        List<Voiture> filtered = masterList.stream()
+                .filter(v -> (text.isEmpty() || v.getMarque().toLowerCase().contains(text)
+                        || v.getModele().toLowerCase().contains(text)
+                        || v.getMatricule().toLowerCase().contains(text)))
+                .filter(v -> (brand == null || brand.isEmpty() || v.getMarque().equals(brand)))
+                .filter(v -> v.getPrixParJour() <= maxPrice)
+                .filter(Voiture::isDisponible)
+                .collect(Collectors.toList());
+
+        voitureTilePane.getChildren().clear();
+        for (Voiture v : filtered) {
+            voitureTilePane.getChildren().add(createVoitureCard(v));
         }
     }
 
     private VBox createVoitureCard(Voiture voiture) {
         VBox card = new VBox(5);
-        card.setStyle("-fx-background-color: white; -fx-padding: 10; -fx-border-color: #cccccc; -fx-border-radius: 10; -fx-background-radius: 10;");
+        card.setStyle("-fx-background-color: white; -fx-padding: 10; " +
+                "-fx-border-color: #cccccc; -fx-border-radius: 10; -fx-background-radius: 10;");
         card.setPrefWidth(180);
 
-        // Image de la voiture
-        ImageView imageView = new ImageView();
+        ImageView iv = new ImageView();
         try {
-            String imagePath = voiture.getImagePath(); // Assurez-vous que le chemin est correct
-            Image image = new Image(getClass().getResource("/" + imagePath).toExternalForm());
-            imageView.setImage(image);
-            imageView.setFitWidth(160);
-            imageView.setFitHeight(100);
-            imageView.setPreserveRatio(true);
+            String path = voiture.getImagePath(); // ex: "images/pannier.png"
+            URL imgUrl = getClass().getResource("/" + path);
+            if (imgUrl != null) {
+                Image img = new Image(imgUrl.toExternalForm());
+                iv.setImage(img);
+                iv.setFitWidth(160);
+                iv.setFitHeight(100);
+                iv.setPreserveRatio(true);
+            } else {
+                System.err.println("Image introuvable: " + path);
+            }
         } catch (Exception e) {
-            System.err.println("Erreur de chargement image : " + voiture.getImagePath());
+            System.err.println("Erreur chargement image: " + voiture.getImagePath());
         }
 
-        // Informations sur la voiture
-        Label marqueLabel = new Label("Marque : " + voiture.getMarque());
-        Label matriculeLabel = new Label("Matricule : " + voiture.getMatricule());
-        Label prixLabel = new Label("Prix : " + voiture.getPrixParJour() + " DT/jour");
+        Label marqueLbl = new Label("Marque: " + voiture.getMarque());
+        Label matriculeLbl = new Label("Matricule: " + voiture.getMatricule());
+        Label prixLbl = new Label("Prix: " + voiture.getPrixParJour() + " DT/jour");
 
-        // Bouton "Voir"
-        Button voirBtn = new Button("Details");
+        Button voirBtn = new Button("Détails");
         voirBtn.setStyle("-fx-background-color: #1976D2; -fx-text-fill: white;");
-       voirBtn.setOnAction(e -> ouvrirFenetreDetail(voiture));
+        voirBtn.setOnAction(e -> ouvrirFenetreDetail(voiture.getId()));
 
-        // Ajouter les éléments à la carte
-        card.getChildren().addAll(imageView, marqueLabel, matriculeLabel, prixLabel, voirBtn);
+        card.getChildren().addAll(iv, marqueLbl, matriculeLbl, prixLbl, voirBtn);
         return card;
     }
 
-    private void ouvrirFenetreDetail(Voiture voiture) {
+    private void ouvrirFenetreDetail(int voitureId) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/DetailsVoitureVisiteur.fxml"));
             Parent root = loader.load();
 
-            // Passer l'ID de la voiture
             DetailVoitureController controller = loader.getController();
-            controller.wait(voiture.getId());
+            controller.setVoitureId(voitureId);
 
             Stage stage = new Stage();
-            stage.setTitle("Détails de la voiture");
             stage.setScene(new Scene(root));
+            stage.setTitle("Détail de la voiture");
             stage.show();
 
         } catch (IOException e) {
-            System.err.println("Erreur lors de l'ouverture de la fenêtre détail : " + e.getMessage());
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
-
 }

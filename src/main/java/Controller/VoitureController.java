@@ -1,10 +1,5 @@
 package Controller;
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import entities.Voiture;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,14 +8,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
+import javafx.scene.control.TableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import services.CrudVoiture;
-
-import com.itextpdf.text.Element;
+import entities.Voiture;
+import javafx.scene.image.Image;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
+import javafx.scene.control.TextField;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -47,21 +45,15 @@ public class VoitureController {
     @FXML private ComboBox<String> disponibiliteFilter;
 
     private final CrudVoiture crud = new CrudVoiture();
-    private final String baseDir = "C:/images_voitures/";
+    private final String baseDir = "C:/Users/gharb/TravelAgencyProject/src/main/resources/images/";
 
     private List<Voiture> allVoitures;
     private List<Voiture> filteredVoitures;
 
     private final int rowsPerPage = 5;
 
-    // Couleur d'entête pour PDF
-    private static final BaseColor HEADER_BG_COLOR = new BaseColor(0, 121, 107);
-    // Chemin logo (modifiable)
-    private static final String LOGO_PATH = "C:/images_voitures/logo.png";
-
     @FXML
     public void initialize() {
-        // Liaison colonnes aux propriétés
         marqueCol.setCellValueFactory(new PropertyValueFactory<>("marque"));
         modelCol.setCellValueFactory(new PropertyValueFactory<>("modele"));
         prixCol.setCellValueFactory(new PropertyValueFactory<>("prixParJour"));
@@ -69,8 +61,7 @@ public class VoitureController {
         disponible.setCellValueFactory(new PropertyValueFactory<>("disponible"));
         imagePath.setCellValueFactory(new PropertyValueFactory<>("imagePath"));
 
-        // Cellule personnalisée pour afficher l’image
-        imagePath.setCellFactory(column -> new TableCell<>() {
+        imagePath.setCellFactory(col -> new TableCell<Voiture, String>() {
             private final ImageView imageView = new ImageView();
 
             @Override
@@ -98,31 +89,24 @@ public class VoitureController {
             }
         });
 
-        // Setup filtre disponibilité
         disponibiliteFilter.setItems(FXCollections.observableArrayList("Tous", "Disponible", "Indisponible"));
         disponibiliteFilter.setValue("Tous");
 
-        // Gestion boutons
-        addOrUpdateButton.setOnAction(e -> openAjouterWindow());
+        addOrUpdateButton.setOnAction(e -> openModifierWindow(null));
         refreshButton.setOnAction(e -> refreshTable());
         btnExportPdf.setOnAction(e -> exportPdf());
 
-        // Ecouteurs filtres texte et combo
         searchField.textProperty().addListener((obs, oldVal, newVal) -> applyFilter());
         disponibiliteFilter.valueProperty().addListener((obs, oldVal, newVal) -> applyFilter());
 
-        // Ajouter boutons action dans la table
         addActionButtonsToTable();
-
-        // Chargement initial
         loadAllVoitures();
     }
 
     private void loadAllVoitures() {
         try {
             allVoitures = crud.getAllVoitures();
-            if (allVoitures == null) allVoitures = List.of();
-            filteredVoitures = allVoitures;
+            filteredVoitures = (allVoitures != null) ? allVoitures : List.of();
             applyFilter();
         } catch (SQLException e) {
             afficherErreur("Erreur de chargement : " + e.getMessage());
@@ -137,12 +121,13 @@ public class VoitureController {
         String dispo = disponibiliteFilter.getValue();
 
         filteredVoitures = allVoitures.stream()
-                .filter(v -> (searchText.isEmpty() || v.getMarque().toLowerCase().contains(searchText)
-                        || v.getModele().toLowerCase().contains(searchText)
-                        || v.getMatricule().toLowerCase().contains(searchText))
-                        && ("Tous".equals(dispo) ||
-                        ("Disponible".equals(dispo) && v.isDisponible()) ||
-                        ("Indisponible".equals(dispo) && !v.isDisponible())))
+                .filter(v -> (searchText.isEmpty() ||
+                        v.getMarque().toLowerCase().contains(searchText) ||
+                        v.getModele().toLowerCase().contains(searchText) ||
+                        v.getMatricule().toLowerCase().contains(searchText)) &&
+                        ("Tous".equals(dispo) ||
+                                ("Disponible".equals(dispo) && v.isDisponible()) ||
+                                ("Indisponible".equals(dispo) && !v.isDisponible())))
                 .toList();
 
         updatePaginationFiltered();
@@ -167,15 +152,23 @@ public class VoitureController {
     }
 
     private void addActionButtonsToTable() {
-        actionCol.setCellFactory(param -> new TableCell<>() {
+        actionCol.setCellFactory(param -> new TableCell<Voiture, Void>() {
             private final Button editButton = new Button("Modifier");
             private final Button deleteButton = new Button("Supprimer");
             private final HBox pane = new HBox(10, editButton, deleteButton);
 
             {
                 pane.setAlignment(Pos.CENTER);
-                editButton.setOnAction(e -> openModifierWindow(getTableView().getItems().get(getIndex())));
-                deleteButton.setOnAction(e -> supprimerVoiture(getTableView().getItems().get(getIndex())));
+
+                editButton.setOnAction(e -> {
+                    Voiture v = getTableView().getItems().get(getIndex());
+                    openModifierWindow(v);
+                });
+
+                deleteButton.setOnAction(e -> {
+                    Voiture v = getTableView().getItems().get(getIndex());
+                    supprimerVoiture(v);
+                });
             }
 
             @Override
@@ -205,26 +198,14 @@ public class VoitureController {
         });
     }
 
-    private void openAjouterWindow() {
-        try {
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/FXML/ajouterVoiture.fxml"));
-            stage.setScene(new Scene(root));
-            stage.setTitle("Ajouter une voiture");
-            stage.showAndWait();
-            refreshTable();
-        } catch (IOException e) {
-            afficherErreur("Erreur ouverture : " + e.getMessage());
-        }
-    }
-
     private void openModifierWindow(Voiture voiture) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/modifierVoiture.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierVoiture.fxml"));
             Parent root = loader.load();
             ModifierVoitureController ctrl = loader.getController();
-            ctrl.setVoiture(voiture);
-
+            if (voiture != null) {
+                ctrl.setVoiture(voiture);
+            }
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Modifier voiture");
@@ -255,22 +236,17 @@ public class VoitureController {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers PDF", "*.pdf"));
-
         String defaultFileName = (selectedVoiture != null) ? selectedVoiture.getModele() + ".pdf" : "voitures.pdf";
         fileChooser.setInitialFileName(defaultFileName);
-
         Stage stage = (Stage) voitureTable.getScene().getWindow();
         File selectedFile = fileChooser.showSaveDialog(stage);
-
-        if (selectedFile == null) {
-            return; // Annulé par utilisateur
-        }
+        if (selectedFile == null) return;
 
         try {
             if (selectedVoiture != null) {
-                exportSingleVoiture(selectedFile.getAbsolutePath(), selectedVoiture, baseDir);
+                exportSingleVoiture(selectedFile.getAbsolutePath(), selectedVoiture);
             } else {
-                exportAllVoitures(selectedFile.getAbsolutePath(), filteredVoitures, baseDir);
+                exportAllVoitures(selectedFile.getAbsolutePath(), filteredVoitures);
             }
             afficherInfo("Export PDF réussi !");
         } catch (Exception e) {
@@ -278,108 +254,74 @@ public class VoitureController {
         }
     }
 
-    public void exportSingleVoiture(String filePath, Voiture voiture, String baseDir) throws Exception {
+    public void exportSingleVoiture(String filePath, Voiture voiture) throws Exception {
         Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(filePath));
         document.open();
 
-        // Logo
-
-
-
-        document.add(new Paragraph("\n"));
-
-        // Titre
-        Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18, BaseColor.BLACK);
-        Paragraph title = new Paragraph("Fiche Voiture", titleFont);
+        Paragraph title = new Paragraph("Détails de la voiture", new Font(Font.FontFamily.HELVETICA, 22, Font.BOLD));
         title.setAlignment(Element.ALIGN_CENTER);
+        title.setSpacingAfter(20f);
         document.add(title);
-        document.add(new Paragraph("\n"));
 
-        // Image voiture
-
-
-        document.add(new Paragraph("\n"));
-
-        // Infos voiture sous forme de tableau
         PdfPTable table = new PdfPTable(2);
-        table.setWidthPercentage(80);
-        table.setHorizontalAlignment(Element.ALIGN_CENTER);
-
-        addCellToTable(table, "Marque", true);
-        addCellToTable(table, voiture.getMarque(), false);
-
-        addCellToTable(table, "Modèle", true);
-        addCellToTable(table, voiture.getModele(), false);
-
-        addCellToTable(table, "Prix par jour", true);
-        addCellToTable(table, String.format("%.2f", voiture.getPrixParJour()), false);
-
-        addCellToTable(table, "Matricule", true);
-        addCellToTable(table, voiture.getMatricule(), false);
-
-        addCellToTable(table, "Disponibilité", true);
-        addCellToTable(table, voiture.isDisponible() ? "Disponible" : "Indisponible", false);
+        table.setWidthPercentage(100);
+        table.setSpacingBefore(10f);
+        addCell(table, "Marque :", true);
+        addCell(table, voiture.getMarque(), false);
+        addCell(table, "Modèle :", true);
+        addCell(table, voiture.getModele(), false);
+        addCell(table, "Prix/jour :", true);
+        addCell(table, String.valueOf(voiture.getPrixParJour()), false);
+        addCell(table, "Matricule :", true);
+        addCell(table, voiture.getMatricule(), false);
+        addCell(table, "Disponible :", true);
+        addCell(table, voiture.isDisponible() ? "Oui" : "Non", false);
 
         document.add(table);
         document.close();
     }
 
-    public void exportAllVoitures(String filePath, List<Voiture> voitures, String baseDir) throws Exception {
-        Document document = new Document(PageSize.A4.rotate());
+    public void exportAllVoitures(String filePath, List<Voiture> voitures) throws Exception {
+        Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(filePath));
         document.open();
 
-        // Logo
-
-        document.add(new Paragraph("\n"));
-
-        // Titre
-        Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20, BaseColor.BLACK);
-        Paragraph title = new Paragraph("Liste des Voitures", titleFont);
+        Paragraph title = new Paragraph("Liste des voitures", new Font(Font.FontFamily.HELVETICA, 22, Font.BOLD));
         title.setAlignment(Element.ALIGN_CENTER);
+        title.setSpacingAfter(20f);
         document.add(title);
-        document.add(new Paragraph("\n"));
 
-        PdfPTable table = new PdfPTable(6);
+        PdfPTable table = new PdfPTable(5);
         table.setWidthPercentage(100);
-        table.setWidths(new float[]{3, 3, 2, 3, 2, 3});
+        table.setSpacingBefore(10f);
+        table.setWidths(new int[]{3, 3, 2, 3, 2});
 
-        // Entête avec style
-        Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE);
-        String[] headers = {"Marque", "Modèle", "Prix par jour", "Matricule", "Disponibilité", "Image"};
+        addCell(table, "Marque", true);
+        addCell(table, "Modèle", true);
+        addCell(table, "Prix/jour", true);
+        addCell(table, "Matricule", true);
+        addCell(table, "Disponible", true);
 
-        for (String header : headers) {
-            PdfPCell cell = new PdfPCell(new Phrase(header, headerFont));
-            cell.setBackgroundColor(HEADER_BG_COLOR);
-            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-            cell.setPadding(5);
-            table.addCell(cell);
-        }
-
-        // Ajout données
         for (Voiture v : voitures) {
-            table.addCell(v.getMarque());
-            table.addCell(v.getModele());
-            table.addCell(String.format("%.2f", v.getPrixParJour()));
-            table.addCell(v.getMatricule());
-            table.addCell(v.isDisponible() ? "Disponible" : "Indisponible");
-
-
+            addCell(table, v.getMarque(), false);
+            addCell(table, v.getModele(), false);
+            addCell(table, String.valueOf(v.getPrixParJour()), false);
+            addCell(table, v.getMatricule(), false);
+            addCell(table, v.isDisponible() ? "Oui" : "Non", false);
         }
 
         document.add(table);
         document.close();
     }
 
-    private void addCellToTable(PdfPTable table, String text, boolean isHeader) {
-        Font font = isHeader
-                ? FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLACK)
-                : FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.BLACK);
-        PdfPCell cell = new PdfPCell(new Phrase(text, font));
-        cell.setPadding(6);
+    private void addCell(PdfPTable table, String text, boolean isHeader) {
+        PdfPCell cell = new PdfPCell(new Phrase(text));
         if (isHeader) {
-            cell.setBackgroundColor(new BaseColor(224, 224, 224));
+            cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            cell.setPadding(5);
+        } else {
+            cell.setPadding(4);
         }
         table.addCell(cell);
     }

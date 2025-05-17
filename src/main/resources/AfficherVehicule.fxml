@@ -26,11 +26,9 @@
             <Button fx:id="addOrUpdateButton" text="Ajouter"
                     style="-fx-background-color: #4A90E2; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-cursor: hand;"/>
 
-            <!-- Nouveau bouton Export PDF -->
             <Button fx:id="btnExportPdf" text="Exporter PDF"
                     style="-fx-background-color: #D35400; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-cursor: hand;"/>
          </children>
-
       </HBox>
    </top>
 

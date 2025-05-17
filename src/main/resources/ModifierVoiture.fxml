@@ -18,13 +18,13 @@
                 <Label text="Modifier la Voiture" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
 
                 <GridPane hgap="10" vgap="10">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
                     <columnConstraints>
                         <ColumnConstraints halignment="RIGHT"/>
                         <ColumnConstraints hgrow="ALWAYS"/>
                     </columnConstraints>
-                    <padding>
-                        <Insets top="10" right="10" bottom="10" left="10"/>
-                    </padding>
 
                     <Label text="Marque :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
                     <TextField fx:id="marqueField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
@@ -38,20 +38,19 @@
                     <Label text="Prix :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
                     <TextField fx:id="prixField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-                    <!-- Importation de l'image -->
                     <Label text="Image :" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                    <Button text="Importer Image" fx:id="importImageButton" onAction="#importerImage" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                    <Button text="Importer Image" fx:id="importImageButton" onAction="#importerImage"
+                            GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
                     <Label text="Disponible :" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
                     <CheckBox fx:id="disponibleCheckBox" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
-                    <!-- Aperçu de l’image -->
                     <ImageView fx:id="imageView" fitHeight="100" fitWidth="150" preserveRatio="true"
                                GridPane.rowIndex="6" GridPane.columnIndex="1"/>
                 </GridPane>
 
                 <HBox spacing="20" alignment="CENTER">
-                    <Button text="Enregistrer" onAction="#enregistrerModification"/>
+                    <Button fx:id="enregistrerButton" text="Enregistrer" onAction="#enregistrerModification"/>
                 </HBox>
             </children>
         </VBox>

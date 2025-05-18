@@ -1,42 +1,35 @@
 package entities;
-
 public class Categorie {
-    private int id ;
-    private  Enumnom nom ;
+    private int idCategorie;
+    private String description;
 
-    public Categorie(int id, Enumnom nom) {
-        this.id = id;
-        this.nom = nom;
+    public Categorie() {
     }
 
-    public Categorie(Enumnom nom) {
-        this.nom = nom;
+    public Categorie(int idCategorie, String description) {
+        this.idCategorie = idCategorie;
+        this.description = description;
     }
 
-    public int getId() {
-        return id;
+    // Getters and Setters
+    public int getIdCategorie() {
+        return idCategorie;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdCategorie(int idCategorie) {
+        this.idCategorie = idCategorie;
     }
 
-    public double getTaux() {
-        return nom.getTaux();
-    }
-    public Enumnom getNom() {
-        return nom;
+    public String getDescription() {
+        return description;
     }
 
-    public void setNom(Enumnom nom) {
-        this.nom = nom;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
     public String toString() {
-        return "Categorie{" +
-                "id=" + id +
-                ", nom=" + nom +
-                '}';
+        return description;
     }
 }

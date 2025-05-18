@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.Categorie.AjouterCategorie"
+            prefWidth="400" prefHeight="320"
+            style="-fx-background-color: linear-gradient(to bottom, #e3f2fd, #ffffff);">
+    <VBox spacing="18" alignment="CENTER" AnchorPane.topAnchor="30" AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="30">
+        <Label text="Ajouter une Catégorie"
+               style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1976d2;"/>
+        <GridPane hgap="10" vgap="15">
+            <Label text="ID :" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-size: 15px;"/>
+            <TextField fx:id="idField" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                       promptText="Auto" editable="false"
+                       style="-fx-background-color: #f5f5f5;"/>
+            <Label text="Description :" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-size: 15px;"/>
+            <TextField fx:id="descriptionField" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                       promptText="Entrer la description"/>
+        </GridPane>
+        <HBox spacing="15" alignment="CENTER">
+            <Button fx:id="addButton" text="Ajouter"
+                    style="-fx-background-color: #1976d2; -fx-text-fill: white; -fx-font-weight: bold;" onAction="#handleAjouter"/>
+            <Button fx:id="cancelButton" text="Annuler"
+                    style="-fx-background-color: #bdbdbd; -fx-text-fill: #263238;" onAction="#handleFermer"/>
+        </HBox>
+        <Label fx:id="messageLabel" text="" style="-fx-text-fill: #d32f2f;"/>
+    </VBox>
+</AnchorPane>

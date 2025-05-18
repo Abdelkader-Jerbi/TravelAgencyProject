@@ -2,45 +2,28 @@ package entities;
 
 public class Utilisateur {
    private int id,age,tel;
-
-   private String nom,prenom,email,password;
-   private Role role;
-
+   private String nom,prenom,email, role;
 
     public Utilisateur() {
     }
 
-
-    public Utilisateur(int id,String nom, String prenom, String email, int tel, String password, Role role) {
-
+    public Utilisateur(int id,String nom, String prenom, String email, int tel, String role) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.tel = tel;
-        this.password = password;
         this.role = role;
     }
 
-    public Utilisateur(int tel, String nom, String prenom,String email,String password, Role role) {
-
+    public Utilisateur(int tel, String nom, String prenom,String email, String role) {
         this.age = age;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.tel = tel;
-        this.password = password;
         this.role = role;
     }
-    public Utilisateur(int id, int tel, String nom, String prenom,String email) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.email = email;
-        this.tel = tel;
-
-    }
-
 
     public int getId() {
         return id;
@@ -50,6 +33,13 @@ public class Utilisateur {
         this.id = id;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 
     public String getNom() {
         return nom;
@@ -83,20 +73,11 @@ public class Utilisateur {
         this.email = email;
     }
 
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    public String getPassword() {
-        return password;
-    }
-
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
-
+    public void setRole(String role) {
         this.role = role;
     }
 

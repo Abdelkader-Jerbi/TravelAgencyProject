@@ -81,7 +81,14 @@ public class LoginController implements Initializable {
             System.err.println("Image not found");
         }
 
+        // Initialize captcha WebView
         captchaWebView.setVisible(false);  // Hide captcha at start
+        
+        // Set preferred size for the captcha WebView
+        captchaWebView.setPrefWidth(400);
+        captchaWebView.setPrefHeight(200);
+        
+        // Initialize the captcha
         loadCaptcha();
 
     }
@@ -89,17 +96,46 @@ public class LoginController implements Initializable {
 
     public void loadCaptcha() {
         WebEngine engine = captchaWebView.getEngine();
+        
+        // Enable JavaScript console logging
+        engine.setOnAlert(event -> System.out.println("JavaScript Alert: " + event));
+        
+        // Set up the bridge before loading the page
+        CaptchaBridge bridge = new CaptchaBridge(token -> {
+            captchaToken = token;
+            System.out.println("Token from CAPTCHA: " + token);
+            
+            // Make sure UI updates happen on the JavaFX thread
+            javafx.application.Platform.runLater(() -> {
+                captchaWebView.setVisible(false);
+                loginErrorMsg.setText("Captcha verified. Processing login..."); 
+                proceedAfterCaptcha();
+            });
+        });
 
         engine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
-                JSObject window = (JSObject) engine.executeScript("window");
-                window.setMember("javaApp", new CaptchaBridge(token -> {
-                    captchaToken = token;
-                    System.out.println("Token from CAPTCHA: " + token);
-                    captchaWebView.setVisible(false);
-                    loginErrorMsg.setText(""); // clear any captcha message
-                    proceedAfterCaptcha();
-                }));
+                System.out.println("Captcha page loaded successfully");
+                try {
+                    JSObject window = (JSObject) engine.executeScript("window");
+                    window.setMember("javaApp", bridge);
+                    System.out.println("Java bridge object set to window.javaApp");
+                    
+                    // Test the bridge
+                    engine.executeScript(
+                        "console.log('Testing bridge availability: ' + " +
+                        "(typeof javaApp !== 'undefined' ? 'Bridge available' : 'Bridge NOT available'));"
+                    );
+                } catch (Exception e) {
+                    System.err.println("Error setting up JavaScript bridge: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            } else if (newState == Worker.State.FAILED) {
+                System.err.println("Failed to load captcha page");
+                Throwable exception = engine.getLoadWorker().getException();
+                if (exception != null) {
+                    exception.printStackTrace();
+                }
             }
         });
 

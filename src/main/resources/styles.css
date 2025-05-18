@@ -1,0 +1,159 @@
+/* Main Application Stylesheet */
+
+/* Login Form Styling */
+.login-pane {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);
+    -fx-padding: 20px;
+}
+
+.text-field, .password-field {
+    -fx-background-color: #ecf0f1;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-padding: 8px;
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #95a5a6;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-background-color: white;
+    -fx-border-color: #3498db;
+    -fx-border-width: 1px;
+}
+
+.button {
+    -fx-background-color: #f46624;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #e74c3c;
+}
+
+.cancel-button {
+    -fx-background-color: #95a5a6;
+}
+
+.cancel-button:hover {
+    -fx-background-color: #7f8c8d;
+}
+
+.register-button {
+    -fx-background-color: #2980b9;
+}
+
+.register-button:hover {
+    -fx-background-color: #3498db;
+}
+
+.error-label {
+    -fx-text-fill: #e74c3c;
+    -fx-font-size: 13px;
+}
+
+/* Navigation Bar Styling */
+.nav-bar {
+    -fx-background-color: #f46624;
+    -fx-padding: 10px;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.nav-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-radius: 5px;
+}
+
+/* Table Styling */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #ecf0f1;
+    -fx-border-radius: 5px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #f46624;
+    -fx-background-radius: 5px 5px 0 0;
+    -fx-padding: 5px 0;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+    -fx-size: 40px;
+    -fx-border-width: 0 0 0 0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: transparent;
+    -fx-padding: 5px 0;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #ecf0f1;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #d6eaf8;
+}
+
+/* Form Styling */
+.form-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f46624;
+}
+
+.form-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #7f8c8d;
+}
+
+/* WebView styling for captcha */
+.captcha-webview {
+    -fx-border-color: #ecf0f1;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+/* Hyperlink styling */
+.hyperlink {
+    -fx-text-fill: #3498db;
+    -fx-underline: true;
+}
+
+.hyperlink:hover {
+    -fx-text-fill: #2980b9;
+}
+
+/* Checkbox styling */
+.check-box .box {
+    -fx-background-color: #ecf0f1;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: white;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #f46624;
+}

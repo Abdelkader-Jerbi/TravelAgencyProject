@@ -43,7 +43,16 @@ public class CrudUtilisateur implements CrudMethods<Utilisateur> {
 
     @Override
     public void supprimer(int id) throws SQLException {
-
+        String req = "DELETE FROM utilisateur WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
+            preparedStatement.setInt(1, id);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Utilisateur supprimé avec succès.");
+            } else {
+                System.out.println("Aucun utilisateur trouvé avec cet ID.");
+            }
+        }
     }
 
     @Override

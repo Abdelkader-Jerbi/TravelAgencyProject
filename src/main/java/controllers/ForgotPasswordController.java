@@ -27,7 +27,13 @@ public class ForgotPasswordController {
 
     private String verificationCode;
     private String userEmail;
-
+    
+    @FXML
+    public void handleCancel() {
+        // Close the current window
+        Stage stage = (Stage) EmailForgetPasswordField.getScene().getWindow();
+        stage.close();
+    }
 
     @FXML
     public void handleSendCode() {

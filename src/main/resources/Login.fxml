@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="920.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="920.0" prefWidth="1600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="282.0" BorderPane.alignment="CENTER">
          <children>
@@ -26,35 +26,51 @@
       </AnchorPane>
    </left>
    <right>
-      <AnchorPane prefHeight="920.0" prefWidth="942.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="920.0" prefWidth="1042.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="lockView" fitHeight="33.0" fitWidth="26.0" layoutX="239.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" scaleX="1.3">
                <image>
                   <Image url="@../../Images/lock.png" />
                </image>
             </ImageView>
-            <Label layoutX="58.0" layoutY="120.0" text="Username : " />
-            <Label layoutX="58.0" layoutY="162.0" text="Password :" />
-            <PasswordField fx:id="passwordField" layoutX="149.0" layoutY="158.0" prefHeight="25.0" prefWidth="208.0" promptText="Password" />
-            <Button fx:id="loginButton" defaultButton="true" layoutX="466.0" layoutY="106.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="33.0" prefWidth="327.0" style="-fx-background-color: #f46624;" text="Login" textFill="WHITE">
+            <Label layoutX="58.0" layoutY="80.0" text="Welcome to Last Minute Travel" textFill="#f46624">
                <font>
-                  <Font name="System Bold" size="22.0" />
-               </font></Button>
-            <Button fx:id="registerButton" defaultButton="true" layoutX="466.0" layoutY="169.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="33.0" prefWidth="328.0" style="-fx-background-color: #f46624;" text="Register" textFill="WHITE">
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="58.0" layoutY="120.0" styleClass="form-label" text="Username : ">
                <font>
-                  <Font name="System Bold" size="22.0" />
-               </font></Button>
-            <Label fx:id="loginErrorMsg" layoutX="58.0" layoutY="218.0" prefHeight="17.0" prefWidth="383.0" textFill="#ff0202" />
-            <Button fx:id="cancelButton" defaultButton="true" layoutX="572.0" layoutY="227.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="46.0" prefWidth="116.0" style="-fx-background-color: #f46624;" text="Cancel" textFill="WHITE">
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="58.0" layoutY="162.0" styleClass="form-label" text="Password :">
                <font>
-                  <Font name="System Bold" size="22.0" />
-               </font></Button>
-            <TextField fx:id="emailUsername" layoutX="150.0" layoutY="116.0" prefHeight="25.0" prefWidth="206.0" promptText="email@email.com" />
-            <CheckBox fx:id="showPasswordCheckBox" layoutX="60.0" layoutY="192.0" mnemonicParsing="false" onAction="#showPassword" text="Show Password" />
-            <Hyperlink layoutX="184.0" layoutY="189.0" onAction="#openForgotPassword" text="Forgot password?" />
-            <TextField fx:id="showPasswordField" layoutX="139.0" layoutY="158.0" managed="false" promptText="Password" visible="false" />
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="passwordField" layoutX="149.0" layoutY="158.0" prefHeight="35.0" prefWidth="250.0" promptText="Enter your password" styleClass="password-field" />
+            <Button fx:id="loginButton" defaultButton="true" layoutX="466.0" layoutY="106.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="45.0" prefWidth="327.0" text="LOGIN">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="registerButton" layoutX="466.0" layoutY="169.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="45.0" prefWidth="328.0" styleClass="register-button" text="CREATE ACCOUNT">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Label fx:id="loginErrorMsg" layoutX="61.0" layoutY="238.0" prefHeight="17.0" prefWidth="383.0" styleClass="error-label" />
+            <Button fx:id="cancelButton" layoutX="572.0" layoutY="227.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="40.0" prefWidth="116.0" styleClass="cancel-button" text="CANCEL">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <TextField fx:id="emailUsername" layoutX="150.0" layoutY="116.0" prefHeight="35.0" prefWidth="250.0" promptText="Enter your email" styleClass="text-field" />
+            <CheckBox fx:id="showPasswordCheckBox" layoutX="58.0" layoutY="206.0" mnemonicParsing="false" onAction="#showPassword" text="Show Password" />
+            <Hyperlink layoutX="191.0" layoutY="203.0" onAction="#openForgotPassword" text="Forgot password?" />
+            <TextField fx:id="showPasswordField" layoutX="149.0" layoutY="158.0" managed="false" prefHeight="35.0" prefWidth="250.0" promptText="Enter your password" styleClass="text-field" visible="false" />
 
-            <WebView fx:id="captchaWebView" layoutX="55.0" layoutY="282.0" prefHeight="617.0" prefWidth="608.0" visible="false" />
+            <WebView fx:id="captchaWebView" layoutX="55.0" layoutY="282.0" prefHeight="517.0" prefWidth="384.0" styleClass="captcha-webview" visible="false" />
          </children>
       </AnchorPane>
    </right>

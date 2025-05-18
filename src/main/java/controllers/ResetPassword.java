@@ -35,6 +35,13 @@ public class ResetPassword {
     public void setUserEmail(String email) {
         this.userEmail = email;
     }
+    
+    @FXML
+    public void handleCancel() {
+        // Close the current window
+        Stage stage = (Stage) verifyCodeField.getScene().getWindow();
+        stage.close();
+    }
 
     @FXML
     public void handleReset() {

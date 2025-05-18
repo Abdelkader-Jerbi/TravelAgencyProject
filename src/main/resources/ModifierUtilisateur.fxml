@@ -1,27 +1,140 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ModifierUtilisateur">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #f0f0f0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ModifierUtilisateur">
    <children>
-      <Label layoutX="200.0" layoutY="41.0" prefHeight="17.0" prefWidth="200.0" text="Modifier Utilisateur" textFill="#f80707">
-         <font>
-            <Font size="21.0" />
-         </font>
-      </Label>
-      <Label layoutX="97.0" layoutY="124.0" prefHeight="17.0" prefWidth="67.0" text="Nom :" />
-      <Label layoutX="97.0" layoutY="160.0" prefHeight="17.0" prefWidth="67.0" text="Prenom :" />
-      <Label layoutX="97.0" layoutY="196.0" prefHeight="17.0" prefWidth="67.0" text="Email :" />
-      <Label layoutX="97.0" layoutY="232.0" prefHeight="17.0" prefWidth="67.0" text="Telephone :" />
-      <TextField fx:id="nomFieldUpdate" layoutX="200.0" layoutY="120.0" />
-      <TextField fx:id="prenomFieldUpdate" layoutX="200.0" layoutY="156.0" />
-      <TextField fx:id="emailFieldUpdate" layoutX="200.0" layoutY="192.0" />
-      <TextField fx:id="telephoneFieldUpdate" layoutX="200.0" layoutY="228.0" />
-      <Button fx:id="retourUpdateButton" layoutX="32.0" layoutY="29.0" mnemonicParsing="false" onAction="#retourAfficherUtilisateursUpdate" text="retour" />
-      <Button fx:id="buttonModifier"  onAction="#modifierUtilisateur" layoutX="249.0" layoutY="287.0" mnemonicParsing="false" text="Modifier" />
+      <VBox alignment="TOP_CENTER" layoutX="0.0" layoutY="0.0" prefHeight="500.0" prefWidth="700.0" spacing="20.0">
+         <children>
+            <!-- Header -->
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="700.0" style="-fx-background-color: #f46624;">
+               <children>
+                  <Button fx:id="retourUpdateButton" onAction="#retourAfficherUtilisateursUpdate" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-radius: 5;" text="Retour">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Label alignment="CENTER" prefHeight="60.0" prefWidth="600.0" text="Modifier Utilisateur" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            
+            <!-- Edit Form Card -->
+            <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="650.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
+               <children>
+                  <!-- Form Fields -->
+                  <VBox alignment="CENTER_LEFT" prefHeight="300.0" prefWidth="600.0" spacing="15.0">
+                     <children>
+                        <!-- Name -->
+                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="600.0">
+                           <children>
+                              <Label prefHeight="30.0" prefWidth="150.0" text="Nom:">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="50.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="nomFieldUpdate" prefHeight="30.0" prefWidth="300.0" style="-fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-background-color: #f8f8f8; -fx-padding: 5;">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        
+                        <!-- First Name -->
+                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="600.0">
+                           <children>
+                              <Label prefHeight="30.0" prefWidth="150.0" text="Prenom:">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="50.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="prenomFieldUpdate" prefHeight="30.0" prefWidth="300.0" style="-fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-background-color: #f8f8f8; -fx-padding: 5;">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        
+                        <!-- Email -->
+                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="600.0">
+                           <children>
+                              <Label prefHeight="30.0" prefWidth="150.0" text="Email:">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="50.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="emailFieldUpdate" prefHeight="30.0" prefWidth="300.0" style="-fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-background-color: #f8f8f8; -fx-padding: 5;">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        
+                        <!-- Phone -->
+                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="600.0">
+                           <children>
+                              <Label prefHeight="30.0" prefWidth="150.0" text="Telephone:">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="50.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="telephoneFieldUpdate" prefHeight="30.0" prefWidth="300.0" style="-fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-background-color: #f8f8f8; -fx-padding: 5;">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        
+                        <!-- Submit Button -->
+                        <HBox alignment="CENTER" prefHeight="80.0" prefWidth="600.0">
+                           <children>
+                              <Button fx:id="buttonModifier" onAction="#modifierUtilisateur" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #f46624; -fx-text-fill: white; -fx-background-radius: 5;" text="ENREGISTRER">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets left="25.0" right="25.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

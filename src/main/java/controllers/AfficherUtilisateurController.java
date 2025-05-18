@@ -50,6 +50,11 @@ public class AfficherUtilisateurController {
     @FXML
     private TextField roleTF;
 
+    @FXML
+    private TextField searchField;
+
+    private ObservableList<Utilisateur> observableList = FXCollections.observableArrayList();
+
 
     @javafx.fxml.FXML
     void initialize() {
@@ -57,7 +62,8 @@ public class AfficherUtilisateurController {
         CrudUtilisateur CrudUtilisateur =new CrudUtilisateur();
         try {
 
-            ObservableList<Utilisateur> observableList= FXCollections.observableArrayList(CrudUtilisateur.afficher());
+            observableList = FXCollections.observableArrayList(CrudUtilisateur.afficher());
+
             tvpersonne.setItems(observableList);
             colnom.setCellValueFactory(new PropertyValueFactory<>("nom"));
             colprenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
@@ -72,10 +78,53 @@ public class AfficherUtilisateurController {
     }
 
     @FXML
+    public void handleSearch(ActionEvent event) {
+        String searchText = searchField.getText().toLowerCase().trim();
+
+        if (searchText.isEmpty()) {
+            tvpersonne.setItems(observableList);
+            return;
+        }
+
+        ObservableList<Utilisateur> filteredList = FXCollections.observableArrayList();
+
+        for (Utilisateur user : observableList) {
+            String role = user.getRole() == null ? "" : user.getRole().toString().toLowerCase();
+            if (user.getNom().toLowerCase().contains(searchText) ||
+                    user.getPrenom().toLowerCase().contains(searchText) ||
+                    user.getEmail().toLowerCase().contains(searchText) ||
+                    String.valueOf(user.getTel()).contains(searchText) ||
+                    role.contains(searchText)) {
+                filteredList.add(user);
+            }
+        }
+        tvpersonne.setItems(filteredList);
+    }
+
+    @FXML
     public void supprimerUtilisateur(ActionEvent actionEvent) {
         int utilisateurSelectionne = tvpersonne.getSelectionModel().getSelectedIndex();
+        Utilisateur utilisateur = (Utilisateur) tvpersonne.getSelectionModel().getSelectedItem();
+
+        if (utilisateur == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a user to delete.");
+            alert.showAndWait();
+            return;
+        }
+
+        CrudUtilisateur crudUtilisateur = new CrudUtilisateur();
+        int idUser = utilisateur.getId();
         tvpersonne.getItems().remove(utilisateurSelectionne);
+        try {
+            crudUtilisateur.supprimer(idUser);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 
     public void afficherUtilisateur(ActionEvent actionEvent) {
         Utilisateur utilisateurSelectionne = (Utilisateur) tvpersonne.getSelectionModel().getSelectedItem();
@@ -102,7 +151,7 @@ public class AfficherUtilisateurController {
         } else {
             // Optional: Alert if nothing is selected
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("No Selection");
+            alert.setTitle("utilisateur");
             alert.setHeaderText(null);
             alert.setContentText("Please select a user to view.");
             alert.showAndWait();

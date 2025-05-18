@@ -83,12 +83,7 @@ public class LoginController implements Initializable {
 
         // Initialize captcha WebView
         captchaWebView.setVisible(false);  // Hide captcha at start
-        
-        // Set preferred size for the captcha WebView
-        captchaWebView.setPrefWidth(400);
-        captchaWebView.setPrefHeight(200);
-        
-        // Initialize the captcha
+
         loadCaptcha();
 
     }
@@ -145,29 +140,21 @@ public class LoginController implements Initializable {
     }
 
     public void proceedAfterCaptcha() {
-        System.out.println("Inside proceedAfterCaptcha()");
-        System.out.println("CAPTCHA token = " + captchaToken);
-        System.out.println("userRole = " + userRole);
-        System.out.println("userEmail = " + userEmail);
-        System.out.println("userPassword = " + userPassword);
-
         if (captchaToken == null || captchaToken.isEmpty()) {
             loginErrorMsg.setText("Please complete the CAPTCHA.");
             return;
         }
 
-        CrudUtilisateur crudUtilisateur = new CrudUtilisateur();
+        Utilisateur user = Session.getLoggedInUser();
 
-        if ("USER".equalsIgnoreCase(userRole)) {
-            Utilisateur user = null;
-            try {
-                user = crudUtilisateur.getUserFromDatabase(userEmail, userPassword);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            Session.setLoggedInUser(user);
+        if (user == null) {
+            loginErrorMsg.setText("Session expired. Please log in again.");
+            return;
+        }
+
+        if ("USER".equalsIgnoreCase(user.getRole().name())) {
             loadDashboard();
-        } else if ("ADMIN".equalsIgnoreCase(userRole)) {
+        } else if ("ADMIN".equalsIgnoreCase(user.getRole().name())) {
             loadDashboardAdmin();
         } else {
             loginErrorMsg.setText("Unknown role.");
@@ -231,9 +218,15 @@ public class LoginController implements Initializable {
                 ResultSet roleResult = roleStatement.executeQuery();
 
                 if (roleResult.next()) {
-                    userRole = roleResult.getString("role");
-                    userEmail = email;
-                    userPassword = password;
+                    Utilisateur user = crudUtilisateur.getUserFromDatabase(email, password);
+                    if (user != null) {
+                        Session.setLoggedInUser(user); // save full user in session
+                        userRole = user.getRole().name(); // get ENUM as string
+                        captchaWebView.setVisible(true); // show captcha
+                        loginErrorMsg.setText("Credentials valid. Please solve CAPTCHA.");
+                    } else {
+                        loginErrorMsg.setText("Error retrieving user details.");
+                    }
 
                     loginErrorMsg.setText("Credentials valid. Please solve CAPTCHA.");
                     captchaToken = null;
@@ -281,18 +274,23 @@ public class LoginController implements Initializable {
         }
     }
 
+    @FXML
     private void loadDashboard() {
         try {
+            System.out.println("Loading user dashboard...");
             Parent root = FXMLLoader.load(getClass().getResource("/HomePage.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            stage.setTitle("User Dashboard");
             stage.show();
 
             ((Stage) emailUsername.getScene().getWindow()).close();
         } catch (IOException e) {
             e.printStackTrace();
+            loginErrorMsg.setText("Error loading user dashboard.");
         }
     }
+
 
     private void loadDashboardAdmin() {
         try {

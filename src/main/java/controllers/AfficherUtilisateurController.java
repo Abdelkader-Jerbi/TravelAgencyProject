@@ -16,7 +16,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import services.CrudUtilisateur;
-
 import java.io.IOException;
 import java.sql.SQLException;
 

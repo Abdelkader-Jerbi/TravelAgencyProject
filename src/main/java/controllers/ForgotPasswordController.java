@@ -51,6 +51,27 @@ public class ForgotPasswordController {
             e.printStackTrace();
             statusLabel.setText("Failed to send email.");
         }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ResetPassword.fxml"));
+            Parent root = loader.load();
+
+            ResetPassword controller = loader.getController();
+            controller.setVerificationCode(verificationCode);
+            controller.setUserEmail(userEmail);
+
+            Stage stage = new Stage();
+            stage.setTitle("Verify Code");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            Stage currentStage = (Stage) statusLabel.getScene().getWindow();
+            currentStage.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private String generateVerificationCode() {

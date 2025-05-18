@@ -3,6 +3,7 @@ package controllers;
 
 import entities.Session;
 import entities.Utilisateur;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,17 +19,18 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
 import services.CrudUtilisateur;
+import utils.CaptchaBridge;
 import utils.MyDatabase;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ResourceBundle;
 import java.net.URL;
+import javafx.scene.web.WebView;
+import javafx.scene.web.WebEngine;
+import netscape.javascript.JSObject;
 
 
 public class LoginController implements Initializable {
@@ -49,6 +51,13 @@ public class LoginController implements Initializable {
     private TextField showPasswordField;
     @FXML
     private CheckBox showPasswordCheckBox;
+    @FXML
+    private WebView captchaWebView;
+
+    private String captchaToken = null;
+    private String userRole;
+    private String userEmail;
+    private String userPassword;
 
 
 
@@ -72,21 +81,87 @@ public class LoginController implements Initializable {
             System.err.println("Image not found");
         }
 
+        captchaWebView.setVisible(false);  // Hide captcha at start
+        loadCaptcha();
+
     }
+
+
+    public void loadCaptcha() {
+        WebEngine engine = captchaWebView.getEngine();
+
+        engine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+            if (newState == Worker.State.SUCCEEDED) {
+                JSObject window = (JSObject) engine.executeScript("window");
+                window.setMember("javaApp", new CaptchaBridge(token -> {
+                    captchaToken = token;
+                    System.out.println("Token from CAPTCHA: " + token);
+                    captchaWebView.setVisible(false);
+                    loginErrorMsg.setText(""); // clear any captcha message
+                    proceedAfterCaptcha();
+                }));
+            }
+        });
+
+        // Load local captcha.html file
+        //File captchaFile = new File("src/main/resources/ReCaptcha.html");
+        engine.load("http://localhost:8000/ReCaptcha.html");
+    }
+
+    public void proceedAfterCaptcha() {
+        System.out.println("Inside proceedAfterCaptcha()");
+        System.out.println("CAPTCHA token = " + captchaToken);
+        System.out.println("userRole = " + userRole);
+        System.out.println("userEmail = " + userEmail);
+        System.out.println("userPassword = " + userPassword);
+
+        if (captchaToken == null || captchaToken.isEmpty()) {
+            loginErrorMsg.setText("Please complete the CAPTCHA.");
+            return;
+        }
+
+        CrudUtilisateur crudUtilisateur = new CrudUtilisateur();
+
+        if ("USER".equalsIgnoreCase(userRole)) {
+            Utilisateur user = null;
+            try {
+                user = crudUtilisateur.getUserFromDatabase(userEmail, userPassword);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            Session.setLoggedInUser(user);
+            loadDashboard();
+        } else if ("ADMIN".equalsIgnoreCase(userRole)) {
+            loadDashboardAdmin();
+        } else {
+            loginErrorMsg.setText("Unknown role.");
+        }
+        captchaToken = null;
+    }
+
 
 
     public void loginButtonAction(ActionEvent event) {
-        loginErrorMsg.setText("Your credentials are incorrect. Please try again.");
-        if(emailUsername.getText().isBlank() == false && passwordField.getText().isBlank() == false) {
+            loginErrorMsg.setText("");
+
+            if (emailUsername.getText().isBlank() || passwordField.getText().isBlank()) {
+                loginErrorMsg.setText("Please enter your email and password.");
+                return;
+            }
+
             validateLogin();
-        }else
-            loginErrorMsg.setText("Your credentials are incorrect. Please try again.");
-    }
+        }
+
+
+
 
     public void cancelButtonOnAction(ActionEvent event) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
+
+
+
 
     public void validateLogin() {
         String email = emailUsername.getText().trim();
@@ -120,16 +195,14 @@ public class LoginController implements Initializable {
                 ResultSet roleResult = roleStatement.executeQuery();
 
                 if (roleResult.next()) {
-                    String role = roleResult.getString("role");
-                    loginErrorMsg.setText("Login successful!");
+                    userRole = roleResult.getString("role");
+                    userEmail = email;
+                    userPassword = password;
 
-                    if ("USER".equalsIgnoreCase(role)) {
-                        Utilisateur user = crudUtilisateur.getUserFromDatabase(email, password);  // Example login logic
-                        Session.setLoggedInUser(user);
-                        loadDashboard(); // HomePage.fxml
-                    } else if ("ADMIN".equalsIgnoreCase(role)) {
-                        loadDashboardAdmin(); // afficherUtilisateur.fxml
-                    }
+                    loginErrorMsg.setText("Credentials valid. Please solve CAPTCHA.");
+                    captchaToken = null;
+                    captchaWebView.setVisible(true); // Show CAPTCHA
+
                 }
 
             } else {

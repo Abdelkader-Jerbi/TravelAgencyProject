@@ -1,0 +1,18 @@
+<!-- captcha.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+<form id="captchaForm">
+    <div class="g-recaptcha" data-sitekey="6LdbKD8rAAAAAK0HpbCKCUj6IcJ9TCBuwTJ1C2mo" data-callback="onSuccess"></div>
+</form>
+<script>
+    function onSuccess(token) {
+        alert("CAPTCHA solved, token: " + token);
+        javaApp.onCaptchaSolved(token);
+    }
+</script>
+</body>
+</html>

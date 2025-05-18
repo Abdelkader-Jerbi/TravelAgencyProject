@@ -1,7 +1,6 @@
 package controllers;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
-import entities.Categorie;
 import entities.Enumnom;
 import entities.StatutVol;
 import entities.Vol;
@@ -77,7 +76,11 @@ public class ListVolController  implements Initializable {
     private Pagination pagination;
     @FXML
     private TableColumn<Vol, StatutVol> statutCol;
+    @FXML
+    private TableColumn<Vol, String> colEnPromotion;
 
+    @FXML
+    private TableColumn<Vol, Double> colPourcentage;
 
     private List<Vol> volsAffiches = FXCollections.observableArrayList();
 
@@ -88,6 +91,12 @@ public class ListVolController  implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         statutCol.setCellValueFactory(new PropertyValueFactory<>("statut"));
+        colEnPromotion.setCellValueFactory(cellData -> {
+            String value = cellData.getValue().getEnpromotion();
+            if (value == null) value = "Hors Promotion"; // au cas où
+            return new SimpleStringProperty(value);
+        });
+        colPourcentage.setCellValueFactory(new PropertyValueFactory<>("pourcentagePromotion"));
 
         categorieCombo.setItems(FXCollections.observableArrayList(
                 Arrays.stream(Enumnom.values())
@@ -268,7 +277,9 @@ public class ListVolController  implements Initializable {
 
             Stage stage = new Stage();
             stage.setTitle("Ajouter un Vol");
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

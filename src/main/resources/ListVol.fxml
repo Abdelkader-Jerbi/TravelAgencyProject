@@ -61,6 +61,8 @@
                 <TableColumn fx:id="prixFinalCol" text="Prix Final" />
                 <TableColumn fx:id="categorieCol" text="Catégorie" prefWidth="100"/>
                 <TableColumn fx:id="statutCol" text="Statut" prefWidth="80"/>
+                <TableColumn fx:id="colEnPromotion" text="Promotion"/>
+                <TableColumn fx:id="colPourcentage" text="PourcentagePromotion"/>
                 <TableColumn fx:id="actionCol" text="Actions" prefWidth="100"/>
 
 

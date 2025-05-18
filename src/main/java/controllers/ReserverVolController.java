@@ -1,6 +1,5 @@
 package controllers;
 
-import entities.Enumnom;
 import entities.Vol;
 import entities.reservation;
 import javafx.fxml.FXML;

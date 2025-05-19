@@ -2,7 +2,9 @@ package controllers;
 
 import entities.Categorie;
 import entities.Enumnom;
+import entities.StatutVol;
 import entities.Vol;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,22 +15,31 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import services.CrudVol;
-
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AjouterVolController  implements Initializable {
 
     @FXML
-    private TextField departField;
+    private ComboBox<String> departField;
 
     @FXML
-    private TextField destinationField;
+    private ComboBox<String> destinationField;
+
 
     @FXML
     private DatePicker datePicker;
@@ -41,21 +52,60 @@ public class AjouterVolController  implements Initializable {
 
     @FXML
     private ComboBox<Enumnom> categorieComboBox;
+    @FXML
+    private ComboBox<StatutVol> statutComboBox;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         categorieComboBox.getItems().setAll(Enumnom.values());
+        statutComboBox.getItems().setAll(StatutVol.values());
+        departField.setEditable(true);
+        destinationField.setEditable(true);
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://restcountries.com/v3.1/all"))
+                .build();
+
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .thenAccept(json -> {
+                    try {
+                        JSONArray array = new JSONArray(json);
+                        List<String> pays = new ArrayList<>();
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject country = array.getJSONObject(i);
+                            String name = country.getJSONObject("name").getString("common");
+                            pays.add(name);
+                        }
+                        Platform.runLater(() -> {
+                            departField.getItems().clear();
+                            destinationField.getItems().clear();
+                            departField.getItems().addAll(pays);
+                            destinationField.getItems().addAll(pays);
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 
 
     @FXML
     public void ajouterVol(ActionEvent event) {
-        String depart = departField.getText();
-        String destination = destinationField.getText();
+        String depart = departField.getValue();
+        StatutVol statut = statutComboBox.getValue();
+        String destination = destinationField.getValue();
         LocalDate dateDepart = datePicker.getValue();
         LocalDate dateRetour = dateRetourPicker.getValue();
         String prixText = prixField.getText();
         Enumnom selectedNom = categorieComboBox.getValue();
+
+        if (statut == null) {
+            showAlert(Alert.AlertType.ERROR, "Veuillez sélectionner un statut.");
+            return;
+        }
 
         if (depart.isEmpty() || destination.isEmpty() || dateDepart == null || dateRetour == null || prixText.isEmpty() || selectedNom == null) {
             showAlert(Alert.AlertType.ERROR, "Veuillez remplir tous les champs.");
@@ -94,7 +144,8 @@ public class AjouterVolController  implements Initializable {
         // Création du vol avec la catégorie existante
         Date dateDepartConverted = java.sql.Date.valueOf(dateDepart);
         Date dateRetourConverted = java.sql.Date.valueOf(dateRetour);
-        Vol vol = new Vol(depart, destination, dateDepartConverted, dateRetourConverted, prix, categorie);
+        Vol vol = new Vol(depart, destination, dateDepartConverted, dateRetourConverted, prix, categorie, statut);
+
 
         try {
             crudVol.ajouterVol(vol); // Appel à la méthode ajouterVol du service
@@ -132,8 +183,8 @@ public class AjouterVolController  implements Initializable {
         }
 
         private void clearFields() {
-            departField.clear();
-            destinationField.clear();
+            departField.setValue(null);         // Pour ComboBox
+            destinationField.setValue(null);
             datePicker.setValue(null);
             dateRetourPicker.setValue(null);
             prixField.clear();

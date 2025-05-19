@@ -11,8 +11,29 @@ public class Vol {
     private Date dateRetour;
     private double prix ;
     private Categorie categorie;
+    private  String enpromotion ;
+    private double pourcentagePromotion;
 
+    private StatutVol statut;
 
+    public StatutVol getStatut() {
+        return statut;
+    }
+
+    public void setStatut(StatutVol statut) {
+        this.statut = statut;
+    }
+
+    public Vol(int id_vol, String depart, String destination, Date date, Date dateRetour, double prix, Categorie categorie, StatutVol statut) {
+        this.id_vol = id_vol;
+        this.depart = depart;
+        this.destination = destination;
+        this.date = date;
+        this.dateRetour = dateRetour;
+        this.prix = prix;
+        this.categorie = categorie;
+        this.statut = statut;
+    }
 
     public Vol(int id_vol, String depart, String destination, Date date, Date dateRetour, double prix, Categorie categorie) {
         this.id_vol = id_vol;
@@ -31,6 +52,28 @@ public class Vol {
         this.dateRetour = dateRetour;
         this.prix = prix;
         this.categorie = categorie;
+    }
+    public Vol(String depart, String destination, Date date, Date dateRetour, double prix, Categorie categorie, StatutVol statut) {
+        this.depart = depart;
+        this.destination = destination;
+        this.date = date;
+        this.dateRetour = dateRetour;
+        this.prix = prix;
+        this.categorie = categorie;
+        this.statut = statut;
+    }
+
+    public Vol(int id_vol, String depart, String destination, Date date, Date dateRetour, double prix, Categorie categorie, String enpromotion, double pourcentagePromotion, StatutVol statut) {
+        this.id_vol = id_vol;
+        this.depart = depart;
+        this.destination = destination;
+        this.date = date;
+        this.dateRetour = dateRetour;
+        this.prix = prix;
+        this.categorie = categorie;
+        this.enpromotion = enpromotion;
+        this.pourcentagePromotion = pourcentagePromotion;
+        this.statut = statut;
     }
 
     public Date getDateRetour() {
@@ -89,7 +132,21 @@ public class Vol {
         this.categorie = categorie;
     }
 
+    public String getEnpromotion() {
+        return enpromotion;
+    }
 
+    public void setEnpromotion(String enpromotion) {
+        this.enpromotion = enpromotion;
+    }
+
+    public double getPourcentagePromotion() {
+        return pourcentagePromotion;
+    }
+
+    public void setPourcentagePromotion(double pourcentagePromotion) {
+        this.pourcentagePromotion = pourcentagePromotion;
+    }
 
     @Override
     public String toString() {
@@ -98,8 +155,10 @@ public class Vol {
                 ", depart='" + depart + '\'' +
                 ", destination='" + destination + '\'' +
                 ", date=" + date +
+                ", dateRetour=" + dateRetour +
                 ", prix=" + prix +
                 ", categorie=" + categorie +
+                ", statut=" + statut +
                 '}';
     }
 }

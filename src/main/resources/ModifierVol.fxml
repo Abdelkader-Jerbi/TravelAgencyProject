@@ -6,19 +6,50 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controllers.ModifierVolController"
-            prefHeight="400.0" prefWidth="400.0">
-    <StackPane prefWidth="350" prefHeight="350">
-    <VBox spacing="10" alignment="CENTER" style="-fx-padding: 20px;">
-        <TextField fx:id="departField" promptText="Départ" styleClass="input-field"/>
-        <TextField fx:id="destinationField" promptText="Destination" styleClass="input-field"/>
-        <DatePicker fx:id="datePicker" promptText="Date départ" styleClass="input-field"/>
-        <DatePicker fx:id="dateRetourPicker" promptText="Date retour" styleClass="input-field"/>
-        <TextField fx:id="prixField" promptText="Prix" styleClass="input-field"/>
-        <ComboBox fx:id="categorieComboBox" promptText="Catégorie" styleClass="input-field"/>
-        <Button text="Enregistrer" onAction="#modifierVol" styleClass="submit-button"/>
-    </VBox>
+<?import javafx.collections.FXCollections?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="controllers.ModifierVolController"
+           style="-fx-background-color: linear-gradient(to bottom right, #f8fafc, #e0e7ef);"
+           prefWidth="1000" prefHeight="600">
+        <StackPane alignment="CENTER">
+            <VBox spacing="18" alignment="CENTER" style="-fx-padding: 32px; -fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, #b0b0b0, 30, 0.2, 0, 8);">
+                <Label text="Modifier un vol" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #e6007a;"/>
+                <Label text="Veuillez remplir les informations" style="-fx-font-size: 14px; -fx-text-fill: #888;"/>
+                <ComboBox fx:id="departField" promptText="Départ" styleClass="input-field" editable="true" style="-fx-background-radius: 10;"/>
+                <ComboBox fx:id="destinationField" promptText="Destination" styleClass="input-field" editable="true" style="-fx-background-radius: 10;"/>
+                <DatePicker fx:id="datePicker" promptText="Date départ" styleClass="input-field" style="-fx-background-radius: 10;"/>
+                <DatePicker fx:id="dateRetourPicker" promptText="Date retour" styleClass="input-field" style="-fx-background-radius: 10;"/>
+                <TextField fx:id="prixField" promptText="Prix" styleClass="input-field" style="-fx-background-radius: 10;"/>
+                <ComboBox fx:id="categorieComboBox" promptText="Catégorie" styleClass="input-field" style="-fx-background-radius: 10;"/>
+                <ComboBox fx:id="statutComboBox" promptText="Statut" styleClass="input-field" style="-fx-background-radius: 10;"/>
+                <ComboBox fx:id="enPromotionComboBox" promptText="Promotion" styleClass="input-field" style="-fx-background-radius: 10;">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="horspromotion" />
+                            <String fx:value="enpromotion" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+                <VBox spacing="4">
+                    <Label fx:id="pourcentageLabel"
+                           text="Pourcentage promotion (%)"
+                           style="-fx-font-size: 12px; -fx-text-fill: #555;"
+                           visible="false"
+                           managed="false" />
+                    <TextField fx:id="pourcentageField"
+                               promptText="Pourcentage promotion (%)"
+                               styleClass="input-field"
+                               style="-fx-background-radius: 10;"
+                               visible="false"
+                               managed="false" />
+                </VBox>
+
+
+
+                <Button text="Enregistrer" onAction="#modifierVol" styleClass="submit-button"
+                        style="-fx-background-color: #0077ff; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 30; -fx-padding: 10 40; -fx-font-weight: bold;"/>
+            </VBox>
+        </StackPane>
     </StackPane>
-</AnchorPane>
+

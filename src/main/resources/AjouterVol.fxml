@@ -15,12 +15,13 @@
     <VBox alignment="CENTER" spacing="15" styleClass="form-container" AnchorPane.topAnchor="30" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
         <Label text="Ajouter un Vol" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
 
-        <TextField fx:id="departField" promptText="Ville de départ" styleClass="input-field"/>
-        <TextField fx:id="destinationField" promptText="Ville de destination" styleClass="input-field"/>
+        <ComboBox fx:id="departField" promptText="Ville de départ" editable="true" styleClass="input-field"/>
+        <ComboBox fx:id="destinationField" promptText="Ville de destination" editable="true" styleClass="input-field"/>
+
 
         <DatePicker fx:id="datePicker" promptText="Date de départ" styleClass="input-field"/>
         <DatePicker fx:id="dateRetourPicker" promptText="Date de retour" styleClass="input-field"/>
-
+        <ComboBox fx:id="statutComboBox" promptText="Statut" styleClass="input-field"/>
         <TextField fx:id="prixField" promptText="Prix" styleClass="input-field"/>
 
         <ComboBox fx:id="categorieComboBox" promptText="Catégorie" styleClass="input-field"/>

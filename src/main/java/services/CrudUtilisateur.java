@@ -73,6 +73,7 @@ public class CrudUtilisateur implements CrudMethods<Utilisateur> {
         return utilisateurs;
     }
 
+
     public Utilisateur getUserFromDatabase(String email, String password) throws SQLException {
         Utilisateur user = null;
         String query = "SELECT * FROM utilisateur WHERE email = ? AND password = ?";
@@ -92,11 +93,30 @@ public class CrudUtilisateur implements CrudMethods<Utilisateur> {
                 user.setPassword(resultSet.getString("password"));
                 user.setRole(Role.valueOf(resultSet.getString("role").toUpperCase())); // Assuming roles are stored as "USER", "ADMIN", etc.
             }
+
+    public List<String> getAllEmails() {
+        List<String> emails = new ArrayList<>();
+        String req = "SELECT email FROM utilisateur ";
+
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(req)) {
+
+            while (rs.next()) {
+                emails.add(rs.getString("email"));
+            }
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+
         return user;
+    }
+
+
+
+        return emails;
     }
 
 

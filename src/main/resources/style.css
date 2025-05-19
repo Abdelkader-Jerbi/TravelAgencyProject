@@ -44,7 +44,33 @@
     -fx-border-color: #007bff;
     -fx-background-color: #f0f8ff;
 }
-
+.input-field {
+    -fx-font-size: 15px;
+    -fx-background-color: #f3f6fa;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #e0e7ef;
+    -fx-padding: 6 10 6 10;
+    -fx-effect: dropshadow(gaussian, #e0e7ef, 2, 0.1, 0, 1);
+}
+.input-field:focused {
+    -fx-border-color: #0077ff;
+    -fx-background-color: #eaf3ff;
+}
+.submit-button {
+    -fx-background-color: #0077ff;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-background-radius: 30;
+    -fx-padding: 10 40;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, #b0b0b0, 10, 0.2, 0, 2);
+    -fx-transition: background-color 0.3s;
+}
+.submit-button:hover {
+    -fx-background-color: #005fd1;
+}
 /* Bouton "Enregistrer" */
 .submit-button {
     -fx-background-color: #007bff;

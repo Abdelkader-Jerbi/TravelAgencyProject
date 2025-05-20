@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.Reclamation.AjouterReclamation"
+            prefHeight="400.0" prefWidth="600.0"
+            style="-fx-background-color: white;">
+    
+    <VBox spacing="20" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" 
+          AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+        
+        <Label text="Nouvelle Réclamation" 
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2196F3;"/>
+        
+        <GridPane vgap="10" hgap="10">
+            <Label text="Catégorie:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="categorieComboBox" prefWidth="200" 
+                      GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            
+            <Label text="Date:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <DatePicker fx:id="datePicker" prefWidth="200" 
+                       GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            
+            <Label text="Commentaire:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextArea fx:id="commentaireArea" prefRowCount="3" prefWidth="200" 
+                      GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        </GridPane>
+        
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button fx:id="afficherButton" text="Afficher Réclamations" onAction="#handleAfficher"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+            <Button fx:id="annulerButton" text="Annuler" onAction="#handleAnnuler"
+                    style="-fx-background-color: #9E9E9E; -fx-text-fill: white;"/>
+            <Button fx:id="ajouterButton" text="Ajouter" onAction="#handleAjouter"
+                    style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+        </HBox>
+        
+        <Label fx:id="messageLabel" style="-fx-text-fill: #F44336;"/>
+    </VBox>
+</AnchorPane>

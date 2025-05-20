@@ -1,6 +1,5 @@
 package tests;
 
-import entities.Utilisateur;
 import services.CrudUtilisateur;
 
 import java.sql.SQLException;

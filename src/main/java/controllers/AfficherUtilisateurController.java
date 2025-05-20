@@ -56,6 +56,7 @@ public class AfficherUtilisateurController {
 
         CrudUtilisateur CrudUtilisateur =new CrudUtilisateur();
         try {
+
             ObservableList<Utilisateur> observableList= FXCollections.observableArrayList(CrudUtilisateur.afficher());
             tvpersonne.setItems(observableList);
             colnom.setCellValueFactory(new PropertyValueFactory<>("nom"));
@@ -63,6 +64,7 @@ public class AfficherUtilisateurController {
             coltel.setCellValueFactory(new PropertyValueFactory<>("tel"));
             colemail.setCellValueFactory(new PropertyValueFactory<>("email"));
             colrole.setCellValueFactory(new PropertyValueFactory<>("role"));
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -75,9 +77,73 @@ public class AfficherUtilisateurController {
         tvpersonne.getItems().remove(utilisateurSelectionne);
     }
 
+    public void afficherUtilisateur(ActionEvent actionEvent) {
+        Utilisateur utilisateurSelectionne = (Utilisateur) tvpersonne.getSelectionModel().getSelectedItem();
+
+        if (utilisateurSelectionne != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/UtilisateurInfo.fxml"));
+                Parent root = loader.load();
+
+                // Get the controller of the new scene
+                UtilisateurInfo controller = loader.getController();
+
+                // Send the selected user to the controller
+                controller.setUtilisateur(utilisateurSelectionne);
+
+                // Switch scenes
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Optional: Alert if nothing is selected
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a user to view.");
+            alert.showAndWait();
+        }
+    }
+
+    public void modifierUtilisateur(ActionEvent actionEvent) {
+        Utilisateur utilisateurSelectionne = (Utilisateur) tvpersonne.getSelectionModel().getSelectedItem();
+
+        if (utilisateurSelectionne != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierUtilisateur.fxml"));
+                Parent root = loader.load();
+
+                // Get the controller of the new scene
+                ModifierUtilisateur controller = loader.getController();
+
+                // Send the selected user to the controller
+                controller.setUtilisateur(utilisateurSelectionne);
+
+                // Switch scenes
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Optional: Alert if nothing is selected
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a user to update.");
+            alert.showAndWait();
+        }
+    }
+
     public void RetourAjoutUtilisateur(ActionEvent Event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Reclamation/AjouterReclamation.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/AjouterUtilisateur.fxml"));
             Stage stage = (Stage)((Node) Event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -86,4 +152,5 @@ public class AfficherUtilisateurController {
             System.out.println(e.getMessage());
         }
     }
+
 }

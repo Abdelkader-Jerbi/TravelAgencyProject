@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.ListVolController"
+            prefHeight="400.0" prefWidth="800.0" style="-fx-background-color: #f0f2f5;">
+    <VBox spacing="10"
+          layoutX="25" layoutY="25"
+          AnchorPane.topAnchor="10.0"
+          AnchorPane.leftAnchor="10.0"
+          AnchorPane.rightAnchor="10.0"
+          AnchorPane.bottomAnchor="10.0">
+        <HBox spacing="12" alignment="CENTER_LEFT" style="-fx-padding: 15;   -fx-border-radius: 8; -fx-background-radius: 8;">
+            <DatePicker fx:id="dateAllerDebutPicker" promptText="Date Aller Du" />
+            <DatePicker fx:id="dateRetourPicker" promptText="Retour avant" />
+            <TextField fx:id="destinationField" promptText="Destination" />
+            <ComboBox fx:id="categorieCombo" promptText="Catégorie" prefWidth="120"/>
+            <TextField fx:id="prixMaxField" promptText="Prix Max" prefWidth="80"/>
+
+            <Button onAction="#filtrerVols" style="-fx-text-fill: white; -fx-padding: 8 14; -fx-cursor: hand;">
+                <graphic>
+                    <ImageView fitWidth="15" fitHeight="15">
+                        <image >
+                            <Image url="@/icones/icons8-view-40.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button
+                    onAction="#reinitialiserFiltres"
+                    style=" -fx-padding: 8 14; -fx-background-radius: 6; -fx-cursor: hand;">
+                <graphic>
+                    <ImageView fitWidth="15" fitHeight="15">
+                        <image >
+                            <Image url="@/icones/icons8-rotate-50.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+        </Button>
+        </HBox>
+
+
+
+        <TableView fx:id="volTable" prefWidth="750" prefHeight="330"
+                   style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #ddd; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+            <columns>
+                <TableColumn fx:id="departCol" text="Départ" prefWidth="100"/>
+                <TableColumn fx:id="destinationCol" text="Destination" prefWidth="100"/>
+                <TableColumn fx:id="dateCol" text="Date" prefWidth="120"/>
+                <TableColumn fx:id="dateRetourCol" text="Date Retour" prefWidth="120"/>
+                <TableColumn fx:id="prixCol" text="Prix" prefWidth="80"/>
+                <TableColumn fx:id="prixFinalCol" text="Prix Final" />
+                <TableColumn fx:id="categorieCol" text="Catégorie" prefWidth="100"/>
+                <TableColumn fx:id="statutCol" text="Statut" prefWidth="80"/>
+                <TableColumn fx:id="colEnPromotion" text="Promotion"/>
+                <TableColumn fx:id="colPourcentage" text="PourcentagePromotion"/>
+                <TableColumn fx:id="actionCol" text="Actions" prefWidth="100"/>
+
+
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+        </TableView>
+        <Pagination fx:id="pagination" pageCount="8" maxPageIndicatorCount="5"
+                    AnchorPane.leftAnchor="10.0"
+                    AnchorPane.rightAnchor="10.0"
+                    style="-fx-page-information-visible: false;"
+                    VBox.vgrow="NEVER"/>
+
+        <!-- HBox avec alignement à gauche -->
+        <HBox alignment="CENTER_RIGHT">
+            <Button text="Ajouter Vol" fx:id="ajouterButton"
+                    onAction="#ajouterVol"
+                    style="-fx-background-color: #28a745;
+                     -fx-text-fill: white;
+                      -fx-font-weight: bold;
+                       -fx-padding: 8 16;
+                       -fx-background-radius: 8;
+                      -fx-cursor: hand;
+                     -fx-transition: all 0.3s ease;"/>
+            <Button fx:id="genererPdfButton"
+                    onAction="#genererPdf"
+                    style="-fx-background-color: transparent; -fx-cursor: hand;">
+                <graphic>
+                    <ImageView fitWidth="25" fitHeight="25">
+                        <image>
+                            <Image url="/icones/icons8-pdf.gif" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+        </HBox>
+
+    </VBox>
+</AnchorPane>

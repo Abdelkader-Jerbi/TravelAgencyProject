@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="controllers.ChercherVolController"
+           style="-fx-background-color: linear-gradient(to bottom right, #f5f6fa, #e8eaf6);">
+
+    <VBox spacing="25" style="-fx-background-color: white; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);" maxWidth="800">
+        <padding>
+            <Insets top="40" right="50" bottom="40" left="50"/>
+        </padding>
+
+        <!-- En-tête -->
+        <VBox alignment="CENTER" spacing="15">
+            <Label text="✈️" style="-fx-font-size: 64px;"/>
+            <Label text="Rechercher un Vol" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+            <Label text="Trouvez le vol qui correspond à vos besoins" style="-fx-font-size: 16px; -fx-text-fill: #7f8c8d;"/>
+        </VBox>
+
+        <!-- Type de vol -->
+        <HBox alignment="CENTER" spacing="20">
+            <RadioButton fx:id="allerSimpleRadio" text="Aller simple" selected="true" 
+                        style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;"
+                        toggleGroup="$typeVolGroup"/>
+            <RadioButton fx:id="allerRetourRadio" text="Aller/Retour"
+                        style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;"
+                        toggleGroup="$typeVolGroup"/>
+        </HBox>
+
+        <!-- Formulaire de recherche -->
+        <VBox spacing="20" style="-fx-padding: 20; -fx-background-color: #f8f9fa; -fx-background-radius: 10;">
+            <!-- Départ -->
+            <HBox spacing="15" alignment="CENTER_LEFT">
+                <ImageView fitWidth="24" fitHeight="24" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@icones/icons8-airplane-take-off-24.png"/>
+                    </image>
+                </ImageView>
+                <ComboBox fx:id="departField" promptText="Ville de départ" 
+                         style="-fx-background-color: white; -fx-background-radius: 5; -fx-padding: 8 15; -fx-font-size: 14px;"
+                         prefWidth="300"/>
+            </HBox>
+
+            <!-- Destination -->
+            <HBox spacing="15" alignment="CENTER_LEFT">
+                <ImageView fitWidth="24" fitHeight="24" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@icones/icons8-airplane-landing-24.png"/>
+                    </image>
+                </ImageView>
+                <ComboBox fx:id="destinationField" promptText="Ville de destination"
+                         style="-fx-background-color: white; -fx-background-radius: 5; -fx-padding: 8 15; -fx-font-size: 14px;"
+                         prefWidth="300"/>
+            </HBox>
+
+            <!-- Dates -->
+            <HBox spacing="20" alignment="CENTER_LEFT">
+                <VBox spacing="5">
+                    <Label text="Date de départ" style="-fx-text-fill: #2c3e50; -fx-font-size: 14px;"/>
+                    <DatePicker fx:id="dateField" promptText="Aller"
+                              style="-fx-background-color: white; -fx-background-radius: 5; -fx-padding: 8 15; -fx-font-size: 14px;"
+                              prefWidth="200"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Date de retour" style="-fx-text-fill: #2c3e50; -fx-font-size: 14px;"/>
+                    <DatePicker fx:id="dateRetourField" promptText="Retour"
+                              style="-fx-background-color: white; -fx-background-radius: 5; -fx-padding: 8 15; -fx-font-size: 14px;"
+                              prefWidth="200"/>
+                </VBox>
+            </HBox>
+
+            <!-- Catégorie -->
+            <HBox spacing="15" alignment="CENTER_LEFT">
+                <Label text="Classe :" style="-fx-text-fill: #2c3e50; -fx-font-size: 14px;"/>
+                <ChoiceBox fx:id="categorieChoiceBox" 
+                          style="-fx-background-color: white; -fx-background-radius: 5; -fx-padding: 8 15; -fx-font-size: 14px;"
+                          prefWidth="200"/>
+            </HBox>
+        </VBox>
+
+        <!-- Bouton de recherche -->
+        <Button fx:id="rechercherButton" text="Rechercher"
+                style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold;
+                       -fx-background-radius: 8; -fx-padding: 12 35; -fx-font-size: 14px;"
+                onMouseEntered="#handleRechercherButtonHover"
+                onMouseExited="#handleRechercherButtonExit">
+            <graphic>
+                <HBox spacing="10" alignment="CENTER">
+                    <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@icones/icons8-search-96.png"/>
+                        </image>
+                    </ImageView>
+                </HBox>
+            </graphic>
+        </Button>
+    </VBox>
+</StackPane>
+
+

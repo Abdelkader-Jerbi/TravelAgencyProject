@@ -13,7 +13,6 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import services.CrudReservation;
 import services.CrudVol;
-
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -135,7 +134,9 @@ public class ReserverVolController implements Initializable {
             "-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; " +
             "-fx-background-radius: 8; -fx-padding: 12 35; -fx-font-size: 14px;"
         ));
-        reserverButton.setOnAction(event -> handleReservation(vol));
+        reserverButton.setOnAction(event -> {
+            handleReservation(vol);
+        });
 
         cardContainer.getChildren().addAll(routeBox, detailsBox, reserverButton);
         return cardContainer;

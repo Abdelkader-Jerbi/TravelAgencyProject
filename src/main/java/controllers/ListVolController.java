@@ -22,6 +22,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.Popup;
 import services.CrudVol;
 import services.VoLInterface;
 import java.io.FileOutputStream;
@@ -34,8 +35,17 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import javafx.application.Platform;
+import javafx.geometry.Bounds;
 
-public class ListVolController  implements Initializable {
+public class ListVolController implements Initializable {
     @FXML
     private TableView<Vol> volTable;
 
@@ -67,7 +77,9 @@ public class ListVolController  implements Initializable {
     @FXML
     private DatePicker dateRetourPicker;
     @FXML
-    private TextField destinationField;
+    private ComboBox<String> destinationField;
+    @FXML
+    private ComboBox<String> departField;
     @FXML
     private ComboBox<String> categorieCombo;
     @FXML
@@ -88,8 +100,22 @@ public class ListVolController  implements Initializable {
     private static final int ROWS_PER_PAGE = 5;
 
     private VoLInterface volService = new CrudVol();
+    private final HttpClient httpClient = HttpClient.newHttpClient();
+    private static final String API_URL = "https://restcountries.com/v3.1/name/";
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Charger la liste des pays
+        loadCountries();
+        
+        // Configuration de l'autocomplétion pour le champ destination
+        destinationField.setEditable(true);
+        destinationField.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !newValue.isEmpty()) {
+                filterComboBox(destinationField, newValue);
+            }
+        });
+
         statutCol.setCellValueFactory(new PropertyValueFactory<>("statut"));
         colEnPromotion.setCellValueFactory(cellData -> {
             String value = cellData.getValue().getEnpromotion();
@@ -169,11 +195,11 @@ public class ListVolController  implements Initializable {
             private final Button editButton = new Button(" Modifier");
             private final HBox buttonBox = new HBox(10);
             {
-        ImageView icon = new ImageView(
-                new Image(getClass().getResourceAsStream("/icones/delete.png"))
-        );
-        icon.setFitHeight(16);
-        icon.setFitWidth(16);
+                ImageView icon = new ImageView(
+                        new Image(getClass().getResourceAsStream("/icones/delete.png"))
+                );
+                icon.setFitHeight(16);
+                icon.setFitWidth(16);
                 deleteButton.setText(" Supprimer");
                 deleteButton.setGraphic(icon);
                 deleteButton.setContentDisplay(ContentDisplay.RIGHT);
@@ -189,7 +215,7 @@ public class ListVolController  implements Initializable {
                                 "-fx-cursor: hand;" +
                                 "-fx-padding: 5 10;" +
                                 "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0.0, 0, 2);"
-                       );
+                );
                 deleteButton.setOnMouseEntered(e -> deleteButton.setStyle(
                         "-fx-background-color: linear-gradient(to right, #e74c3c,  #ff7f7f);" +
                                 "-fx-text-fill: white;" +
@@ -213,7 +239,7 @@ public class ListVolController  implements Initializable {
                     Vol vol = getTableView().getItems().get(getIndex());
 
 
-                     volService.supprimerVol(vol.getId_vol());
+                    volService.supprimerVol(vol.getId_vol());
                     getTableView().getItems().remove(vol);
                 });
                 ImageView editIcon = new ImageView(
@@ -289,14 +315,22 @@ public class ListVolController  implements Initializable {
     @FXML
     private void filtrerVols(ActionEvent event) {
         List<Vol> tousLesVols = volService.getAllVols();
+        List<Vol> volsFiltres = new ArrayList<>();
 
-        List<Vol> volsFiltres = tousLesVols.stream().filter(vol -> {
+        for (Vol vol : tousLesVols) {
+            boolean correspond = true;
+
+            if (destinationField.getValue() != null && !destinationField.getValue().isEmpty()) {
+                if (!vol.getDestination().toLowerCase().contains(destinationField.getValue().toLowerCase())) {
+                    correspond = false;
+                }
+            }
 
             // Date aller >= début sélectionnée
             if (dateAllerDebutPicker.getValue() != null) {
                 Date minDate = java.sql.Date.valueOf(dateAllerDebutPicker.getValue());
                 if (vol.getDate().before(minDate)) {
-                    return false;
+                    correspond = false;
                 }
             }
 
@@ -304,14 +338,7 @@ public class ListVolController  implements Initializable {
             if (dateRetourPicker.getValue() != null) {
                 Date maxRetour = java.sql.Date.valueOf(dateRetourPicker.getValue());
                 if (vol.getDateRetour() == null || vol.getDateRetour().after(maxRetour)) {
-                    return false;
-                }
-            }
-
-            // Destination contient
-            if (!destinationField.getText().isEmpty()) {
-                if (!vol.getDestination().toLowerCase().contains(destinationField.getText().toLowerCase())) {
-                    return false;
+                    correspond = false;
                 }
             }
 
@@ -319,39 +346,38 @@ public class ListVolController  implements Initializable {
             if (categorieCombo.getValue() != null) {
                 String valeurChoisie = categorieCombo.getValue().toUpperCase();
                 if (!vol.getCategorie().getNom().name().equalsIgnoreCase(valeurChoisie)) {
-                    return false;
+                    correspond = false;
                 }
             }
-
 
             // Prix <= max
             if (!prixMaxField.getText().isEmpty()) {
                 try {
                     double prixMax = Double.parseDouble(prixMaxField.getText());
                     if (vol.getPrix() > prixMax) {
-                        return false;
+                        correspond = false;
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("Prix max invalide.");
-                    return false;
+                    correspond = false;
                 }
             }
 
-
-            return true;
-        }).toList();
-
+            if (correspond) {
+                volsFiltres.add(vol);
+            }
+        }
 
         volsAffiches = volsFiltres;
         setupPagination();
         pagination.setCurrentPageIndex(0);
-
     }
     @FXML
     private void reinitialiserFiltres(ActionEvent event) {
+        destinationField.setValue(null);
+        departField.setValue(null);
         dateAllerDebutPicker.setValue(null);
         dateRetourPicker.setValue(null);
-        destinationField.clear();
         categorieCombo.setValue(null);
         prixMaxField.clear();
 
@@ -415,7 +441,7 @@ public class ListVolController  implements Initializable {
             // === SIGNATURE EN BAS DE PAGE ===
             PdfContentByte canvas = writer.getDirectContent();
             Font font = new Font(Font.FontFamily.HELVETICA, 12, Font.ITALIC);
-            Phrase signaturePhrase = new Phrase("Signature : Agence TravelX", font);
+            Phrase signaturePhrase = new Phrase("Signature : Agence Last Minute Travel", font);
 
             ColumnText.showTextAligned(
                     canvas,
@@ -436,9 +462,136 @@ public class ListVolController  implements Initializable {
         }
     }
 
+    private void searchCountries(String query) {
+        if (query == null || query.isEmpty()) {
+            return;
+        }
 
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(API_URL + query))
+                .build();
 
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .thenAccept(json -> {
+                    try {
+                        JSONArray array = new JSONArray(json);
+                        List<String> countries = new ArrayList<>();
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject country = array.getJSONObject(i);
+                            String name = country.getJSONObject("name").getString("common");
+                            countries.add(name);
+                        }
+                        Platform.runLater(() -> showCountrySuggestions(countries));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+    }
 
+    private boolean isInternetAvailable() {
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://www.google.com"))
+                    .GET()
+                    .build();
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.statusCode() == 200;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
+    private void showCountrySuggestions(List<String> countries) {
+        if (currentPopup != null) {
+            currentPopup.hide();
+        }
 
+        Popup popup = new Popup();
+        VBox content = new VBox(5);
+        content.setStyle("-fx-background-color: white; -fx-padding: 10; -fx-border-color: #ccc; -fx-border-width: 1;");
+
+        for (String country : countries) {
+            Label label = new Label(country);
+            label.setStyle("-fx-cursor: hand; -fx-padding: 5;");
+            label.setOnMouseClicked(e -> {
+                destinationField.setValue(country);
+                popup.hide();
+            });
+            content.getChildren().add(label);
+        }
+
+        popup.getContent().add(content);
+        currentPopup = popup;
+
+        // Positionner le popup sous le champ de texte
+        Bounds bounds = destinationField.localToScreen(destinationField.getBoundsInLocal());
+        popup.show(destinationField.getScene().getWindow(), bounds.getMinX(), bounds.getMaxY());
+    }
+
+    // Ajouter cette variable de classe
+    private Popup currentPopup;
+
+    private void loadCountries() {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://restcountries.com/v3.1/all"))
+                .build();
+
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .thenAccept(json -> {
+                    try {
+                        JSONArray array = new JSONArray(json);
+                        List<String> pays = new ArrayList<>();
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject country = array.getJSONObject(i);
+                            String name = country.getJSONObject("name").getString("common");
+                            pays.add(name);
+                        }
+                        Platform.runLater(() -> {
+                            destinationField.getItems().clear();
+                            destinationField.getItems().addAll(pays);
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+    }
+
+    private void filterComboBox(ComboBox<String> comboBox, String filter) {
+        if (filter == null || filter.isEmpty()) {
+            comboBox.show();
+            return;
+        }
+
+        ObservableList<String> filteredItems = FXCollections.observableArrayList();
+        for (String item : comboBox.getItems()) {
+            if (item.toLowerCase().contains(filter.toLowerCase())) {
+                filteredItems.add(item);
+            }
+        }
+        comboBox.setItems(filteredItems);
+        comboBox.show();
+    }
+
+    private void searchFlights() {
+        String destination = destinationField.getValue();
+        String depart = departField.getValue();
+        // ... existing code ...
+    }
+
+    private void clearFields() {
+        destinationField.getItems().clear();
+        departField.getItems().clear();
+        // ... existing code ...
+    }
+
+    private void handleDestinationSelection() {
+        String selectedCountry = destinationField.getValue();
+        if (selectedCountry != null && !selectedCountry.isEmpty()) {
+            // ... existing code ...
+        }
+    }
 }

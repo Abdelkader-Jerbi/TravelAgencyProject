@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import services.CrudVol;
 import java.net.URI;
@@ -48,6 +49,8 @@ public class ChercherVolController implements Initializable {
     private Button rechercherButton;
     @FXML
     private ChoiceBox<Enumnom> categorieChoiceBox;
+    @FXML
+    private VBox dateRetourContainer;
     
     private final CrudVol crudVol = new CrudVol();
 
@@ -90,6 +93,18 @@ public class ChercherVolController implements Initializable {
     public void handleRechercherButtonExit() {
         rechercherButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; " +
                                 "-fx-background-radius: 8; -fx-padding: 12 35; -fx-font-size: 14px;");
+    }
+
+    @FXML
+    public void handleTypeVolChange() {
+        if (allerSimpleRadio.isSelected()) {
+            dateRetourContainer.setVisible(false);
+            dateRetourContainer.setManaged(false);
+            dateRetourField.setValue(null);
+        } else {
+            dateRetourContainer.setVisible(true);
+            dateRetourContainer.setManaged(true);
+        }
     }
 
     private void loadCountries() {

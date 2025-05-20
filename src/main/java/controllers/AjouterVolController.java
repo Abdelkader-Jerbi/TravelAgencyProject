@@ -176,20 +176,20 @@ public class AjouterVolController  implements Initializable {
 
 
     private void showAlert(Alert.AlertType type, String message) {
-            Alert alert = new Alert(type);
-            alert.setTitle("Information");
-            alert.setContentText(message);
-            alert.showAndWait();
-        }
+        Alert alert = new Alert(type);
+        alert.setTitle("Information");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
-        private void clearFields() {
-            departField.setValue(null);         // Pour ComboBox
-            destinationField.setValue(null);
-            datePicker.setValue(null);
-            dateRetourPicker.setValue(null);
-            prixField.clear();
-            categorieComboBox.setValue(null);
-        }
+    private void clearFields() {
+        departField.setValue(null);         // Pour ComboBox
+        destinationField.setValue(null);
+        datePicker.setValue(null);
+        dateRetourPicker.setValue(null);
+        prixField.clear();
+        categorieComboBox.setValue(null);
+    }
 
 
 }

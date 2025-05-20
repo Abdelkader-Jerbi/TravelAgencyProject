@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="900.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherUtilisateurController">
+<BorderPane prefHeight="650.0" prefWidth="900.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherUtilisateurController">
    <top>
       <HBox prefHeight="60.0" prefWidth="900.0" spacing="10.0" styleClass="nav-bar" BorderPane.alignment="CENTER">
          <children>
@@ -34,8 +34,9 @@
             <HBox layoutX="30.0" layoutY="70.0" spacing="10.0">
                <children>
                   <TextField fx:id="searchField" prefHeight="35.0" prefWidth="300.0" promptText="Search users..." />
-                  <Button fx:id="searchButton" mnemonicParsing="false" prefHeight="35.0" text="Search" onAction="#handleSearch" />
-                  <Button fx:id="afficherUtilisateur" mnemonicParsing="false" onAction="#afficherUtilisateur" prefHeight="35.0" text="Refresh List" />
+                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#handleSearch" prefHeight="35.0" text="Search" />
+                  <Button fx:id="afficherUtilisateur" mnemonicParsing="false" onAction="#afficherUtilisateur" prefHeight="35.0" text="Show User" />
+                  <Button fx:id="exportPdfButton" mnemonicParsing="false" onAction="#exportToPdf" prefHeight="35.0" styleClass="register-button" text="Export to PDF" />
                </children>
             </HBox>
             
@@ -51,7 +52,7 @@
             
             <HBox layoutX="30.0" layoutY="490.0" spacing="10.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#RetourAjoutUtilisateur" prefHeight="35.0" styleClass="cancel-button" text="Back" />
+                  <Button mnemonicParsing="false" onAction="#RetourAjoutUtilisateur" prefHeight="35.0" styleClass="cancel-button" text="Add New User" />
                   <Button mnemonicParsing="false" onAction="#modifierUtilisateur" prefHeight="35.0" styleClass="register-button" text="Edit Selected User" />
                   <Button mnemonicParsing="false" onAction="#supprimerUtilisateur" prefHeight="35.0" styleClass="cancel-button" text="Delete Selected User" />
                </children>

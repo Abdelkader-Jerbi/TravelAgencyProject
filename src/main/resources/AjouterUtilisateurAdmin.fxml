@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="600.0" prefWidth="900.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterUtilisateurAdminController">
+    <top>
+        <HBox prefHeight="60.0" prefWidth="900.0" spacing="10.0" styleClass="nav-bar" BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Last Minute Travel - Registration" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+    </top>
+    <center>
+        <AnchorPane prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="30.0" layoutY="20.0" text="Create New Account" textFill="#f46624">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+
+                <Label layoutX="30.0" layoutY="60.0" text="Please fill in your information to register" textFill="#7f8c8d">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Label>
+
+                <AnchorPane layoutX="30.0" layoutY="100.0" prefHeight="350.0" prefWidth="840.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 10;">
+                    <children>
+                        <Label layoutX="30.0" layoutY="30.0" styleClass="form-label" text="Last Name">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="nomTF" layoutX="30.0" layoutY="55.0" prefHeight="35.0" prefWidth="350.0" promptText="Enter your last name" styleClass="text-field" />
+
+                        <Label layoutX="450.0" layoutY="30.0" styleClass="form-label" text="First Name">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="prenomTF" layoutX="450.0" layoutY="55.0" prefHeight="35.0" prefWidth="350.0" promptText="Enter your first name" styleClass="text-field" />
+
+                        <Label layoutX="30.0" layoutY="110.0" styleClass="form-label" text="Email">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="emailTF" layoutX="30.0" layoutY="135.0" prefHeight="35.0" prefWidth="350.0" promptText="Enter your email address" styleClass="text-field" />
+
+                        <Label layoutX="450.0" layoutY="110.0" styleClass="form-label" text="Password">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <PasswordField fx:id="passwordTF" layoutX="450.0" layoutY="135.0" prefHeight="35.0" prefWidth="350.0" promptText="Create a strong password" styleClass="password-field" />
+
+                        <Label layoutX="30.0" layoutY="190.0" styleClass="form-label" text="Phone Number">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="telTF" layoutX="30.0" layoutY="215.0" prefHeight="35.0" prefWidth="350.0" promptText="Enter your phone number" styleClass="text-field" />
+
+                        <Label layoutX="450.0" layoutY="190.0" styleClass="form-label" text="User Role">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <ComboBox layoutX="450.0" layoutY="215.0" prefHeight="35.0" prefWidth="350.0" promptText="Select role" />
+
+                        <HBox layoutX="30.0" layoutY="280.0" spacing="20.0">
+                            <children>
+                                <Button mnemonicParsing="false" onAction="#AfficherUtilisateur" prefHeight="40.0" prefWidth="200.0" styleClass="cancel-button" text="USERS LIST" />
+                                <Button defaultButton="true" mnemonicParsing="false" onAction="#AjouterUtilisateur" prefHeight="40.0" prefWidth="200.0" text="ADD USER" />
+                            </children>
+                        </HBox>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+    </center>
+    <bottom>
+        <AnchorPane prefHeight="40.0" prefWidth="900.0" style="-fx-background-color: #f46624;" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="350.0" layoutY="12.0" text="© 2024 Last Minute Travel" textFill="WHITE">
+                    <font>
+                        <Font size="12.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+    </bottom>
+</BorderPane>

@@ -17,9 +17,9 @@ public class HompePageController {
 
     public void allerPageProfile(ActionEvent Event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UtilisateurInfo.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UtilisateurInfoUser.fxml"));
             Parent root = loader.load();
-            UtilisateurInfo controller = loader.getController();
+            UtilisateurInfoUser controller = loader.getController();
             controller.setUtilisateur(getLoggedInUser());
             Stage stage = (Stage)((Node) Event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);

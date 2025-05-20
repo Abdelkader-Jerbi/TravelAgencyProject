@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class UtilisateurInfo {
+public class UtilisateurInfoUser {
 
     @FXML
     private Label nomFieldLabel;
@@ -31,6 +31,7 @@ public class UtilisateurInfo {
     @FXML
     private Label roleFieldLabel;
 
+    private int userId;
 
 
     public void setNom(String nom) {
@@ -55,6 +56,7 @@ public class UtilisateurInfo {
     }
 
     public void setUtilisateur(Utilisateur u) {
+        this.userId = u.getId();
         telephoneFieldLabel.setText(String.valueOf(u.getTel()));
         nomFieldLabel.setText(u.getNom());
         prenomFieldLabel.setText(u.getPrenom());
@@ -63,7 +65,7 @@ public class UtilisateurInfo {
 
     public void retourAfficherUtilisateurss(ActionEvent Event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/AfficherUtilisateur.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/HomePage.fxml"));
             Stage stage = (Stage) ((Node) Event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -73,4 +75,32 @@ public class UtilisateurInfo {
         }
     }
 
+    public void navigateToModifierUtilisateur(ActionEvent event) {
+        try {
+            // Get the current user information
+            Utilisateur utilisateur = new Utilisateur();
+            utilisateur.setId(this.userId);
+            utilisateur.setNom(nomFieldLabel.getText());
+            utilisateur.setPrenom(prenomFieldLabel.getText());
+            utilisateur.setEmail(emailFieldLabel.getText());
+            utilisateur.setTel(Integer.parseInt(telephoneFieldLabel.getText()));
+
+            // Load the ModifierUtilisateur.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierUtilisateur.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller and pass the user data
+            ModifierUtilisateur modifierUtilisateurController = loader.getController();
+            modifierUtilisateurController.setUtilisateur(utilisateur);
+
+            // Set the scene
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Error navigating to ModifierUtilisateur: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }

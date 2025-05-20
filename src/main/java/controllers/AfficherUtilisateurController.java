@@ -14,10 +14,29 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import services.CrudUtilisateur;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class AfficherUtilisateurController {
 
@@ -163,11 +182,11 @@ public class AfficherUtilisateurController {
 
         if (utilisateurSelectionne != null) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierUtilisateur.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierUtilisateurAdmin.fxml"));
                 Parent root = loader.load();
 
                 // Get the controller of the new scene
-                ModifierUtilisateur controller = loader.getController();
+                ModifierUtilisateurAdmin controller = loader.getController();
 
                 // Send the selected user to the controller
                 controller.setUtilisateur(utilisateurSelectionne);
@@ -192,13 +211,125 @@ public class AfficherUtilisateurController {
 
     public void RetourAjoutUtilisateur(ActionEvent Event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/AjouterUtilisateur.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/AjouterUtilisateurAdmin.fxml"));
             Stage stage = (Stage)((Node) Event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             System.out.println(e.getMessage());
+        }
+    }
+    
+    @FXML
+    public void exportToPdf(ActionEvent event) {
+        try {
+            // Create a file chooser
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save PDF File");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+            
+            // Set default file name with timestamp
+            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+            fileChooser.setInitialFileName("users_list_" + timestamp + ".pdf");
+            
+            // Show save file dialog
+            File file = fileChooser.showSaveDialog(((Node) event.getSource()).getScene().getWindow());
+            
+            if (file != null) {
+                // Create Document
+                Document document = new Document();
+                PdfWriter.getInstance(document, new FileOutputStream(file));
+                document.open();
+                
+                // Add title
+                Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18);
+                Paragraph title = new Paragraph("Last Minute Travel - User List", titleFont);
+                title.setAlignment(Element.ALIGN_CENTER);
+                document.add(title);
+                
+                // Add date
+                Font dateFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
+                Paragraph date = new Paragraph("Generated on: " + 
+                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), dateFont);
+                date.setAlignment(Element.ALIGN_CENTER);
+                document.add(date);
+                
+                document.add(new Paragraph(" ")); // Add some space
+                
+                // Create table with 5 columns
+                PdfPTable table = new PdfPTable(5);
+                table.setWidthPercentage(100);
+                
+                // Set column widths
+                float[] columnWidths = {20f, 20f, 15f, 30f, 15f};
+                table.setWidths(columnWidths);
+                
+                // Add table headers
+                Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
+                Stream.of("Name", "First Name", "Phone", "Email", "Role")
+                    .forEach(columnTitle -> {
+                        PdfPCell header = new PdfPCell();
+                        header.setBackgroundColor(new com.itextpdf.text.BaseColor(244, 102, 36)); // #f46624
+                        header.setBorderWidth(2);
+                        header.setPhrase(new Phrase(columnTitle, headerFont));
+                        header.setHorizontalAlignment(Element.ALIGN_CENTER);
+                        header.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                        header.setPadding(8);
+                        table.addCell(header);
+                    });
+                
+                // Add data rows
+                Font dataFont = FontFactory.getFont(FontFactory.HELVETICA, 10);
+                
+                ObservableList<Utilisateur> users = tvpersonne.getItems();
+                for (Utilisateur user : users) {
+                    // Name
+                    PdfPCell cell = new PdfPCell(new Phrase(user.getNom(), dataFont));
+                    cell.setPadding(5);
+                    table.addCell(cell);
+                    
+                    // First Name
+                    cell = new PdfPCell(new Phrase(user.getPrenom(), dataFont));
+                    cell.setPadding(5);
+                    table.addCell(cell);
+                    
+                    // Phone
+                    cell = new PdfPCell(new Phrase(String.valueOf(user.getTel()), dataFont));
+                    cell.setPadding(5);
+                    table.addCell(cell);
+                    
+                    // Email
+                    cell = new PdfPCell(new Phrase(user.getEmail(), dataFont));
+                    cell.setPadding(5);
+                    table.addCell(cell);
+                    
+                    // Role
+                    String role = user.getRole() == null ? "" : user.getRole().toString();
+                    cell = new PdfPCell(new Phrase(role, dataFont));
+                    cell.setPadding(5);
+                    table.addCell(cell);
+                }
+                
+                document.add(table);
+                document.close();
+                
+                // Show success message
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("PDF Export");
+                alert.setHeaderText(null);
+                alert.setContentText("PDF file has been successfully created at:\n" + file.getAbsolutePath());
+                alert.showAndWait();
+                
+            }
+        } catch (DocumentException | IOException e) {
+            // Show error message
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("PDF Export Error");
+            alert.setHeaderText(null);
+            alert.setContentText("An error occurred while creating the PDF file:\n" + e.getMessage());
+            alert.showAndWait();
+            e.printStackTrace();
         }
     }
 

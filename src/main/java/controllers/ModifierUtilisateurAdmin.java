@@ -16,7 +16,7 @@ import services.CrudUtilisateur;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class ModifierUtilisateur {
+public class ModifierUtilisateurAdmin{
 
     @FXML
     private TextField nomFieldUpdate;
@@ -50,7 +50,7 @@ public class ModifierUtilisateur {
             alert.show();
             return;
         }
-        
+
         if (prenomFieldUpdate.getText().trim().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur de validation");
@@ -58,7 +58,7 @@ public class ModifierUtilisateur {
             alert.show();
             return;
         }
-        
+
         if (emailFieldUpdate.getText().trim().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur de validation");
@@ -66,7 +66,7 @@ public class ModifierUtilisateur {
             alert.show();
             return;
         }
-        
+
         if (telephoneFieldUpdate.getText().trim().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur de validation");
@@ -74,7 +74,7 @@ public class ModifierUtilisateur {
             alert.show();
             return;
         }
-        
+
         // Validation du format de l'email
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         if (!emailFieldUpdate.getText().matches(emailRegex)) {
@@ -84,7 +84,7 @@ public class ModifierUtilisateur {
             alert.show();
             return;
         }
-        
+
         // Validation du numéro de téléphone
         try {
             int telephone = Integer.parseInt(telephoneFieldUpdate.getText());
@@ -102,7 +102,7 @@ public class ModifierUtilisateur {
             alert.show();
             return;
         }
-        
+
         // Si toutes les validations sont passées, procéder à la modification
         CrudUtilisateur CrudUtilisateur = new CrudUtilisateur();
         Utilisateur utilisateur = new Utilisateur(this.id,Integer.parseInt(telephoneFieldUpdate.getText()),nomFieldUpdate.getText(),prenomFieldUpdate.getText(),emailFieldUpdate.getText());
@@ -123,7 +123,7 @@ public class ModifierUtilisateur {
 
     public void retourAfficherUtilisateursUpdate(ActionEvent Event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/HomePage.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/AfficherUtilisateur.fxml"));
             Stage stage = (Stage) ((Node) Event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);

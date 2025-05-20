@@ -26,7 +26,7 @@
             <ComboBox fx:id="categorieCombo" promptText="Catégorie" prefWidth="120" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-padding: 8 12;"/>
             <TextField fx:id="prixMaxField" promptText="Prix Max" prefWidth="80" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-padding: 8 12;"/>
 
-            <Button onAction="#filtrerVols" style="-fx-text-fill: white; -fx-padding: 8 14; -fx-cursor: hand;">
+            <Button onAction="#filtrerVols" style="-fx-background-color: linear-gradient(to right, #4facfe, #00f2fe); -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 14; -fx-background-radius: 8; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0.0, 0, 2);">
                 <graphic>
                     <ImageView fitWidth="15" fitHeight="15">
                         <image >

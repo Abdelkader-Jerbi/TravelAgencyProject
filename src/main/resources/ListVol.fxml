@@ -8,6 +8,7 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import java.net.URL?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.ListVolController"
@@ -19,13 +20,13 @@
           AnchorPane.rightAnchor="10.0"
           AnchorPane.bottomAnchor="10.0">
         <HBox spacing="12" alignment="CENTER_LEFT" style="-fx-padding: 15;   -fx-border-radius: 8; -fx-background-radius: 8;">
-            <DatePicker fx:id="dateAllerDebutPicker" promptText="Date Aller Du" />
-            <DatePicker fx:id="dateRetourPicker" promptText="Retour avant" />
-            <TextField fx:id="destinationField" promptText="Destination" />
-            <ComboBox fx:id="categorieCombo" promptText="Catégorie" prefWidth="120"/>
-            <TextField fx:id="prixMaxField" promptText="Prix Max" prefWidth="80"/>
+            <DatePicker fx:id="dateAllerDebutPicker" promptText="Date Aller Du" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-padding: 8 12;"/>
+            <DatePicker fx:id="dateRetourPicker" promptText="Retour avant" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-padding: 8 12;"/>
+            <ComboBox fx:id="destinationField" promptText="Destination" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-padding: 8 12;"/>
+            <ComboBox fx:id="categorieCombo" promptText="Catégorie" prefWidth="120" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-padding: 8 12;"/>
+            <TextField fx:id="prixMaxField" promptText="Prix Max" prefWidth="80" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-padding: 8 12;"/>
 
-            <Button onAction="#filtrerVols" style="-fx-text-fill: white; -fx-padding: 8 14; -fx-cursor: hand;">
+            <Button onAction="#filtrerVols" style="-fx-background-color: linear-gradient(to right, #4facfe, #00f2fe); -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 14; -fx-background-radius: 8; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0.0, 0, 2);">
                 <graphic>
                     <ImageView fitWidth="15" fitHeight="15">
                         <image >
@@ -45,7 +46,7 @@
                         </image>
                     </ImageView>
                 </graphic>
-        </Button>
+            </Button>
         </HBox>
 
 
@@ -103,4 +104,7 @@
         </HBox>
 
     </VBox>
+    <stylesheets>
+        <URL value="@css/style.css" />
+    </stylesheets>
 </AnchorPane>

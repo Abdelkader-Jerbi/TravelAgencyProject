@@ -1,22 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.image.ImageView?>
 
-
-<AnchorPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.AllHotels"
-            prefHeight="400.0" prefWidth="800.0">
+            prefHeight="600.0" prefWidth="900.0"
+            stylesheets="@/View/css/style.css"
+            style="-fx-background-color: #f5f6fa;">
 
-    <!-- Centering the HBox containing cards -->
-    <HBox fx:id="hotelListContainer" alignment="CENTER" spacing="15"
-          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
-          AnchorPane.topAnchor="0" >
-        <!-- Hotel cards added dynamically here -->
-    </HBox>
+    <!-- Top Section with Search -->
+    <top>
+        <VBox spacing="20" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            
+            <Text style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2c3e50;">
+                Discover Amazing Hotels
+            </Text>
+            
+            <HBox spacing="15" alignment="CENTER_LEFT">
+                <TextField fx:id="searchField" 
+                          promptText="Search hotels by name, location, or amenities..." 
+                          styleClass="search-field"
+                          style="-fx-pref-width: 400px; -fx-background-radius: 20px; -fx-border-radius: 20px;"/>
 
-</AnchorPane>
+
+
+                <ComboBox fx:id="filterComboBox" 
+                          promptText="Filter by rating"
+                          styleClass="filter-combo"
+                          style="-fx-background-radius: 20px; -fx-border-radius: 20px;"/>
+
+                <ComboBox fx:id="categoryFilterComboBox" 
+                          promptText="Filter by category"
+                          styleClass="filter-combo"
+                          style="-fx-background-radius: 20px; -fx-border-radius: 20px;"/>
+
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- Main Content Area -->
+    <center>
+        <VBox spacing="20" style="-fx-padding: 20;">
+            <!-- Results Count -->
+            <HBox alignment="CENTER_LEFT" style="-fx-padding: 0 0 10 0;">
+                <Label fx:id="resultsCount" 
+                       text="Found 0 hotels" 
+                       style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
+            </HBox>
+
+            <!-- Hotel Grid -->
+            <ScrollPane fitToWidth="true"
+                       hbarPolicy="NEVER"
+                       style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;">
+                <GridPane fx:id="hotelGrid"
+                         hgap="20"
+                         vgap="20"
+                         alignment="CENTER">
+                    <!-- Grid content will be populated dynamically -->
+                </GridPane>
+            </ScrollPane>
+        </VBox>
+    </center>
+
+    <!-- Loading Indicator -->
+    <StackPane fx:id="loadingIndicator" visible="false">
+        <ProgressIndicator style="-fx-progress-color: #3498db;"/>
+    </StackPane>
+
+</BorderPane>

@@ -1,34 +1,30 @@
 package controllers;
 
-import entities.Hotel;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import entities.Hotel;
 import services.CrudHotel;
-
-import javafx.event.ActionEvent;
-import java.sql.SQLException;
+import java.io.File;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Calendar;
+import java.time.format.DateTimeFormatter;
+import java.sql.SQLException;
 
 public class AddHotel {
-
-    @FXML private TextField nomHotelField;
-    @FXML private TextField destinationField;
+    @FXML private TextField nomField;
+    @FXML private TextField localisationField;
     @FXML private DatePicker datePicker;
-    @FXML private TextField nbNuiteField;
-    @FXML private TextField nombreChambreField;
-    @FXML private TextField nbEtoilesField;
+    @FXML private ComboBox<String> chambreComboBox;
+    @FXML private ComboBox<String> categorieTypeComboBox;
+    @FXML private TextField nbEtoileField;
     @FXML private TextField tarifField;
-    @FXML private Button addButton;
+    @FXML private TextField imageField;
+    @FXML private TextArea descriptionField;
 
-    private final CrudHotel crudHotel = new CrudHotel();
-    private Runnable refreshCallback; // ✅ Callback for refreshing hotel table
+    private CrudHotel crudHotel;
+    private Runnable refreshCallback;
 
     public void setRefreshCallback(Runnable callback) {
         this.refreshCallback = callback;
@@ -36,73 +32,149 @@ public class AddHotel {
 
     @FXML
     public void initialize() {
+        crudHotel = new CrudHotel();
+        
+        // Set default date to today
         datePicker.setValue(LocalDate.now());
-
-        addButton.setOnAction(e -> {
-            try {
-                addHotel(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+        
+        // Initialize room type combo box
+        chambreComboBox.getItems().addAll("Single", "Double", "Suite", "Deluxe");
+        
+        // Initialize category type combo box
+        try {
+            categorieTypeComboBox.getItems().addAll("Luxe", "Famille", "Economique", "Affaires");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        // Add numeric validation for stars and price
+        nbEtoileField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                nbEtoileField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        
+        tarifField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                tarifField.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
     }
 
-    private void addHotel(ActionEvent event) throws SQLException {
-        String nom = nomHotelField.getText();
-        LocalDate localDate = datePicker.getValue();
-        Date date = null;
+    @FXML
+    private void handleImageBrowse() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Hotel Image");
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
+        
+        File selectedFile = fileChooser.showOpenDialog(imageField.getScene().getWindow());
+        if (selectedFile != null) {
+            imageField.setText(selectedFile.getAbsolutePath());
+        }
+    }
 
-        if (localDate != null) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(localDate.getYear(), localDate.getMonthValue() - 1, localDate.getDayOfMonth());
-            date = new Date(calendar.getTimeInMillis());
+    @FXML
+    private void handleSave() {
+        if (!validateInputs()) {
+            return;
         }
 
         try {
-            String Localisation = destinationField.getText();
-            int nombreNuité = Integer.parseInt(nbNuiteField.getText());
-            int nbEtoile = Integer.parseInt(nbEtoilesField.getText());
-            int nombreChambre = Integer.parseInt(nombreChambreField.getText());
-            float tarif = Float.parseFloat(tarifField.getText());
+            Hotel hotel = new Hotel();
+            hotel.setNom(nomField.getText());
+            hotel.setLocalisation(localisationField.getText());
+            hotel.setDate(Date.valueOf(datePicker.getValue()));
+            hotel.setChambre(chambreComboBox.getValue());
+            hotel.setCategorieType(categorieTypeComboBox.getValue());
+            hotel.setNbEtoile(Integer.parseInt(nbEtoileField.getText()));
+            hotel.setTarif((float) Double.parseDouble(tarifField.getText()));
+            hotel.setImage(imageField.getText());
+            hotel.setDescription(descriptionField.getText());
 
-            Hotel hotel = new Hotel(nom, Localisation, date, nombreNuité, nbEtoile, nombreChambre, tarif);
             crudHotel.add(hotel);
-
-            // ✅ Refresh the table
+            showAlert(Alert.AlertType.INFORMATION, "Success", "Hotel added successfully!");
+            
+            // Refresh the table if callback is set
             if (refreshCallback != null) {
                 refreshCallback.run();
             }
-
-            showAlert("Success", "Hotel added successfully!", Alert.AlertType.INFORMATION);
-
-            // ✅ Close the window
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.close();
-
+            
+            closeWindow();
         } catch (Exception e) {
-            // The alert is removed, and no message will be shown in case of exception.
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to add hotel: " + e.getMessage());
         }
-
-        clearFields();
     }
 
-    private void showAlert(String title, String message, Alert.AlertType alertType) {
-        Alert alert = new Alert(alertType);
+    @FXML
+    private void handleCancel() {
+        closeWindow();
+    }
+
+    private boolean validateInputs() {
+        StringBuilder errors = new StringBuilder();
+
+        if (nomField.getText().trim().isEmpty()) {
+            errors.append("Hotel name is required\n");
+        }
+        if (localisationField.getText().trim().isEmpty()) {
+            errors.append("Location is required\n");
+        }
+        if (datePicker.getValue() == null) {
+            errors.append("Date is required\n");
+        }
+        if (chambreComboBox.getValue() == null) {
+            errors.append("Room type is required\n");
+        }
+        if (categorieTypeComboBox.getValue() == null) {
+            errors.append("Category type is required\n");
+        }
+        if (descriptionField.getText().trim().isEmpty()) {
+            errors.append("Description is required\n");
+        }
+        if (nbEtoileField.getText().trim().isEmpty()) {
+            errors.append("Number of stars is required\n");
+        } else {
+            try {
+                int stars = Integer.parseInt(nbEtoileField.getText());
+                if (stars < 1 || stars > 5) {
+                    errors.append("Stars must be between 1 and 5\n");
+                }
+            } catch (NumberFormatException e) {
+                errors.append("Invalid number of stars\n");
+            }
+        }
+        if (tarifField.getText().trim().isEmpty()) {
+            errors.append("Price is required\n");
+        } else {
+            try {
+                double price = Double.parseDouble(tarifField.getText());
+                if (price <= 0) {
+                    errors.append("Price must be greater than 0\n");
+                }
+            } catch (NumberFormatException e) {
+                errors.append("Invalid price format\n");
+            }
+        }
+
+        if (errors.length() > 0) {
+            showAlert(Alert.AlertType.ERROR, "Validation Error", errors.toString());
+            return false;
+        }
+        return true;
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
-        alert.setContentText(message);
+        alert.setContentText(content);
         alert.showAndWait();
     }
 
-
-
-    private void clearFields() {
-        nomHotelField.clear();
-        destinationField.clear();
-        datePicker.setValue(LocalDate.now());
-        nbNuiteField.clear();
-        nbEtoilesField.clear();
-        nombreChambreField.clear();
-        tarifField.clear();
+    private void closeWindow() {
+        Stage stage = (Stage) nomField.getScene().getWindow();
+        stage.close();
     }
 }

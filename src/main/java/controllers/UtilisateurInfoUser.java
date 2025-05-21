@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -100,6 +101,29 @@ public class UtilisateurInfoUser {
             stage.show();
         } catch (IOException e) {
             System.out.println("Error navigating to ModifierUtilisateur: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public void navigateToChangePassword(ActionEvent event) {
+        try {
+            // Create a new stage for the password change dialog
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ChangePassword.fxml"));
+            Parent root = loader.load();
+            
+            // Get the controller and set the user email
+            ChangePasswordController changePasswordController = loader.getController();
+            changePasswordController.setUserEmail(emailFieldLabel.getText());
+            
+            // Set the scene
+            Stage stage = new Stage();
+            stage.setTitle("Change Password");
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            
+        } catch (IOException e) {
+            System.out.println("Error navigating to Change Password: " + e.getMessage());
             e.printStackTrace();
         }
     }

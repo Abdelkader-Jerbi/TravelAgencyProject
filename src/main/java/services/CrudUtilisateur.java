@@ -1,5 +1,7 @@
 package services;
 
+
+import entities.Role;
 import entities.Utilisateur;
 import utils.MyDatabase;
 
@@ -16,8 +18,9 @@ public class CrudUtilisateur implements CrudMethods<Utilisateur> {
     @Override
     public void ajouter(Utilisateur utilisateur) throws SQLException {
 
-        String req="insert into utilisateur (nom,prenom,email,tel,role)"+
-                "values('"+ utilisateur.getNom()+"','"+ utilisateur.getPrenom()+"','"+ utilisateur.getEmail()+"','"+utilisateur.getTel()+"','"+utilisateur.getRole()+"')";
+        String req="insert into utilisateur (nom,prenom,email,tel,password,role)"+
+                "values('"+ utilisateur.getNom()+"','"+ utilisateur.getPrenom()+"','"+ utilisateur.getEmail()+"','"+utilisateur.getTel()+"','"+utilisateur.getPassword()+"','"+utilisateur.getRole()+"')";
+
 
         Statement statement=connection.createStatement();
         statement.executeUpdate(req);
@@ -57,7 +60,9 @@ public class CrudUtilisateur implements CrudMethods<Utilisateur> {
            utilisateur.setNom(rs.getString("nom"));
            utilisateur.setPrenom(rs.getString("prenom"));
            utilisateur.setEmail(rs.getString("email"));
-           utilisateur.setRole(rs.getString("role"));
+
+           utilisateur.setRole(Role.valueOf(rs.getString("role")));
+
            utilisateur.setTel(rs.getInt("tel"));
            utilisateur.setId(rs.getInt("id"));
 
@@ -67,4 +72,52 @@ public class CrudUtilisateur implements CrudMethods<Utilisateur> {
 
         return utilisateurs;
     }
+
+
+    public Utilisateur getUserFromDatabase(String email, String password) throws SQLException {
+        Utilisateur user = null;
+        String query = "SELECT * FROM utilisateur WHERE email = ? AND password = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, email);
+            statement.setString(2, password); // In real applications, don't store plain passwords!
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                user = new Utilisateur();
+                user.setId(resultSet.getInt("id"));
+                user.setNom(resultSet.getString("nom"));
+                user.setPrenom(resultSet.getString("prenom"));
+                user.setEmail(resultSet.getString("email"));
+                user.setTel(resultSet.getInt("tel"));
+                user.setPassword(resultSet.getString("password"));
+                user.setRole(Role.valueOf(resultSet.getString("role").toUpperCase())); // Assuming roles are stored as "USER", "ADMIN", etc.
+            }
+
+    public List<String> getAllEmails() {
+        List<String> emails = new ArrayList<>();
+        String req = "SELECT email FROM utilisateur ";
+
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(req)) {
+
+            while (rs.next()) {
+                emails.add(rs.getString("email"));
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return user;
+    }
+
+
+
+        return emails;
+    }
+
+
 }

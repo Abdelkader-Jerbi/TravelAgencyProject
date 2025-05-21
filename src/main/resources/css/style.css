@@ -1,0 +1,13 @@
+.date-picker:focused,
+.text-field:focused,
+.combo-box:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-border-color: derive(-fx-text-box-border, -10%); /* ou une couleur neutre/grise */
+    -fx-border-width: 1;
+}
+
+/* Optionnel: style pour le prompt text */
+.text-field .text {
+    -fx-fill: #a0a0a0;
+} 

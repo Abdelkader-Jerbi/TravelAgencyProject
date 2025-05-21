@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import java.net.URL?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="controllers.ConfirmationReservation"
+           style="-fx-background-color: #f5f6fa;">
+
+    <stylesheets>
+        <URL value="@style.css" />
+    </stylesheets>
+
+    <VBox spacing="20" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" maxWidth="600">
+        <padding>
+            <Insets top="30" right="40" bottom="30" left="40"/>
+        </padding>
+
+        <!-- En-tête -->
+        <VBox alignment="CENTER" spacing="10">
+            <Label text="✓" style="-fx-font-size: 48px; -fx-text-fill: #2ecc71;"/>
+            <Label text="Confirmation de Réservation" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+        </VBox>
+
+        <!-- Message de confirmation -->
+        <VBox spacing="15" style="-fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-padding: 20;">
+            <Label fx:id="confirmationLabel" wrapText="true" style="-fx-font-size: 16px; -fx-text-fill: #34495e;"/>
+        </VBox>
+
+        <!-- Boutons d'action -->
+        <HBox spacing="20" alignment="CENTER">
+            <Button fx:id="payerButton" text="Payer" 
+                    onAction="#handlePayerButtonClick"
+                    onMouseEntered="#handlePayerButtonHover"
+                    onMouseExited="#handlePayerButtonExit"
+                    style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold;
+                           -fx-background-radius: 8; -fx-padding: 12 30; -fx-font-size: 14px;"/>
+
+            <Button fx:id="retourButton" text="Retour" 
+                    onAction="#handleRetourButtonClick"
+                    onMouseEntered="#handleRetourButtonHover"
+                    onMouseExited="#handleRetourButtonExit"
+                    style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;
+                           -fx-background-radius: 8; -fx-padding: 12 30; -fx-font-size: 14px;"/>
+        </HBox>
+    </VBox>
+</StackPane>

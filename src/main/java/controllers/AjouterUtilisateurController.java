@@ -1,11 +1,16 @@
 package controllers;
 
+
+import entities.Role;
 import entities.Utilisateur;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+
+import javafx.scene.control.PasswordField;
+
 import javafx.scene.control.TextField;
 import services.CrudUtilisateur;
 
@@ -30,22 +35,37 @@ public class AjouterUtilisateurController {
     private TextField roleTF;
 
     @FXML
+
     void AjouterUtilisateur(ActionEvent event) {
         CrudUtilisateur CrudUtilisateur = new CrudUtilisateur();
         Utilisateur utilisateur = new Utilisateur(Integer.parseInt(telTF.getText()),nomTF.getText(),prenomTF.getText(),emailTF.getText(),roleTF.getText());
+
+    private PasswordField passwordTF;
+
+    @FXML
+    void AjouterUtilisateur(ActionEvent event) {
+        CrudUtilisateur CrudUtilisateur = new CrudUtilisateur();
+        Utilisateur utilisateur = new Utilisateur(Integer.parseInt(telTF.getText()),nomTF.getText(),prenomTF.getText(),emailTF.getText(),passwordTF.getText(), Role.USER);
+
         try {
             CrudUtilisateur.ajouter(utilisateur);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information");
             alert.setContentText("Utilisateur a ete ajouté avec succes !");
             alert.show();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UtilisateurInfo.fxml"));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
+
             try {
                 Parent parent = loader.load();
                 UtilisateurInfo utilInfo = loader.getController();
-                utilInfo.setAge(telTF.getText());
+                utilInfo.setTel(telTF.getText());
                 utilInfo.setNom(nomTF.getText());
                 utilInfo.setPrenom(prenomTF.getText());
+                utilInfo.setEmail(emailTF.getText());
+
+                utilInfo.setRole(Role.USER.toString());
+
                 nomTF.getScene().setRoot(parent);
             } catch (IOException e) {
                 throw new RuntimeException(e);

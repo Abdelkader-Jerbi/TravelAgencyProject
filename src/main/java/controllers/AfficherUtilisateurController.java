@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -57,6 +56,7 @@ public class AfficherUtilisateurController {
 
         CrudUtilisateur CrudUtilisateur =new CrudUtilisateur();
         try {
+
             ObservableList<Utilisateur> observableList= FXCollections.observableArrayList(CrudUtilisateur.afficher());
             tvpersonne.setItems(observableList);
             colnom.setCellValueFactory(new PropertyValueFactory<>("nom"));
@@ -64,6 +64,7 @@ public class AfficherUtilisateurController {
             coltel.setCellValueFactory(new PropertyValueFactory<>("tel"));
             colemail.setCellValueFactory(new PropertyValueFactory<>("email"));
             colrole.setCellValueFactory(new PropertyValueFactory<>("role"));
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -74,6 +75,70 @@ public class AfficherUtilisateurController {
     public void supprimerUtilisateur(ActionEvent actionEvent) {
         int utilisateurSelectionne = tvpersonne.getSelectionModel().getSelectedIndex();
         tvpersonne.getItems().remove(utilisateurSelectionne);
+    }
+
+    public void afficherUtilisateur(ActionEvent actionEvent) {
+        Utilisateur utilisateurSelectionne = (Utilisateur) tvpersonne.getSelectionModel().getSelectedItem();
+
+        if (utilisateurSelectionne != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/UtilisateurInfo.fxml"));
+                Parent root = loader.load();
+
+                // Get the controller of the new scene
+                UtilisateurInfo controller = loader.getController();
+
+                // Send the selected user to the controller
+                controller.setUtilisateur(utilisateurSelectionne);
+
+                // Switch scenes
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Optional: Alert if nothing is selected
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a user to view.");
+            alert.showAndWait();
+        }
+    }
+
+    public void modifierUtilisateur(ActionEvent actionEvent) {
+        Utilisateur utilisateurSelectionne = (Utilisateur) tvpersonne.getSelectionModel().getSelectedItem();
+
+        if (utilisateurSelectionne != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierUtilisateur.fxml"));
+                Parent root = loader.load();
+
+                // Get the controller of the new scene
+                ModifierUtilisateur controller = loader.getController();
+
+                // Send the selected user to the controller
+                controller.setUtilisateur(utilisateurSelectionne);
+
+                // Switch scenes
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Optional: Alert if nothing is selected
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a user to update.");
+            alert.showAndWait();
+        }
     }
 
     public void RetourAjoutUtilisateur(ActionEvent Event) {
@@ -87,4 +152,5 @@ public class AfficherUtilisateurController {
             System.out.println(e.getMessage());
         }
     }
+
 }

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherUtilisateurController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherUtilisateurController">
    <children>
       <TableView fx:id="tvpersonne" layoutX="112.0" layoutY="77.0" prefHeight="201.0" prefWidth="376.0">
         <columns>
@@ -13,8 +15,11 @@
             <TableColumn fx:id="colemail" prefWidth="75.0" text="email" />
             <TableColumn fx:id="colrole" prefWidth="75.0" text="role" />
         </columns>
+
       </TableView>
       <Button layoutX="416.0" layoutY="301.0" mnemonicParsing="false" onAction="#supprimerUtilisateur" text="Supprimer" />
       <Button layoutX="21.0" layoutY="28.0" mnemonicParsing="false" onAction="#RetourAjoutUtilisateur" text="Retour" />
+      <Button layoutX="349.0" layoutY="301.0" mnemonicParsing="false" onAction="#modifierUtilisateur" text="Modifier" />
+      <Button fx:id="afficherUtilisateur" onAction="#afficherUtilisateur" layoutX="282.0" layoutY="301.0" mnemonicParsing="false" text="Afficher" />
    </children>
 </AnchorPane>

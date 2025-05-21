@@ -632,14 +632,7 @@
 }
 
 /* Grid layout */
-.grid-pane {
-    -fx-hgap: 10px;
-    -fx-vgap: 10px;
-    -fx-padding: 10px;
-    -fx-alignment: center;
-    -fx-min-width: 100px;
-    -fx-max-width: 100px;
-}
+
 
 /* Scroll pane styling */
 .scroll-pane {

@@ -213,12 +213,12 @@ public class HotelInfo {
 
                 // Configure buttons with icons
                 editButton.setGraphic(editIcon);
-                editButton.setText("Edit"); // Optional text
+                editButton.setText("Modifier"); // Optional text
                 editButton.setContentDisplay(ContentDisplay.LEFT);
                 editButton.setGraphicTextGap(5);
 
                 deleteButton.setGraphic(deleteIcon);
-                deleteButton.setText("Delete"); // Optional text
+                deleteButton.setText("Supprimer"); // Optional text
                 deleteButton.setContentDisplay(ContentDisplay.LEFT);
                 deleteButton.setGraphicTextGap(5);
 

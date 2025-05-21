@@ -49,7 +49,7 @@ public class PDFViewer implements Initializable {
             @Override
             public TableCell<PDFFile, Void> call(TableColumn<PDFFile, Void> param) {
                 return new TableCell<PDFFile, Void>() {
-                    private final Button viewButton = new Button("View");
+                    private final Button viewButton = new Button("Voir");
                     private final HBox buttons = new HBox(10, viewButton);
 
                     {

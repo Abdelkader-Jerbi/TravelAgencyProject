@@ -49,7 +49,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class AllHotels implements Initializable {
 
-    @FXML private GridPane hotelGrid;
+    @FXML private FlowPane hotelGrid;
     @FXML private TextField searchField;
     @FXML private ComboBox<String> filterComboBox;
     @FXML private ComboBox<String> categoryFilterComboBox;
@@ -125,54 +125,38 @@ public class AllHotels implements Initializable {
     }
 
     private void setupGridLayout() {
-        // Set grid properties
-        hotelGrid.setHgap(10);
-        hotelGrid.setVgap(10);
-        hotelGrid.setPadding(new Insets(10));
-
-        // Make grid fill available space
-        GridPane.setHgrow(hotelGrid, Priority.ALWAYS);
-        GridPane.setVgrow(hotelGrid, Priority.ALWAYS);
-
-        // Set column constraints to make columns equal width and fill available space
-        hotelGrid.getColumnConstraints().clear(); // Clear existing constraints
-        for (int i = 0; i < COLUMNS; i++) {
-            ColumnConstraints column = new ColumnConstraints();
-            column.setHgrow(Priority.ALWAYS);
-            column.setFillWidth(true);
-            // Set a minimum width for columns to prevent them from becoming too small
-            column.setMinWidth(200); // You can adjust this value
-            hotelGrid.getColumnConstraints().add(column);
-        }
-
-        // Explicitly set max width to ensure it tries to fill the ScrollPane
-        hotelGrid.setMaxWidth(Double.MAX_VALUE);
+        // Set FlowPane properties
+        hotelGrid.setHgap(20);
+        hotelGrid.setVgap(20);
+        hotelGrid.setPadding(new Insets(20));
+        hotelGrid.setStyle("-fx-background-color: transparent;");
+        hotelGrid.setPrefWrapLength(900.0); // This will be the width at which cards wrap to next line
     }
 
     private void setupFilterComboBox() {
         ObservableList<String> ratings = FXCollections.observableArrayList(
-            "All Ratings",
-            "5 Stars",
-            "4 Stars",
-            "3 Stars",
-            "2 Stars",
-            "1 Star"
+            "Toutes les évaluations",
+            "5 étoiles",
+            "4 étoiles",
+            "3 étoiles",
+            "2 étoiles",
+            "1 étoile"
         );
         filterComboBox.setItems(ratings);
-        filterComboBox.setValue("All Ratings");
+        filterComboBox.setValue("Toutes les évaluations");
         filterComboBox.setOnAction(e -> filterHotels());
     }
 
     private void setupCategoryFilterComboBox() {
         ObservableList<String> categories = FXCollections.observableArrayList(
-            "All Categories",
+            "Toutes les catégories",
             "Luxe",
             "Famille",
             "Economique",
             "Affaires"
         );
         categoryFilterComboBox.setItems(categories);
-        categoryFilterComboBox.setValue("All Categories");
+        categoryFilterComboBox.setValue("Toutes les catégories");
         categoryFilterComboBox.setOnAction(e -> filterHotels());
     }
 
@@ -216,14 +200,14 @@ public class AllHotels implements Initializable {
                     boolean matchesSearch = hotel.getNom().toLowerCase().contains(searchText) ||
                             hotel.getLocalisation().toLowerCase().contains(searchText);
 
-                    boolean matchesRating = selectedRating.equals("All Ratings") ||
-                            (selectedRating.equals("5 Stars") && hotel.getNbEtoile() == 5) ||
-                            (selectedRating.equals("4 Stars") && hotel.getNbEtoile() == 4) ||
-                            (selectedRating.equals("3 Stars") && hotel.getNbEtoile() == 3) ||
-                            (selectedRating.equals("2 Stars") && hotel.getNbEtoile() == 2) ||
-                            (selectedRating.equals("1 Star") && hotel.getNbEtoile() == 1);
+                    boolean matchesRating = selectedRating.equals("Toutes les évaluations") ||
+                            (selectedRating.equals("5 étoiles") && hotel.getNbEtoile() == 5) ||
+                            (selectedRating.equals("4 étoiles") && hotel.getNbEtoile() == 4) ||
+                            (selectedRating.equals("3 étoiles") && hotel.getNbEtoile() == 3) ||
+                            (selectedRating.equals("2 étoiles") && hotel.getNbEtoile() == 2) ||
+                            (selectedRating.equals("1 étoile") && hotel.getNbEtoile() == 1);
 
-                    boolean matchesCategory = selectedCategory.equals("All Categories") ||
+                    boolean matchesCategory = selectedCategory.equals("Toutes les catégories") ||
                             (hotel.getCategorieType() != null && hotel.getCategorieType().equals(selectedCategory));
 
                     return matchesSearch && matchesRating && matchesCategory;
@@ -237,25 +221,12 @@ public class AllHotels implements Initializable {
 
     private void displayHotels(List<Hotel> hotelsToDisplay) {
         hotelGrid.getChildren().clear();
-        final int[] row = {0};
-        final int[] col = {0};
 
         for (Hotel hotel : hotelsToDisplay) {
             final VBox hotelCard = createHotelCard(hotel);
-
-            // Make the card fill its grid cell
-            GridPane.setHgrow(hotelCard, Priority.ALWAYS);
-            GridPane.setVgrow(hotelCard, Priority.ALWAYS);
-
-            // Add the card to the grid
-            hotelGrid.add(hotelCard, col[0], row[0]);
-
-            // Update column and row
-            col[0]++;
-            if (col[0] >= COLUMNS) {
-                col[0] = 0;
-                row[0]++;
-            }
+            hotelCard.setMaxWidth(300); // Set a fixed maximum width for each card
+            hotelCard.setMinWidth(300);
+            hotelGrid.getChildren().add(hotelCard);
         }
     }
 
@@ -264,15 +235,17 @@ public class AllHotels implements Initializable {
         card.getStyleClass().add("hotel-card");
         card.setMaxWidth(Double.MAX_VALUE);
         card.setMinWidth(0);
+        card.setStyle("-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 8, 0, 0, 2); -fx-border-radius: 15; -fx-background-radius: 15;");
 
         // Hotel Image Container
         BorderPane imageContainer = new BorderPane();
         imageContainer.getStyleClass().add("hotel-image-container");
-        imageContainer.setMaxHeight(100);
-        imageContainer.setMinHeight(100);
-        imageContainer.setPrefHeight(100);
+        imageContainer.setMaxHeight(200);
+        imageContainer.setMinHeight(200);
+        imageContainer.setPrefHeight(200);
         imageContainer.setMaxWidth(Double.MAX_VALUE);
         imageContainer.setMinWidth(0);
+        imageContainer.setStyle("-fx-border-radius: 10 10 0 0; -fx-background-radius: 10 10 0 0;");
 
         // Loading indicator
         ProgressIndicator loadingSpinner = new ProgressIndicator();
@@ -285,7 +258,9 @@ public class AllHotels implements Initializable {
         imageView.fitHeightProperty().bind(imageContainer.heightProperty());
         imageView.setPreserveRatio(false);
         imageView.setSmooth(true);
+        imageView.setCache(true);
         imageView.getStyleClass().add("hotel-image");
+        imageView.setStyle("-fx-background-color: transparent;");
 
         // Center the loading spinner initially
         imageContainer.setCenter(loadingSpinner);
@@ -299,6 +274,7 @@ public class AllHotels implements Initializable {
         info.setPadding(new Insets(15));
         info.setMaxWidth(Double.MAX_VALUE);
         info.setMinWidth(0);
+        info.setStyle("-fx-background-color: white; -fx-border-radius: 0 0 10 10; -fx-background-radius: 0 0 10 10;");
 
         // Hotel Name
         Label nameLabel = new Label(hotel.getNom());
@@ -315,7 +291,7 @@ public class AllHotels implements Initializable {
         locationLabel.setMaxWidth(Double.MAX_VALUE);
 
         // Category
-        Label categoryLabel = new Label("Category: " + hotel.getCategorieType());
+        Label categoryLabel = new Label("Catégorie: " + hotel.getCategorieType());
         categoryLabel.getStyleClass().add("hotel-category");
         categoryLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #7f8c8d; -fx-font-weight: bold;");
         categoryLabel.setWrapText(true);
@@ -326,18 +302,18 @@ public class AllHotels implements Initializable {
         ratingBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         Label ratingLabel = new Label("★".repeat(hotel.getNbEtoile()));
         ratingLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #f1c40f;");
-        Label ratingText = new Label(hotel.getNbEtoile() + " Stars");
+        Label ratingText = new Label(hotel.getNbEtoile() + " Etoiles");
         ratingText.setStyle("-fx-font-size: 14px; -fx-text-fill: #7f8c8d;");
         ratingBox.getChildren().addAll(ratingLabel, ratingText);
 
         // Price
-        Label priceLabel = new Label(String.format("%.2f €", hotel.getTarif()));
+        Label priceLabel = new Label(String.format("%.2f DT", hotel.getTarif()));
         priceLabel.getStyleClass().add("hotel-price");
         priceLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #27ae60;");
 
         // Buttons Container
         HBox buttonsContainer = new HBox(10);
-        buttonsContainer.setAlignment(javafx.geometry.Pos.CENTER);
+        buttonsContainer.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         buttonsContainer.setPadding(new Insets(10, 0, 0, 0));
 
         // Book Button
@@ -351,7 +327,11 @@ public class AllHotels implements Initializable {
         detailsLink.setStyle("-fx-text-fill: #3498db; -fx-underline: true; -fx-cursor: hand;");
         detailsLink.setOnAction(event -> openHotelDetails(hotel));
 
-        buttonsContainer.getChildren().addAll(detailsLink, bookButton);
+        // Add HBox to push Book Now button to the right
+        HBox spacer = new HBox();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        buttonsContainer.getChildren().addAll(detailsLink, spacer, bookButton);
 
         // Add all elements to the info VBox
         info.getChildren().addAll(nameLabel, locationLabel, categoryLabel, ratingBox, priceLabel, buttonsContainer);
@@ -360,8 +340,8 @@ public class AllHotels implements Initializable {
         card.getChildren().addAll(imageContainer, info);
 
         // Add hover effect
-        card.setOnMouseEntered(e -> card.setStyle("-fx-background-color: #ffffff; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2); -fx-border-radius: 10; -fx-background-radius: 10;"));
-        card.setOnMouseExited(e -> card.setStyle("-fx-background-color: #ffffff; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 1); -fx-border-radius: 10; -fx-background-radius: 10;"));
+        card.setOnMouseEntered(e -> card.setStyle("-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 12, 0, 0, 3); -fx-border-radius: 15; -fx-background-radius: 15; -fx-translate-y: -2;"));
+        card.setOnMouseExited(e -> card.setStyle("-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 8, 0, 0, 2); -fx-border-radius: 15; -fx-background-radius: 15; -fx-translate-y: 0;"));
 
         // Apply clipping to the image container for rounded corners
         Rectangle clip = new Rectangle();
@@ -543,7 +523,7 @@ public class AllHotels implements Initializable {
             // Price box
             VBox priceBox = new VBox(5);
             priceBox.setStyle("-fx-background-color: #f8f9fa; -fx-padding: 10; -fx-background-radius: 5;");
-            Label priceLabel = new Label(String.format("Price: %.2f €", hotel.getTarif()));
+            Label priceLabel = new Label(String.format("Price: %.2f DT", hotel.getTarif()));
             priceLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #27ae60;");
             priceBox.getChildren().add(priceLabel);
             

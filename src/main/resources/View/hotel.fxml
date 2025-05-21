@@ -17,7 +17,7 @@
     </stylesheets>
 
     <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10;">
-        <Label text="Add New Hotel" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+        <Label text="Ajouter nouveau Hotel" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1976D2;"/>
     </HBox>
 
     <GridPane vgap="15" hgap="15" style="-fx-padding: 20; -fx-background-color: #f8f9fa; -fx-background-radius: 8;">
@@ -63,7 +63,7 @@
 
         <Label text="Image:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
         <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="7" GridPane.columnIndex="1">
-            <TextField fx:id="imageField" promptText="Select image file" 
+            <TextField fx:id="imageField" promptText="Choisir une image"
                       style="-fx-background-radius: 5; -fx-padding: 8; -fx-font-size: 14; -fx-background-color: white; -fx-border-radius: 5; -fx-border-color: #e0e0e0; -fx-border-width: 1;"
                       HBox.hgrow="ALWAYS"/>
             <Button text="Browse" onAction="#handleImageBrowse" 

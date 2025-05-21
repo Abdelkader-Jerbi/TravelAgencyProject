@@ -41,22 +41,22 @@
         <VBox spacing="20" style="-fx-padding: 20;">
             <HBox alignment="CENTER" spacing="15" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
                 <HBox alignment="CENTER_LEFT" spacing="15" HBox.hgrow="ALWAYS">
-                    <TextField fx:id="searchField" promptText="Search by hotel name..." 
+                    <TextField fx:id="searchField" promptText="Rechercher hotel par nom..."
                               style="-fx-background-radius: 20; -fx-padding: 8 15; -fx-font-size: 14; -fx-background-color: #f5f6fa; -fx-border-radius: 20; -fx-border-color: #e0e0e0; -fx-border-width: 1;" />
-                    <DatePicker fx:id="searchDatePicker" promptText="Filter by date" 
+                    <DatePicker fx:id="searchDatePicker" promptText="Filtrer par date..."
                                styleClass="search-datepicker" 
                                style="-fx-background-radius: 20; -fx-padding: 8 15; -fx-font-size: 14; " />
                 </HBox>
                 <HBox alignment="CENTER_RIGHT" spacing="15">
-                    <Button fx:id="addHotelButton" text="➕ Add Hotel" 
+                    <Button fx:id="addHotelButton" text="➕ Ajouter Hotel"
                             styleClass="add-button" 
                             onAction="#handleAddHotel"
                             style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14; -fx-padding: 8 20; -fx-background-radius: 20; -fx-cursor: hand;" />
-                    <Button fx:id="generatePdfButton" text="Generate PDF"
+                    <Button fx:id="generatePdfButton" text="Générer PDF"
                             styleClass="add-button"
                             onAction="#handleGeneratePdf"
                             style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-font-size: 14; -fx-padding: 8 20; -fx-background-radius: 20; -fx-cursor: hand;" />
-                    <Button fx:id="viewPdfsButton" text="View PDFs"
+                    <Button fx:id="viewPdfsButton" text="Voir PDFs"
                             styleClass="add-button"
                             onAction="#handleViewPDFs"
                             style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-size: 14; -fx-padding: 8 20; -fx-background-radius: 20; -fx-cursor: hand;" />
@@ -67,14 +67,14 @@
                 <TableView fx:id="hotelTable" style="-fx-font-size: 14px; -fx-background-color: transparent; -fx-table-cell-border-color: transparent;" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="colImage" text="Image" style="-fx-alignment: CENTER;" prefWidth="100" minWidth="50" maxWidth="90"/>
-                        <TableColumn fx:id="colNom" text="Hotel Name" style="-fx-alignment: CENTER_LEFT;" prefWidth="150"/>
-                        <TableColumn fx:id="colDestination" text="Location" style="-fx-alignment: CENTER_LEFT;" prefWidth="150"/>
+                        <TableColumn fx:id="colNom" text="Nom Hotel" style="-fx-alignment: CENTER_LEFT;" prefWidth="150"/>
+                        <TableColumn fx:id="colDestination" text="Localisation" style="-fx-alignment: CENTER_LEFT;" prefWidth="150"/>
                         <TableColumn fx:id="colDate" text="Date" style="-fx-alignment: CENTER;" prefWidth="100"/>
-                        <TableColumn fx:id="colChambre" text="Room Type" style="-fx-alignment: CENTER;" prefWidth="100"/>
-                        <TableColumn fx:id="colEtoile" text="Stars" style="-fx-alignment: CENTER;" prefWidth="80"/>
-                        <TableColumn fx:id="colTarif" text="Price" style="-fx-alignment: CENTER_RIGHT;" prefWidth="100"/>
+                        <TableColumn fx:id="colChambre" text="Chambres" style="-fx-alignment: CENTER;" prefWidth="100"/>
+                        <TableColumn fx:id="colEtoile" text="Etoiles" style="-fx-alignment: CENTER;" prefWidth="80"/>
+                        <TableColumn fx:id="colTarif" text="Prix" style="-fx-alignment: CENTER_RIGHT;" prefWidth="100"/>
                         <TableColumn fx:id="colDescription" text="Description" style="-fx-alignment: CENTER_LEFT;" prefWidth="300" minWidth="200"/>
-                        <TableColumn fx:id="colCategory" text="Category" style="-fx-alignment: CENTER;" prefWidth="100">
+                        <TableColumn fx:id="colCategory" text="Catégorie" style="-fx-alignment: CENTER;" prefWidth="100">
                              <cellValueFactory>
                                  <PropertyValueFactory property="categorieType"/>
                              </cellValueFactory>

@@ -68,7 +68,7 @@ public class HotelDetails {
 
             roomTypeLabel.setText(hotel.getChambre());
             starsLabel.setText("★".repeat(hotel.getNbEtoile()));
-            priceLabel.setText(String.format("%.2f €", hotel.getTarif()));
+            priceLabel.setText(String.format("%.2f DT", hotel.getTarif()));
             descriptionTextArea.setText(hotel.getDescription());
 
             // Load hotel image

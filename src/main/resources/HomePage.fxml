@@ -50,7 +50,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="ReclamButton" mnemonicParsing="false" styleClass="nav-button" text="Support">
+            <Button fx:id="ReclamButton" onAction="#allerPageReclamation" mnemonicParsing="false" styleClass="nav-button" text="Support">
                <font>
                   <Font size="14.0" />
                </font>

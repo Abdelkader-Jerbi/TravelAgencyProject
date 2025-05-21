@@ -1,7 +1,4 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
-
-
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -18,15 +15,11 @@
     </properties>
 
     <dependencies>
-
-        <!-- MySQL Connector -->
-
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.33</version>
         </dependency>
-
 
         <dependency>
             <groupId>com.sun.mail</groupId>
@@ -40,9 +33,6 @@
         </dependency>
 
 
-
-        <!-- JavaFX -->
-
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
@@ -54,7 +44,6 @@
             <version>21.0.2</version>
         </dependency>
 
-        
         <!-- iText PDF for PDF generation -->
         <dependency>
             <groupId>com.itextpdf</groupId>
@@ -63,34 +52,6 @@
         </dependency>
     </dependencies>
 
-
-
-
-
-        <!-- Ikonli -->
-        <dependency>
-            <groupId>org.kordamp.ikonli</groupId>
-            <artifactId>ikonli-core</artifactId>
-            <version>12.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.kordamp.ikonli</groupId>
-            <artifactId>ikonli-fontawesome5-pack</artifactId>
-            <version>12.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.kordamp.ikonli</groupId>
-            <artifactId>ikonli-javafx</artifactId>
-            <version>12.3.1</version>
-        </dependency>
-
-        <!-- JSON -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20231013</version>
-        </dependency>
-    </dependencies>
 
 
     <build>
@@ -107,4 +68,3 @@
     </build>
 
 </project>
-

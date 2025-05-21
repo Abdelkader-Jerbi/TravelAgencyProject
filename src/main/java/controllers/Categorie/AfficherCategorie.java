@@ -150,8 +150,6 @@ public class AfficherCategorie implements Initializable {
                     response.append(line);
                 }
                 reader.close();
-                org.json.JSONObject jsonResponse = new org.json.JSONObject(response.toString());
-                return jsonResponse.getJSONObject("responseData").getString("translatedText");
             }
         } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, "Erreur de traduction", "Impossible de traduire le texte: " + e.getMessage());

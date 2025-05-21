@@ -293,8 +293,7 @@ public class AfficherReclamation implements Initializable {
                 reader.close();
                 
                 // Parse la réponse JSON
-                org.json.JSONObject jsonResponse = new org.json.JSONObject(response.toString());
-                return jsonResponse.getString("translatedText");
+
             }
         } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, "Erreur de traduction", 

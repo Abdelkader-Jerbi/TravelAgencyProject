@@ -49,19 +49,8 @@ public class AjouterUtilisateurController {
             alert.setTitle("Information");
             alert.setContentText("Utilisateur a ete ajouté avec succes !");
             alert.show();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
-            try {
-                Parent parent = loader.load();
-                UtilisateurInfo utilInfo = loader.getController();
-                utilInfo.setTel(telTF.getText());
-                utilInfo.setNom(nomTF.getText());
-                utilInfo.setPrenom(prenomTF.getText());
-                utilInfo.setEmail(emailTF.getText());
-                utilInfo.setRole(Role.USER.toString());
-                nomTF.getScene().setRoot(parent);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterUtilisateur.fxml"));
+
         } catch (SQLException e) {
             showErrorAlert(e.getMessage());
         }

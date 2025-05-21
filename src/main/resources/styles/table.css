@@ -1,0 +1,56 @@
+.table-view {
+    -fx-background-color: #f7f7f7;
+    -fx-border-color: #bdbdbd;
+    -fx-border-radius: 8;
+    -fx-padding: 10;
+}
+
+.table-view .column-header {
+    -fx-background-color: #1976D2;
+    -fx-text-fill: #fafafa;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Segoe UI';
+    -fx-font-size: 15px;
+    -fx-border-radius: 8 8 0 0;
+    -fx-padding: 12 0 12 0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #fafafa;
+    -fx-font-family: 'Segoe UI';
+    -fx-font-size: 15px;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: #f7f7f7;
+    -fx-text-fill: #222;
+    -fx-font-family: 'Segoe UI';
+    -fx-font-size: 14px;
+    -fx-border-radius: 0 0 8 8;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #eeeeee;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #bdbdbd;
+    -fx-text-fill: #222;
+    -fx-font-weight: bold;
+}
+
+.table-view .table-cell {
+    -fx-text-fill: #222;
+    -fx-alignment: center;
+    -fx-font-family: 'Segoe UI';
+    -fx-padding: 12;
+}
+
+.table-view .table-row-cell:selected .table-cell {
+    -fx-text-fill: #222;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #e0e0e0;
+    -fx-cursor: hand;
+} 

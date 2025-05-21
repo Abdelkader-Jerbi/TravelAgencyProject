@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+//for push
 public class MyDatabase {
 
-    final String URL="jdbc:mysql://localhost:3306/esprit";
+    final String URL="jdbc:mysql://localhost:3306/travelagency?serverTimezone=UTC&jdbcCompliantTruncation=false";
+
 
     final String USERNAME="root";
     final String PASSWORD="";
@@ -38,6 +40,7 @@ public class MyDatabase {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return connection;
     }
 }

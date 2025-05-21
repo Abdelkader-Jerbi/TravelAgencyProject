@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.Categorie.ModifierCategorie"
+            prefWidth="600" prefHeight="500"
+            style="-fx-background-color: #e3f2fd;">
+    
+    <VBox spacing="20" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+        <!-- Titre -->
+        <Label text="Modifier les Catégories" 
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1976d2;"/>
+        
+        <!-- Liste des catégories -->
+        <TableView fx:id="categorieTable" VBox.vgrow="ALWAYS" 
+                  style="-fx-background-color: white; -fx-border-color: #E0E0E0;">
+            <columns>
+                <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="400"/>
+            </columns>
+        </TableView>
+
+        <!-- Formulaire de modification -->
+        <VBox spacing="10" style="-fx-background-color: #F5F5F5; -fx-padding: 15px; -fx-background-radius: 5px;">
+            <Label text="Modifier la description:" style="-fx-font-size: 14px;"/>
+            <TextField fx:id="descriptionField" promptText="Entrez la nouvelle description"/>
+            
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button fx:id="annulerButton" text="Annuler" 
+                        style="-fx-background-color: #9E9E9E; -fx-text-fill: white;"/>
+                <Button fx:id="sauvegarderButton" text="Sauvegarder" 
+                        style="-fx-background-color: #1976d2; -fx-text-fill: white;"/>
+            </HBox>
+        </VBox>
+    </VBox>
+</AnchorPane>

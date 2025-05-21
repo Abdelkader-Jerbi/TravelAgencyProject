@@ -428,6 +428,27 @@ public class HotelInfo {
             footer.setSpacingBefore(20);
             document.add(footer);
 
+            // Add signature field
+            Paragraph signatureLabel = new Paragraph(
+                "Signature:",
+                new com.lowagie.text.Font(com.lowagie.text.Font.HELVETICA, 12, com.lowagie.text.Font.BOLD)
+            );
+            signatureLabel.setSpacingBefore(30);
+            document.add(signatureLabel);
+
+            // Add a line for the signature
+            com.lowagie.text.pdf.PdfPTable signatureTable = new com.lowagie.text.pdf.PdfPTable(1);
+            signatureTable.setWidthPercentage(50);
+            signatureTable.setHorizontalAlignment(com.lowagie.text.Element.ALIGN_LEFT);
+            
+            com.lowagie.text.pdf.PdfPCell signatureCell = new com.lowagie.text.pdf.PdfPCell();
+            signatureCell.setFixedHeight(50);
+            signatureCell.setBorder(com.lowagie.text.Rectangle.BOTTOM);
+            signatureCell.setBorderColor(new java.awt.Color(0, 0, 0));
+            signatureTable.addCell(signatureCell);
+            
+            document.add(signatureTable);
+
             document.close();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

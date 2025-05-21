@@ -33,6 +33,9 @@ public class AjouterUtilisateurController {
 
     @FXML
     private PasswordField passwordTF;
+    
+    @FXML
+    private PasswordField confirmPasswordTF;
 
     @FXML
     void AjouterUtilisateur(ActionEvent event) {
@@ -84,6 +87,11 @@ public class AjouterUtilisateurController {
             return false;
         }
         
+        if (confirmPasswordTF.getText().isEmpty()) {
+            showErrorAlert("La confirmation du mot de passe ne peut pas être vide.");
+            return false;
+        }
+        
         // Validate email format
         if (!isValidEmail(emailTF.getText())) {
             showErrorAlert("Format d'email invalide.");
@@ -99,6 +107,12 @@ public class AjouterUtilisateurController {
         // Validate password strength
         if (passwordTF.getText().length() < 6) {
             showErrorAlert("Le mot de passe doit contenir au moins 6 caractères.");
+            return false;
+        }
+        
+        // Check if passwords match
+        if (!passwordTF.getText().equals(confirmPasswordTF.getText())) {
+            showErrorAlert("Les mots de passe ne correspondent pas.");
             return false;
         }
         

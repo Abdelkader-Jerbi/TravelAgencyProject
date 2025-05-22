@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import java.net.URL?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.AddHotel"
+      spacing="20"
+      style="-fx-background-color: white; -fx-padding: 20;">
+
+    <stylesheets>
+        <URL value="@css/style.css" />
+    </stylesheets>
+
+    <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10;">
+        <Label text="Ajouter nouveau Hotel" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1976D2;"/>
+    </HBox>
+
+    <GridPane vgap="15" hgap="15" style="-fx-padding: 20; -fx-background-color: #f8f9fa; -fx-background-radius: 8;">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
+        </columnConstraints>
+
+        <Label text="Hotel Name:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="nomField" promptText="Enter hotel name" 
+                  style="-fx-background-radius: 5; -fx-padding: 8; -fx-font-size: 14; -fx-background-color: white; -fx-border-radius: 5; -fx-border-color: #e0e0e0; -fx-border-width: 1;"
+                  GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Location:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="localisationField" promptText="Enter hotel location" 
+                  style="-fx-background-radius: 5; -fx-padding: 8; -fx-font-size: 14; -fx-background-color: white; -fx-border-radius: 5; -fx-border-color: #e0e0e0; -fx-border-width: 1;"
+                  GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Date:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="datePicker" promptText="Select date" 
+                   style="-fx-background-radius: 5; -fx-padding: 8; -fx-font-size: 14;"
+                   GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Room Type:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="chambreComboBox" promptText="Select room type" 
+                 style="-fx-background-radius: 5; -fx-padding: 8; -fx-font-size: 14; -fx-background-color: white; -fx-border-radius: 5; -fx-border-color: #e0e0e0; -fx-border-width: 1;"
+                 GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Category Type:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="categorieTypeComboBox" promptText="Select category type" 
+                 style="-fx-background-radius: 5; -fx-padding: 8; -fx-font-size: 14; -fx-background-color: white; -fx-border-radius: 5; -fx-border-color: #e0e0e0; -fx-border-width: 1;"
+                 GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+        <Label text="Stars:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <TextField fx:id="nbEtoileField" promptText="Enter number of stars" 
+                  style="-fx-background-radius: 5; -fx-padding: 8; -fx-font-size: 14; -fx-background-color: white; -fx-border-radius: 5; -fx-border-color: #e0e0e0; -fx-border-width: 1;"
+                  GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+        <Label text="Price:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <TextField fx:id="tarifField" promptText="Enter price" 
+                  style="-fx-background-radius: 5; -fx-padding: 8; -fx-font-size: 14; -fx-background-color: white; -fx-border-radius: 5; -fx-border-color: #e0e0e0; -fx-border-width: 1;"
+                  GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+        <Label text="Image:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+        <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="7" GridPane.columnIndex="1">
+            <TextField fx:id="imageField" promptText="Choisir une image"
+                      style="-fx-background-radius: 5; -fx-padding: 8; -fx-font-size: 14; -fx-background-color: white; -fx-border-radius: 5; -fx-border-color: #e0e0e0; -fx-border-width: 1;"
+                      HBox.hgrow="ALWAYS"/>
+            <Button text="Browse" onAction="#handleImageBrowse" 
+                    style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14; -fx-padding: 8 15; -fx-background-radius: 5; -fx-cursor: hand;"/>
+        </HBox>
+
+        <Label text="Description:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+        <TextArea fx:id="descriptionField" promptText="Hotel Description" prefRowCount="3" wrapText="true" GridPane.rowIndex="8" GridPane.columnSpan="2" />
+    </GridPane>
+
+    <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 10;">
+        <Button text="Cancel" onAction="#handleCancel" 
+                style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14; -fx-padding: 8 20; -fx-background-radius: 5; -fx-cursor: hand;"/>
+        <Button text="Save" onAction="#handleSave" 
+                style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-size: 14; -fx-padding: 8 20; -fx-background-radius: 5; -fx-cursor: hand;"/>
+    </HBox>
+</VBox>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="TravelAgencyProject.Main" />
+      <module name="TravelAgencyProject" />
+      <option name="VM_PARAMETERS" value="--enable-native-access=ALL-UNNAMED --add-opens javafx.graphics/javafx.scene=ALL-UNNAMED" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+</project> 

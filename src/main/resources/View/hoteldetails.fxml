@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import java.net.URL?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controllers.HotelDetails"
+      spacing="20"
+      style="-fx-background-color: white; -fx-padding: 20;">
+
+    <stylesheets>
+        <URL value="@css/style.css" />
+    </stylesheets>
+
+    <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10;">
+        <Label fx:id="hotelNameLabel" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+    </HBox>
+
+    <GridPane vgap="15" hgap="15" style="-fx-padding: 20; -fx-background-color: #f8f9fa; -fx-background-radius: 8;">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
+        </columnConstraints>
+
+        <ImageView fx:id="hotelImageView" fitWidth="300" fitHeight="200" preserveRatio="true" 
+                  GridPane.columnSpan="2" GridPane.halignment="CENTER"/>
+
+        <Label text="Localisation:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <Label fx:id="locationLabel" style="-fx-font-size: 14px;" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Chambre:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <Label fx:id="roomTypeLabel" style="-fx-font-size: 14px;" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Etoiles:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <Label fx:id="starsLabel" style="-fx-font-size: 14px;" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+        <Label text="Prix:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <Label fx:id="priceLabel" style="-fx-font-size: 14px;" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+        <Label text="Description:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <TextArea fx:id="descriptionTextArea" editable="false" wrapText="true" prefRowCount="4" 
+                 style="-fx-background-color: white; -fx-font-size: 14px;"
+                 GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+        <!-- Weather Information -->
+        <Label text="Météo:" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+        <HBox styleClass="weather-container" GridPane.rowIndex="7" GridPane.columnIndex="1" spacing="10" alignment="CENTER_LEFT">
+            <ImageView fx:id="weatherIconView" fitWidth="40" fitHeight="40" preserveRatio="true"/>
+            <VBox spacing="5">
+                <Label fx:id="temperatureLabel" style="-fx-font-size: 14px;"/>
+                <Label fx:id="weatherDescriptionLabel" style="-fx-font-size: 14px;"/>
+            </VBox>
+        </HBox>
+    </GridPane>
+
+    <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 10;">
+        <Button text="Close" onAction="#handleClose" 
+                style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14; -fx-padding: 8 20; -fx-background-radius: 5; -fx-cursor: hand;"/>
+    </HBox>
+</VBox> 

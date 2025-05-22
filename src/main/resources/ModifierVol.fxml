@@ -13,7 +13,7 @@
            style="-fx-background-color: linear-gradient(to bottom right, #f8fafc, #e0e7ef);"
            prefWidth="1000" prefHeight="600">
         <StackPane alignment="CENTER">
-            <VBox spacing="18" alignment="CENTER" style="-fx-padding: 32px; -fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, #b0b0b0, 30, 0.2, 0, 8);">
+            <VBox spacing="15" alignment="CENTER" style="-fx-padding: 32px; -fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, #b0b0b0, 30, 0.2, 0, 8);">
                 <Label text="Modifier un vol" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #e6007a;"/>
                 <Label text="Veuillez remplir les informations" style="-fx-font-size: 14px; -fx-text-fill: #888;"/>
                 <ComboBox fx:id="departField" promptText="Départ" styleClass="input-field" editable="true" style="-fx-background-radius: 10;"/>
@@ -47,7 +47,7 @@
 
 
 
-                <Button text="Enregistrer" onAction="#modifierVol" styleClass="submit-button"
+                <Button text="Enregistrer" onAction="#modifierVol" styleClass="submit-button" 
                         style="-fx-background-color: #0077ff; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 30; -fx-padding: 10 40; -fx-font-weight: bold;"/>
             </VBox>
         </StackPane>

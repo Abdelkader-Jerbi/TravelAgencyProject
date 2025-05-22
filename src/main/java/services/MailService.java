@@ -17,8 +17,13 @@ public class MailService {
 
     public void envoyerPromotionAuxClients(Vol vol) {
         try {
-            CrudUtilisateur crudClient = new CrudUtilisateur();
-            List<String> emails = crudClient.getAllEmails();
+            //CrudUtilisateur crudClient = new CrudUtilisateur();
+           // List<String> emails = crudClient.getAllEmails();
+            List<String> emails = List.of(
+                    "client1@example.com",
+                    "client2@example.com",
+                    "client3@example.com"
+            );
 
             if (emails.isEmpty()) {
                 System.out.println("Aucun email trouvé dans la base de données");

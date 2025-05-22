@@ -1,9 +1,6 @@
 package controllers;
 
-import entities.Categorie;
-import entities.Enumnom;
-import entities.StatutVol;
-import entities.Vol;
+import entities.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -145,7 +142,7 @@ public class ModifierVolController {
             }
 
             try {
-                Categorie categorie = crudVol.getCategorieByNom(selectedNom.name());
+                CategorieVol categorie = crudVol.getCategorieByNom(selectedNom.name());
                 if (categorie != null) {
                     vol.setCategorie(categorie);
                 } else {

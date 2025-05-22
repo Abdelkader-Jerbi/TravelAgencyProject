@@ -295,7 +295,7 @@ public class LoginController implements Initializable {
     private void loadDashboardAdmin() {
         try {
 
-            Parent root = FXMLLoader.load(getClass().getResource("/View/hoteltable.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/ListVol.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();

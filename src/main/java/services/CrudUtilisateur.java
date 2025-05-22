@@ -103,4 +103,23 @@ public class CrudUtilisateur implements CrudMethods<Utilisateur> {
         return user;
     }
 
+
+        public List<String> getAllEmails() {
+            List<String> emails = new ArrayList<>();
+            String req = "SELECT email FROM utilisateur ";
+
+            try (Statement stmt = connection.createStatement();
+                 ResultSet rs = stmt.executeQuery(req)) {
+
+                while (rs.next()) {
+                    emails.add(rs.getString("email"));
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            return emails;
+        }
 }
+

@@ -1,6 +1,6 @@
 package services;
 
-import entities.Categorie;
+import entities.CategorieVol;
 import entities.Enumnom;
 import entities.Vol;
 import utils.MyDatabase;
@@ -84,7 +84,7 @@ public class CrudVol implements VoLInterface {
                     continue;
                 }
 
-                Categorie cat = new Categorie(catId, nomCat);
+                CategorieVol cat = new CategorieVol(catId, nomCat);
 
                 Vol vol = new Vol(id, depart, destination, date, dateRetour, prix, cat, statut);
                 vol.setEnpromotion(enpromotion);
@@ -140,7 +140,7 @@ public class CrudVol implements VoLInterface {
     }
 
     @Override
-    public Categorie getCategorieByNom(String nom) throws SQLException {
+    public CategorieVol getCategorieByNom(String nom) throws SQLException {
         String sql = "SELECT * FROM categorie WHERE nom = ?";
         try (Connection conn = MyDatabase.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -149,7 +149,7 @@ public class CrudVol implements VoLInterface {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 Enumnom categorieNom = Enumnom.valueOf(rs.getString("nom"));
-                return new Categorie(rs.getInt("id"), categorieNom);
+                return new CategorieVol(rs.getInt("id"), categorieNom);
             }
         }
 

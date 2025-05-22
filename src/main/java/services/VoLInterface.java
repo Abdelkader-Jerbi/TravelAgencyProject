@@ -1,6 +1,6 @@
 package services;
 
-import entities.Categorie;
+import entities.CategorieVol;
 import entities.Enumnom;
 import entities.Vol;
 
@@ -12,7 +12,7 @@ public interface VoLInterface {
     List<Vol> getAllVols();
     void supprimerVol(int id);
     void modifierVol(Vol vol);
-    Categorie getCategorieByNom(String nom) throws SQLException;
+    CategorieVol getCategorieByNom(String nom) throws SQLException;
     void ajouterVol(Vol vol) throws SQLException;
     double calculerPrixFinal(Vol vol);
     List<Vol> chercherVolParDepartEtDestination(String depart, String destination);

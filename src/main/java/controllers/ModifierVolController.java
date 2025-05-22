@@ -1,6 +1,6 @@
 package controllers;
 
-import entities.Categorie;
+import entities.CategorieVol;
 import entities.Enumnom;
 import entities.StatutVol;
 import entities.Vol;
@@ -145,7 +145,7 @@ public class ModifierVolController {
             }
 
             try {
-                Categorie categorie = crudVol.getCategorieByNom(selectedNom.name());
+                CategorieVol categorie = crudVol.getCategorieByNom(selectedNom.name());
                 if (categorie != null) {
                     vol.setCategorie(categorie);
                 } else {

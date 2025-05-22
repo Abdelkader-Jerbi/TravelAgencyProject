@@ -1,6 +1,6 @@
 package controllers;
 
-import entities.Categorie;
+import entities.CategorieVol;
 import entities.Enumnom;
 import entities.StatutVol;
 import entities.Vol;
@@ -126,7 +126,7 @@ public class AjouterVolController  implements Initializable {
 
         // Vérifier si la catégorie existe dans la base de données
         CrudVol crudVol = new CrudVol();
-        Categorie categorie = null;
+        CategorieVol categorie = null;
         try {
             categorie = crudVol.getCategorieByNom(selectedNom.toString());
         } catch (SQLException e) {

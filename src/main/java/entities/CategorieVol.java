@@ -1,15 +1,15 @@
 package entities;
 
-public class Categorie {
+public class CategorieVol {
     private int id ;
     private  Enumnom nom ;
 
-    public Categorie(int id, Enumnom nom) {
+    public CategorieVol(int id, Enumnom nom) {
         this.id = id;
         this.nom = nom;
     }
 
-    public Categorie(Enumnom nom) {
+    public CategorieVol(Enumnom nom) {
         this.nom = nom;
     }
 

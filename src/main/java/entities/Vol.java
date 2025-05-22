@@ -10,7 +10,7 @@ public class Vol {
     private Date date ;
     private Date dateRetour;
     private double prix ;
-    private Categorie categorie;
+    private CategorieVol categorie;
     private  String enpromotion ;
     private double pourcentagePromotion;
 
@@ -24,7 +24,7 @@ public class Vol {
         this.statut = statut;
     }
 
-    public Vol(int id_vol, String depart, String destination, Date date, Date dateRetour, double prix, Categorie categorie, StatutVol statut) {
+    public Vol(int id_vol, String depart, String destination, Date date, Date dateRetour, double prix, CategorieVol categorie, StatutVol statut) {
         this.id_vol = id_vol;
         this.depart = depart;
         this.destination = destination;
@@ -35,7 +35,7 @@ public class Vol {
         this.statut = statut;
     }
 
-    public Vol(int id_vol, String depart, String destination, Date date, Date dateRetour, double prix, Categorie categorie) {
+    public Vol(int id_vol, String depart, String destination, Date date, Date dateRetour, double prix, CategorieVol categorie) {
         this.id_vol = id_vol;
         this.depart = depart;
         this.destination = destination;
@@ -45,7 +45,7 @@ public class Vol {
         this.categorie = categorie;
     }
 
-    public Vol(String depart, String destination, Date date, Date dateRetour, double prix, Categorie categorie) {
+    public Vol(String depart, String destination, Date date, Date dateRetour, double prix, CategorieVol categorie) {
         this.depart = depart;
         this.destination = destination;
         this.date = date;
@@ -53,7 +53,7 @@ public class Vol {
         this.prix = prix;
         this.categorie = categorie;
     }
-    public Vol(String depart, String destination, Date date, Date dateRetour, double prix, Categorie categorie, StatutVol statut) {
+    public Vol(String depart, String destination, Date date, Date dateRetour, double prix, CategorieVol categorie, StatutVol statut) {
         this.depart = depart;
         this.destination = destination;
         this.date = date;
@@ -63,7 +63,7 @@ public class Vol {
         this.statut = statut;
     }
 
-    public Vol(int id_vol, String depart, String destination, Date date, Date dateRetour, double prix, Categorie categorie, String enpromotion, double pourcentagePromotion, StatutVol statut) {
+    public Vol(int id_vol, String depart, String destination, Date date, Date dateRetour, double prix, CategorieVol categorie, String enpromotion, double pourcentagePromotion, StatutVol statut) {
         this.id_vol = id_vol;
         this.depart = depart;
         this.destination = destination;
@@ -124,11 +124,11 @@ public class Vol {
         this.prix = prix;
     }
 
-    public Categorie getCategorie() {
+    public CategorieVol getCategorie() {
         return categorie;
     }
 
-    public void setCategorie(Categorie categorie) {
+    public void setCategorie(CategorieVol categorie) {
         this.categorie = categorie;
     }
 

@@ -1,6 +1,6 @@
 package services;
 
-import entities.Categorie;
+import entities.CategorieVol;
 import entities.Enumnom;
 import entities.Vol;
 import utils.MyDatabase;
@@ -43,7 +43,7 @@ public class CrudVol implements VoLInterface {
         List<Vol> vols = new ArrayList<>();
        String sql = "SELECT v.id_vol, v.depart, v.destination, v.date, v.dateRetour, v.prix, v.statut, " +
                "v.enpromotion, v.pourcentagePromotion, c.id, c.nom " + // Ajout des champs
-               "FROM vol v JOIN categorie c ON v.categorie_id = c.id";
+               "FROM vol v JOIN categorieVol c ON v.categorie_id = c.id";
 
        try (Connection conn = MyDatabase.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -84,7 +84,7 @@ public class CrudVol implements VoLInterface {
                     continue;
                 }
 
-                Categorie cat = new Categorie(catId, nomCat);
+                CategorieVol cat = new CategorieVol(catId, nomCat);
 
                 Vol vol = new Vol(id, depart, destination, date, dateRetour, prix, cat, statut);
                 vol.setEnpromotion(enpromotion);
@@ -140,7 +140,7 @@ public class CrudVol implements VoLInterface {
     }
 
     @Override
-    public Categorie getCategorieByNom(String nom) throws SQLException {
+    public CategorieVol getCategorieByNom(String nom) throws SQLException {
         String sql = "SELECT * FROM categorie WHERE nom = ?";
         try (Connection conn = MyDatabase.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -149,7 +149,7 @@ public class CrudVol implements VoLInterface {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 Enumnom categorieNom = Enumnom.valueOf(rs.getString("nom"));
-                return new Categorie(rs.getInt("id"), categorieNom);
+                return new CategorieVol(rs.getInt("id"), categorieNom);
             }
         }
 

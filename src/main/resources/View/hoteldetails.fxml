@@ -30,16 +30,16 @@
         <ImageView fx:id="hotelImageView" fitWidth="300" fitHeight="200" preserveRatio="true" 
                   GridPane.columnSpan="2" GridPane.halignment="CENTER"/>
 
-        <Label text="Location:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <Label text="Localisation:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
         <Label fx:id="locationLabel" style="-fx-font-size: 14px;" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-        <Label text="Room Type:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <Label text="Chambre:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
         <Label fx:id="roomTypeLabel" style="-fx-font-size: 14px;" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-        <Label text="Stars:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <Label text="Etoiles:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
         <Label fx:id="starsLabel" style="-fx-font-size: 14px;" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-        <Label text="Price:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <Label text="Prix:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
         <Label fx:id="priceLabel" style="-fx-font-size: 14px;" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
         <Label text="Description:" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
@@ -48,7 +48,7 @@
                  GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
         <!-- Weather Information -->
-        <Label text="Weather:" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+        <Label text="Météo:" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
         <HBox styleClass="weather-container" GridPane.rowIndex="7" GridPane.columnIndex="1" spacing="10" alignment="CENTER_LEFT">
             <ImageView fx:id="weatherIconView" fitWidth="40" fitHeight="40" preserveRatio="true"/>
             <VBox spacing="5">

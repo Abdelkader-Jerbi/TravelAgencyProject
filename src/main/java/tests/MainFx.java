@@ -18,7 +18,7 @@ public class MainFx extends Application {
     public void start(Stage primaryStage) {
         try {
             // 👉 Change this to /AjouterUtilisateur.fxml if you want to start with that
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/AllHotels.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/hoteltable.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);

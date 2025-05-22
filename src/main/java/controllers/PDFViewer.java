@@ -40,7 +40,7 @@ public class PDFViewer implements Initializable {
         fileNameColumn.setCellValueFactory(new PropertyValueFactory<>("fileName"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("generatedDate"));
 
-        // Setup action column with View button
+        // Setup action column with View and Delete buttons
         actionColumn.setCellFactory(createActionButtonCellFactory());
     }
 
@@ -49,16 +49,23 @@ public class PDFViewer implements Initializable {
             @Override
             public TableCell<PDFFile, Void> call(TableColumn<PDFFile, Void> param) {
                 return new TableCell<PDFFile, Void>() {
-                    private final Button viewButton = new Button("View");
-                    private final HBox buttons = new HBox(10, viewButton);
+                    private final Button viewButton = new Button("Voir");
+                    private final Button deleteButton = new Button("Supprimer");
+                    private final HBox buttons = new HBox(10, viewButton, deleteButton);
 
                     {
                         viewButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+                        deleteButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: white;");
                         buttons.setAlignment(Pos.CENTER);
                         
                         viewButton.setOnAction(event -> {
                             PDFFile pdf = getTableView().getItems().get(getIndex());
                             openPDF(pdf.getFile());
+                        });
+
+                        deleteButton.setOnAction(event -> {
+                            PDFFile pdf = getTableView().getItems().get(getIndex());
+                            deletePDF(pdf);
                         });
                     }
 
@@ -75,20 +82,31 @@ public class PDFViewer implements Initializable {
     @FXML
     private void refreshPDFList() {
         try {
+            System.out.println("Starting PDF list refresh...");
+            
             // Get the project root directory
             File projectRoot = new File(System.getProperty("user.dir"));
+            System.out.println("Project root: " + projectRoot.getAbsolutePath());
+            
             File pdfDir = new File(projectRoot, "pdfs");
+            System.out.println("PDF directory: " + pdfDir.getAbsolutePath());
             
             if (!pdfDir.exists()) {
+                System.out.println("PDF directory does not exist, creating it...");
                 boolean created = pdfDir.mkdir();
                 if (!created) {
+                    System.out.println("Failed to create PDF directory");
                     showError("Error", "Could not create PDFs directory at: " + pdfDir.getAbsolutePath());
                     return;
                 }
+                System.out.println("PDF directory created successfully");
             }
 
             File[] files = pdfDir.listFiles((dir, name) -> name.toLowerCase().endsWith(".pdf"));
+            System.out.println("Found " + (files != null ? files.length : 0) + " PDF files");
+            
             if (files == null) {
+                System.out.println("Could not access PDF directory");
                 showError("Error", "Could not access PDFs directory at: " + pdfDir.getAbsolutePath());
                 return;
             }
@@ -101,13 +119,26 @@ public class PDFViewer implements Initializable {
                     ))
                     .collect(Collectors.toList());
 
-            pdfList.setAll(pdfFiles);
+            System.out.println("Updating table with " + pdfFiles.size() + " files");
+            
+            // Clear and update the table
+            pdfList.clear();
+            pdfList.addAll(pdfFiles);
             pdfTable.setItems(pdfList);
-
+            
+            // Force table refresh
+            pdfTable.refresh();
+            
+            // Show success message
             if (pdfFiles.isEmpty()) {
+                System.out.println("No PDF files found");
                 showInfo("Information", "No PDF files found in: " + pdfDir.getAbsolutePath());
+            } else {
+                System.out.println("PDF list refreshed successfully");
+                showInfo("Success", "PDF list has been refreshed. Found " + pdfFiles.size() + " files.");
             }
         } catch (Exception e) {
+            System.err.println("Error during PDF list refresh: " + e.getMessage());
             e.printStackTrace();
             showError("Error", "Error refreshing PDF list: " + e.getMessage());
         }
@@ -123,6 +154,28 @@ public class PDFViewer implements Initializable {
         } catch (Exception e) {
             showError("Error", "Could not open PDF file: " + e.getMessage());
         }
+    }
+
+    private void deletePDF(PDFFile pdf) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Confirmation");
+        alert.setHeaderText("Are you sure you want to delete this PDF?");
+        alert.setContentText("File: " + pdf.getFileName());
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                try {
+                    if (pdf.getFile().delete()) {
+                        showInfo("Success", "PDF file deleted successfully!");
+                        refreshPDFList(); // Refresh the list after deletion
+                    } else {
+                        showError("Error", "Could not delete the PDF file. It may be in use by another program.");
+                    }
+                } catch (Exception e) {
+                    showError("Error", "Failed to delete PDF file: " + e.getMessage());
+                }
+            }
+        });
     }
 
     private void showError(String title, String message) {

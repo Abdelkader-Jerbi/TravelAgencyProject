@@ -21,16 +21,14 @@
             </padding>
             
             <Text style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2c3e50;">
-                Discover Amazing Hotels
+              Découvrir nos meilleurs hôtels
             </Text>
             
             <HBox spacing="15" alignment="CENTER_LEFT">
                 <TextField fx:id="searchField" 
-                          promptText="Search hotels by name, location, or amenities..." 
+                          promptText="Rechercher hotel par nom, localisation, ou Commodités..."
                           styleClass="search-field"
                           style="-fx-pref-width: 400px; -fx-background-radius: 20px; -fx-border-radius: 20px;"/>
-
-
 
                 <ComboBox fx:id="filterComboBox" 
                           promptText="Filter by rating"
@@ -41,7 +39,6 @@
                           promptText="Filter by category"
                           styleClass="filter-combo"
                           style="-fx-background-radius: 20px; -fx-border-radius: 20px;"/>
-
             </HBox>
         </VBox>
     </top>
@@ -56,16 +53,18 @@
                        style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
             </HBox>
 
-            <!-- Hotel Grid -->
+            <!-- Hotel Cards Container -->
             <ScrollPane fitToWidth="true"
                        hbarPolicy="NEVER"
                        style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;">
-                <GridPane fx:id="hotelGrid"
+                <FlowPane fx:id="hotelGrid"
                          hgap="20"
                          vgap="20"
-                         alignment="CENTER">
-                    <!-- Grid content will be populated dynamically -->
-                </GridPane>
+                         alignment="CENTER"
+                         prefWrapLength="900.0"
+                         style="-fx-background-color: transparent;">
+                    <!-- Cards will be populated dynamically -->
+                </FlowPane>
             </ScrollPane>
         </VBox>
     </center>

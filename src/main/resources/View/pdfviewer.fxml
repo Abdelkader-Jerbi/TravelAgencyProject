@@ -17,13 +17,13 @@
     </stylesheets>
 
     <HBox alignment="CENTER_LEFT" spacing="10">
-        <Label text="PDF Reports" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2196F3;"/>
+        <Label text="Rapport PDFs" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2196F3;"/>
     </HBox>
 
     <TableView fx:id="pdfTable" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn fx:id="fileNameColumn" text="File Name" prefWidth="300"/>
-            <TableColumn fx:id="dateColumn" text="Generated Date" prefWidth="200"/>
+            <TableColumn fx:id="fileNameColumn" text="Nom du pdf" prefWidth="300"/>
+            <TableColumn fx:id="dateColumn" text="Date" prefWidth="200"/>
             <TableColumn fx:id="actionColumn" text="Actions" prefWidth="150"/>
         </columns>
         <columnResizePolicy>

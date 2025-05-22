@@ -213,12 +213,12 @@ public class HotelInfo {
 
                 // Configure buttons with icons
                 editButton.setGraphic(editIcon);
-                editButton.setText("Edit"); // Optional text
+                editButton.setText("Modifier"); // Optional text
                 editButton.setContentDisplay(ContentDisplay.LEFT);
                 editButton.setGraphicTextGap(5);
 
                 deleteButton.setGraphic(deleteIcon);
-                deleteButton.setText("Delete"); // Optional text
+                deleteButton.setText("Supprimer"); // Optional text
                 deleteButton.setContentDisplay(ContentDisplay.LEFT);
                 deleteButton.setGraphicTextGap(5);
 
@@ -349,7 +349,7 @@ public class HotelInfo {
 
             // Create a unique filename with timestamp
             String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
-            String filename = pdfDir.getAbsolutePath() + File.separator + "hotels-list_" + timestamp + ".pdf";
+            String filename = pdfDir.getAbsolutePath() + File.separator + "Liste_Hotels" + timestamp + ".pdf";
 
             Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(filename));
@@ -357,7 +357,7 @@ public class HotelInfo {
 
             // Add title and generation date
             com.lowagie.text.Font titleFont = new com.lowagie.text.Font(com.lowagie.text.Font.HELVETICA, 18, com.lowagie.text.Font.BOLD);
-            Paragraph title = new Paragraph("Hotel List", titleFont);
+            Paragraph title = new Paragraph("Liste Hotel", titleFont);
             title.setAlignment(com.lowagie.text.Element.ALIGN_CENTER);
             title.setSpacingAfter(10);
 
@@ -381,7 +381,7 @@ public class HotelInfo {
 
             // Add table headers
             com.lowagie.text.Font headerFont = new com.lowagie.text.Font(com.lowagie.text.Font.HELVETICA, 12, com.lowagie.text.Font.BOLD);
-            String[] headers = {"Hotel Name", "Location", "Stars", "Room Type", "Price", "Date"};
+            String[] headers = {"Nom Hotel", "Localisation", "Etoile", "Chambre", "Prix", "Date"};
             for (String header : headers) {
                 com.lowagie.text.Phrase phrase = new com.lowagie.text.Phrase(header, headerFont);
                 phrase.setFont(new com.lowagie.text.Font(com.lowagie.text.Font.HELVETICA, 12, com.lowagie.text.Font.BOLD, java.awt.Color.WHITE));
@@ -403,7 +403,7 @@ public class HotelInfo {
                 com.lowagie.text.pdf.PdfPCell locationCell = createContentCell(hotel.getLocalisation(), contentFont, alternateRow);
                 com.lowagie.text.pdf.PdfPCell starsCell = createContentCell(hotel.getNbEtoile() + " Stars", contentFont, alternateRow);
                 com.lowagie.text.pdf.PdfPCell roomCell = createContentCell(hotel.getChambre(), contentFont, alternateRow);
-                com.lowagie.text.pdf.PdfPCell priceCell = createContentCell(String.format("$%.2f", hotel.getTarif()), contentFont, alternateRow);
+                com.lowagie.text.pdf.PdfPCell priceCell = createContentCell(String.format("%.2f DT", hotel.getTarif()), contentFont, alternateRow);
                 com.lowagie.text.pdf.PdfPCell dateCell = createContentCell(hotel.getDate().toString(), contentFont, alternateRow);
 
                 // Add cells to table
@@ -427,6 +427,20 @@ public class HotelInfo {
             footer.setAlignment(com.lowagie.text.Element.ALIGN_RIGHT);
             footer.setSpacingBefore(20);
             document.add(footer);
+
+            // Add signature section
+            document.add(new Paragraph("\n\n\n")); // Add some space before signature
+            
+            // Add signature line
+            Paragraph signatureLine = new Paragraph("_____________________________");
+            signatureLine.setAlignment(com.lowagie.text.Element.ALIGN_RIGHT);
+            document.add(signatureLine);
+            
+            // Add signature label
+            Paragraph signatureLabel = new Paragraph("Signature");
+            signatureLabel.setAlignment(com.lowagie.text.Element.ALIGN_RIGHT);
+            signatureLabel.setSpacingBefore(5);
+            document.add(signatureLabel);
 
             document.close();
 

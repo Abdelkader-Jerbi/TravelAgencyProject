@@ -54,7 +54,7 @@ public class EmailService {
                 "Location: %s\n" +
                 "Room Type: %s\n" +
                 "Rating: %d Stars\n" +
-                "Total Price: $%.2f\n\n" +
+                "Total Price: %.2f DT\n\n" +
                 "We look forward to welcoming you and ensuring you have a wonderful stay!\n\n" +
                 "Best regards,\n" +
                 "Your Travel Agency Team",

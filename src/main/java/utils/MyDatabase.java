@@ -43,7 +43,6 @@ public class MyDatabase {
             e.printStackTrace();
         }
 
-
         return connection;
     }
 }

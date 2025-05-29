@@ -22,12 +22,15 @@ public class MainFx extends Application {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
 
+
         try {
             Parent parent = loader.load();
             Scene scene = new Scene(parent);
            // primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.setScene(scene);
+
             primaryStage.setTitle("Login");
+
             primaryStage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);

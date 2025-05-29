@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller.ReservationVoitureController"
+            prefWidth="1200" prefHeight="800"
+            styleClass="main-bg" stylesheets="@theme-voyage.css">
+    <children>
+        <VBox spacing="0" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+            <!-- Barre de navigation améliorée -->
+            <HBox styleClass="nav-bar" alignment="CENTER_LEFT" spacing="10">
+                <padding><Insets top="15" right="25" bottom="15" left="25"/></padding>
+                <Button text="← Retour" onAction="#closeWindow" styleClass="button back-btn"/>
+                <Label text="Réservation de voiture" styleClass="nav-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+            </HBox>
+
+            <!-- Contenu principal avec ScrollPane -->
+            <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="scroll-pane" VBox.vgrow="ALWAYS">
+                <HBox spacing="40" alignment="TOP_LEFT" style="-fx-padding: 40;">
+                    <!-- Carte voiture à gauche avec animation -->
+                    <VBox spacing="25" styleClass="card-container" prefWidth="450" maxWidth="450">
+                        <ImageView fx:id="voitureImage" fitHeight="250" fitWidth="400" preserveRatio="true" styleClass="detail-image"/>
+                        
+                        <VBox spacing="12" styleClass="info-container">
+                            <Label fx:id="marqueLabel" styleClass="detail-title"/>
+                            <Label fx:id="modeleLabel" styleClass="detail-subtitle"/>
+                        </VBox>
+
+                        <HBox spacing="20" alignment="CENTER_LEFT" styleClass="price-container">
+                            <Label text="Prix/jour :" styleClass="price-label"/>
+                            <Label fx:id="prixLabel" styleClass="price-value"/>
+                        </HBox>
+
+                        <HBox spacing="20" alignment="CENTER_LEFT" styleClass="availability-container">
+                            <Label text="Disponibilité :" styleClass="availability-label"/>
+                            <Label fx:id="disponibleLabel" styleClass="availability-value"/>
+                        </HBox>
+
+                        <Separator styleClass="separator"/>
+
+                        <GridPane hgap="25" vgap="20" styleClass="features-grid">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="120"/>
+                                <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" minWidth="120"/>
+                            </columnConstraints>
+                            <children>
+                                <Label text="Matricule" styleClass="feature-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                <Label fx:id="matriculeCol" styleClass="feature-value" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                                <Label text="Carburant" styleClass="feature-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                <Label fx:id="carburantLabel" styleClass="feature-value" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                                <Label text="Boîte" styleClass="feature-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                <Label fx:id="boiteVitesseLabel" styleClass="feature-value" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                            </children>
+                        </GridPane>
+                    </VBox>
+
+                    <!-- Formulaire de réservation à droite avec animation -->
+                    <VBox spacing="30" styleClass="form-container" prefWidth="550" maxWidth="550">
+                        <Label text="Informations de réservation" styleClass="section-title"/>
+                        
+                        <GridPane hgap="25" vgap="25">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="130"/>
+                                <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" minWidth="250"/>
+                            </columnConstraints>
+                            <children>
+                                <Label text="Nom" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                <TextField fx:id="nomClientField" promptText="Votre nom" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                                
+                                <Label text="Prénom" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                <TextField fx:id="prenomClientField" promptText="Votre prénom" styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                                
+                                <Label text="Départ" styleClass="form-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                <ComboBox fx:id="villeDepartCombo" promptText="Ville de départ" styleClass="form-field" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                                
+                                <Label text="Retour" styleClass="form-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                                <ComboBox fx:id="villeRetourCombo" promptText="Ville de retour" styleClass="form-field" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                                
+                                <Label text="Date début" styleClass="form-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                                <DatePicker fx:id="dateDebutPicker" promptText="Date de début" styleClass="form-field" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                                
+                                <Label text="Date fin" styleClass="form-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                                <DatePicker fx:id="dateFinPicker" promptText="Date de fin" styleClass="form-field" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                                
+                                <Label text="Chauffeur" styleClass="form-label" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                                <CheckBox fx:id="chauffeurCheckBox" text="Avec chauffeur" styleClass="form-checkbox" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                            </children>
+                        </GridPane>
+
+                        <VBox spacing="20" alignment="CENTER">
+                            <HBox spacing="20" alignment="CENTER">
+                                <Button fx:id="btnRechercher" onAction="#passerAPaiement" text="Passer à paiement" styleClass="button action-btn primary" prefWidth="220"/>
+                                <Button fx:id="annulerButton" onAction="#closeWindow" text="Annuler" styleClass="button action-btn secondary" prefWidth="140"/>
+                            </HBox>
+                            <Label fx:id="notificationLabel" text="" styleClass="notification-label"/>
+                        </VBox>
+                    </VBox>
+                </HBox>
+            </ScrollPane>
+        </VBox>
+    </children>
+</AnchorPane>

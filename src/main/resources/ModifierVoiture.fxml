@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.Node?>
+<?import javafx.stage.Stage?>
+<?import javafx.event.ActionEvent?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="Controller.ModifierVoitureController" stylesheets="@theme-voyage.css">
+    <children>
+        <VBox spacing="10" alignment="CENTER"
+              AnchorPane.topAnchor="0"
+              AnchorPane.leftAnchor="0"
+              AnchorPane.rightAnchor="0"
+              AnchorPane.bottomAnchor="0">
+            <VBox spacing="7" maxWidth="440" style="-fx-background-color: #fff; -fx-background-radius: 14; -fx-padding: 16 22 14 22; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 6, 0, 0, 1);">
+                <Label text="Modifier la Voiture" styleClass="label-title" alignment="CENTER" />
+                <GridPane hgap="10" vgap="7">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" minWidth="120" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+                    <Label text="Marque :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="marqueField" GridPane.rowIndex="0" GridPane.columnIndex="1" promptText="Ex : Renault" styleClass="filter-field"/>
+                    <Label text="Modèle :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="modeleField" GridPane.rowIndex="1" GridPane.columnIndex="1" promptText="Ex : Clio" styleClass="filter-field"/>
+                    <Label text="Matricule :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="matriculeField" GridPane.rowIndex="2" GridPane.columnIndex="1" promptText="Ex : 1234 TU 567" styleClass="filter-field"/>
+                    <Label text="Prix par jour :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="prixParJourField" GridPane.rowIndex="3" GridPane.columnIndex="1" promptText="Ex : 120" styleClass="filter-field"/>
+                    <Label text="Image :" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <Button text="Importer Image" fx:id="importImageButton" onAction="#importerImage" GridPane.rowIndex="4" GridPane.columnIndex="1" styleClass="button action-btn export"/>
+                    <Label text="Disponible :" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <CheckBox fx:id="disponibleCheckBox" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                    <Label text="Carburant :" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="carburantComboBox" GridPane.rowIndex="6" GridPane.columnIndex="1" styleClass="filter-field combo-compact"/>
+                    <Label text="Boîte de Vitesse :" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="boiteVitesseComboBox" GridPane.rowIndex="7" GridPane.columnIndex="1" styleClass="filter-field combo-compact"/>
+                    <Label text="Nombre de Places :" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                    <Spinner fx:id="nbPlacesSpinner" GridPane.rowIndex="8" GridPane.columnIndex="1" styleClass="filter-field spinner-compact"/>
+                    <Label text="Nombre de Portes :" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+                    <Spinner fx:id="nbPortesSpinner" GridPane.rowIndex="9" GridPane.columnIndex="1" styleClass="filter-field spinner-compact"/>
+                    <Label text="Couleur :" GridPane.rowIndex="10" GridPane.columnIndex="0"/>
+                    <TextField fx:id="couleurField" GridPane.rowIndex="10" GridPane.columnIndex="1" promptText="Ex : Bleu" styleClass="filter-field"/>
+                    <Label text="Climatisation :" GridPane.rowIndex="11" GridPane.columnIndex="0"/>
+                    <CheckBox fx:id="climatisationCheckBox" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
+                    <Label text="Kilométrage :" GridPane.rowIndex="12" GridPane.columnIndex="0"/>
+                    <TextField fx:id="kilometrageField" GridPane.rowIndex="12" GridPane.columnIndex="1" promptText="Ex : 50000" styleClass="filter-field"/>
+                    <Label text="Année :" GridPane.rowIndex="13" GridPane.columnIndex="0"/>
+                    <TextField fx:id="anneeField" GridPane.rowIndex="13" GridPane.columnIndex="1" promptText="Ex : 2022" styleClass="filter-field"/>
+                    <Label text="Catégorie :" GridPane.rowIndex="14" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="categorieComboBox" GridPane.rowIndex="14" GridPane.columnIndex="1" styleClass="filter-field combo-compact"/>
+                    <ImageView fx:id="imageView" fitHeight="70" fitWidth="90" preserveRatio="true" GridPane.rowIndex="15" GridPane.columnIndex="1" style="-fx-border-color: #0097A7; -fx-border-width: 1;"/>
+                </GridPane>
+                <HBox spacing="10" alignment="CENTER" style="-fx-padding: 8 0 0 0;">
+                    <Button fx:id="enregistrerButton" text="Enregistrer" onAction="#enregistrerModification" styleClass="button action-btn refresh" prefWidth="120"/>
+                    <Button text="Annuler" onAction="#handleAnnuler" styleClass="button action-btn export" prefWidth="100"/>
+                </HBox>
+            </VBox>
+        </VBox>
+    </children>
+</AnchorPane>

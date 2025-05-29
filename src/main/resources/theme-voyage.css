@@ -1,0 +1,1011 @@
+/* --- THEME COLORS (Conceptual) --- */
+/* -theme-primary-blue: #003b95; */
+/* -theme-secondary-blue: #006ce4; */
+/* -theme-background-light: #f5f7fa; */
+/* -theme-card-background: white; */
+/* -theme-text-dark: #2c3e50; */
+/* -theme-text-light-gray: #666666; */
+/* -theme-border-light: #e0e0e0; */
+/* -theme-accent-red: red; */
+
+/* --- GÉNÉRAL --- */
+.root, .main-bg {
+    -fx-background-color: #f5f7fa; /* Light grey-blue background */
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.label {
+    -fx-text-fill: #2c3e50; /* Dark grey-blue text */
+}
+
+/* --- TITRES --- */
+.label-title { /* General page/section titles if used elsewhere */
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #003b95; /* Theme Primary Blue */
+}
+.label-section { /* If used for other sections */
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #003b95; /* Theme Primary Blue */
+}
+
+/* --- BOUTONS GÉNÉRIQUES --- */
+.button { /* General button styling - will be overridden by more specific styles */
+    -fx-background-radius: 6; /* Slightly less rounded */
+    -fx-font-weight: bold;
+    -fx-font-size: 13px; /* Standardized size */
+    -fx-padding: 6 15; /* Standardized padding */
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 2, 0, 0, 1);
+    -fx-cursor: hand;
+}
+/* Default button theme - can be blue like "Voir l'offre" */
+.button {
+    -fx-background-color: #006ce4; /* Theme Secondary Blue */
+}
+.button:hover {
+    -fx-background-color: #0052b3; /* Darker shade of secondary blue */
+    -fx-text-fill: white;
+}
+
+/* --- TABLEVIEW --- */
+.table-view {
+    -fx-background-color: #FFFFFF;
+    -fx-border-radius: 14;
+    -fx-background-radius: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 8, 0, 0, 2);
+}
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to right, #1976D2, #2196F3);
+}
+.table-view .column-header, .table-view .filler {
+    -fx-size: 36px;
+    -fx-border-color: transparent transparent #1976D2 transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #fff;
+}
+.table-view .table-row-cell:filled:even {
+    -fx-background-color: #F4F8FB;
+}
+.table-view .table-row-cell:filled:odd {
+    -fx-background-color: #FFFFFF;
+}
+.table-view .table-row-cell:hover {
+    -fx-background-color: #E3E8F3;
+    -fx-text-fill: #1976D2;
+}
+
+/* --- CHAMPS ET COMPOSANTS --- */
+.text-field, .combo-box { /* General input field styling */
+    -fx-background-color: white;
+    -fx-border-color: #ced4da; /* Lighter border */
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-font-size: 13px;
+    -fx-padding: 7 10; /* Adjusted padding */
+}
+.text-field:focused, .combo-box:focused {
+    -fx-border-color: #006ce4; /* Theme secondary blue on focus */
+    -fx-effect: dropshadow(gaussian, rgba(0, 108, 228, 0.25), 3, 0, 0, 0); /* Subtle glow */
+}
+.combo-box .arrow-button { /* Style for combo box arrow */
+    -fx-background-color: transparent;
+}
+.combo-box .arrow {
+    -fx-background-color: #006ce4; /* Theme secondary blue */
+}
+
+.slider .track {
+    -fx-background-color: #e0e0e0;
+    -fx-background-radius: 3;
+}
+.slider .thumb {
+    -fx-background-color: #006ce4; /* Theme secondary blue */
+    -fx-pref-height: 14px;
+    -fx-pref-width: 14px;
+    -fx-background-radius: 7px;
+}
+.slider .axis .axis-tick-mark, .slider .axis .axis-minor-tick-mark {
+    -fx-stroke: #cccccc;
+}
+.slider .axis .label {
+    -fx-font-size: 10px;
+    -fx-text-fill: #555555;
+}
+
+
+/* --- BOUTONS D'ACTION (spécifiques) --- */
+/* These are fine but ensure they don't conflict or override sidebar/navbar buttons unintentionally */
+.action-btn { /* Base for action buttons, can be more specific */
+    -fx-background-radius: 6;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 18;
+    -fx-cursor: hand;
+    -fx-text-fill: white;
+    -fx-border-width: 0;
+}
+.action-btn.ajouter {
+    -fx-background-color: linear-gradient(to right, #1976D2, #2196F3);
+    -fx-border-color: #1565C0;
+}
+.action-btn.ajouter:hover {
+    -fx-background-color: #0D47A1;
+}
+.action-btn.refresh { /* This style will be used by sidebar reset button if it has .action-btn.refresh */
+    -fx-background-color: linear-gradient(to right, #43A047, #66BB6A);
+    -fx-border-color: #388E3C;
+}
+.action-btn.export {
+    -fx-background-color: linear-gradient(to right, #FFA726, #FFB300);
+    -fx-border-color: #FB8C00;
+}
+.action-btn.modifier {
+    -fx-background-color: #1976D2;
+    -fx-border-color: #0D47A1;
+}
+.action-btn.supprimer {
+    -fx-background-color: #FF5252;
+    -fx-border-color: #B71C1C;
+}
+.action-btn.details {
+    -fx-background-color: #43A047;
+    -fx-border-color: #1B5E20;
+}
+.scroll-pane { /* Main content scroll pane */
+    -fx-background-color: transparent; /* Make it transparent if main-bg handles color */
+    -fx-border-color: transparent;
+}
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* --- NAVBAR STYLING --- */
+.navbar {
+    -fx-background-color: white;
+    -fx-padding: 12 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 3);
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #e0e0e0;
+}
+
+.navbar .logo-container {
+    -fx-padding: 0 20 0 0;
+}
+
+.navbar .logo {
+    -fx-fit-height: 32;
+    -fx-fit-width: 32;
+    -fx-preserve-ratio: true;
+}
+
+.navbar .nav-links {
+    -fx-spacing: 20;
+}
+
+.navbar .nav-link {
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+    -fx-padding: 8 12;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.navbar .nav-link:hover {
+    -fx-background-color: #f5f7fa;
+    -fx-text-fill: #006ce4;
+}
+
+.navbar .nav-link.active {
+    -fx-background-color: #006ce4;
+    -fx-text-fill: white;
+}
+
+.navbar .search-container {
+    -fx-background-color: #f5f7fa;
+    -fx-background-radius: 20;
+    -fx-padding: 6 12;
+    -fx-spacing: 8;
+}
+
+.navbar .search-field {
+    -fx-background-color: transparent;
+    -fx-prompt-text-fill: #666666;
+    -fx-font-size: 13px;
+}
+
+.navbar .search-icon {
+    -fx-text-fill: #666666;
+    -fx-font-size: 14px;
+}
+
+.navbar .cart-container {
+    -fx-padding: 0 0 0 20;
+}
+
+.navbar .cart-icon {
+    -fx-fit-height: 24;
+    -fx-fit-width: 24;
+    -fx-preserve-ratio: true;
+    -fx-cursor: hand;
+}
+
+.navbar .cart-badge {
+    -fx-background-color: #ff3b30;
+    -fx-text-fill: white;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 2 6;
+    -fx-background-radius: 10;
+    -fx-min-width: 18;
+    -fx-min-height: 18;
+    -fx-alignment: center;
+}
+
+/* --- SIDEBAR STYLING --- */
+.sidebar {
+    -fx-background-color: #f7f5ff;
+    -fx-background-radius: 18;
+    -fx-padding: 18 14 18 14;
+    -fx-effect: dropshadow(gaussian, rgba(80,0,180,0.10), 12, 0, 0, 2);
+    -fx-border-width: 0;
+    -fx-spacing: 14;
+}
+
+.sidebar-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c2255;
+    -fx-padding: 0 0 10 0;
+}
+
+.sidebar-separator {
+    -fx-padding: 8 0;
+}
+
+.filter-group {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 12 10 12 10;
+    -fx-spacing: 10;
+    -fx-effect: dropshadow(gaussian, rgba(80,0,180,0.04), 2, 0, 0, 1);
+}
+
+.filter-group-title {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #7c4dff;
+    -fx-padding: 0 0 6 0;
+}
+
+.filter-field, .filter-field:focused {
+    -fx-background-color: #f3f0fa;
+    -fx-border-color: #e0d7fa;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-font-size: 13px;
+    -fx-text-fill: #2c2255;
+    -fx-prompt-text-fill: #b0a7d6;
+}
+
+.button.filtrer {
+    -fx-background-color: linear-gradient(to right, #7c4dff, #b388ff);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 8 0;
+    -fx-effect: dropshadow(gaussian, rgba(80,0,180,0.08), 2, 0, 0, 1);
+}
+.button.filtrer:hover {
+    -fx-background-color: #7c4dff;
+}
+
+.button.refresh {
+    -fx-background-color: #ede7f6;
+    -fx-text-fill: #7c4dff;
+    -fx-background-radius: 8;
+    -fx-padding: 8 0;
+}
+.button.refresh:hover {
+    -fx-background-color: #d1c4e9;
+}
+
+.check-box .box {
+    -fx-background-color: #f3f0fa;
+    -fx-border-color: #b39ddb;
+}
+.check-box:selected .box .mark {
+    -fx-background-color: #7c4dff;
+}
+
+.sidebar .label {
+    -fx-font-size: 13px;
+    -fx-text-fill: rgba(255, 255, 255, 0.9);
+}
+
+.sidebar .check-box {
+    -fx-text-fill: white;
+}
+
+.sidebar .check-box .text {
+    -fx-font-size: 13px;
+    -fx-text-fill: white;
+}
+
+.sidebar .button {
+    -fx-pref-width: Infinity;
+    -fx-font-size: 13px;
+    -fx-padding: 10 15;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+}
+
+.sidebar .button.filtrer:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.9);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 1);
+}
+
+.sidebar .button.refresh:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Style pour les sliders dans la sidebar */
+.sidebar .slider .track {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar .slider .thumb {
+    -fx-background-color: white;
+}
+
+.sidebar .slider .axis .axis-tick-mark, 
+.sidebar .slider .axis .axis-minor-tick-mark {
+    -fx-stroke: rgba(255, 255, 255, 0.3);
+}
+
+.sidebar .slider .axis .label {
+    -fx-text-fill: rgba(255, 255, 255, 0.8);
+}
+
+/* === MODE SOMBRE === */
+.dark-root, .dark-main-bg {
+    -fx-background-color: #181a1b;
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+}
+.dark-label, .dark-sidebar-title, .dark-filter-group-title, .dark-label-title {
+    -fx-text-fill: #f5f7fa;
+}
+.dark-sidebar {
+    -fx-background-color: #23272b;
+}
+.dark-filter-group {
+    -fx-background-color: #23272b;
+}
+.dark-filter-field, .dark-filter-field:focused {
+    -fx-background-color: #23272b;
+    -fx-text-fill: #f5f7fa;
+    -fx-prompt-text-fill: #b0b0b0;
+    -fx-border-color: #444;
+}
+.dark-button, .dark-button.filtrer, .dark-button.refresh {
+    -fx-background-color: #333c4a;
+    -fx-text-fill: #f5f7fa;
+}
+.dark-button:hover, .dark-button.filtrer:hover, .dark-button.refresh:hover {
+    -fx-background-color: #444c5a;
+}
+.dark-check-box .box {
+    -fx-background-color: #23272b;
+    -fx-border-color: #666;
+}
+.dark-check-box:selected .box .mark {
+    -fx-background-color: #7c4dff;
+}
+.dark-scroll-pane .viewport {
+    -fx-background-color: #181a1b;
+}
+
+/* --- EXTENSION MODE SOMBRE --- */
+.dark-root, .dark-main-bg {
+    -fx-background-color: #181a1b;
+}
+.dark-sidebar, .dark-nav-bar {
+    -fx-background-color: #23272b;
+}
+.dark-filter-group, .dark-card {
+    -fx-background-color: #23272b;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 6, 0, 0, 4);
+}
+.dark-label, .dark-sidebar-title, .dark-filter-group-title, .dark-label-title {
+    -fx-text-fill: #f5f7fa;
+}
+.dark-button, .dark-button.filtrer, .dark-button.refresh {
+    -fx-background-color: #333c4a;
+    -fx-text-fill: #f5f7fa;
+}
+.dark-button:hover, .dark-button.filtrer:hover, .dark-button.refresh:hover {
+    -fx-background-color: #444c5a;
+}
+.dark-check-box .box {
+    -fx-background-color: #23272b;
+    -fx-border-color: #666;
+}
+.dark-check-box:selected .box .mark {
+    -fx-background-color: #7c4dff;
+}
+.dark-scroll-pane .viewport {
+    -fx-background-color: #181a1b;
+}
+
+/* Styles généraux */
+.main-bg {
+    -fx-background-color: linear-gradient(to bottom right, #f0f4ff, #e6eeff);
+}
+
+/* Barre de navigation */
+.nav-bar {
+    -fx-background-color: linear-gradient(to right, #003b95, #006ce4);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 4, 0, 0, 2);
+}
+
+.nav-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.back-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-padding: 8 15;
+    -fx-background-radius: 5;
+}
+
+.back-btn:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Image de la voiture */
+.detail-image {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 4, 0, 0, 2);
+}
+
+.nav-image-btn {
+    -fx-background-color: white;
+    -fx-text-fill: #006ce4;
+    -fx-font-size: 16px;
+    -fx-min-width: 35px;
+    -fx-min-height: 35px;
+    -fx-background-radius: 17.5;
+    -fx-border-color: #006ce4;
+    -fx-border-radius: 17.5;
+    -fx-cursor: hand;
+}
+
+.nav-image-btn:hover {
+    -fx-background-color: #006ce4;
+    -fx-text-fill: white;
+}
+
+/* Titres et badges */
+.detail-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #003b95;
+}
+
+.detail-subtitle {
+    -fx-font-size: 22px;
+    -fx-text-fill: #006ce4;
+}
+
+.badge {
+    -fx-background-color: linear-gradient(to right, #003b95, #006ce4);
+    -fx-text-fill: white;
+    -fx-padding: 5 10;
+    -fx-font-size: 12px;
+    -fx-background-radius: 4;
+}
+
+/* Prix et disponibilité */
+.price-label, .availability-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666;
+}
+
+.price-value {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2e7d32;
+}
+
+.availability-value {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+/* Grille de caractéristiques */
+.features-grid {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 4, 0, 0, 2);
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 8;
+}
+
+.feature-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666;
+}
+
+.feature-value {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #003b95;
+}
+
+/* Description */
+.section-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #003b95;
+    -fx-padding: 0 0 10 0;
+}
+
+.description-text {
+    -fx-font-size: 14px;
+    -fx-fill: #444;
+    -fx-line-spacing: 4;
+}
+
+/* Boutons d'action */
+.action-btn {
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+
+.action-btn.primary {
+    -fx-background-color: linear-gradient(to right, #003b95, #006ce4);
+    -fx-text-fill: white;
+}
+
+.action-btn.primary:hover {
+    -fx-background-color: linear-gradient(to right, #002b6f, #0052b3);
+}
+
+.action-btn.secondary {
+    -fx-background-color: white;
+    -fx-text-fill: #006ce4;
+    -fx-border-color: #006ce4;
+    -fx-border-radius: 6;
+}
+
+.action-btn.secondary:hover {
+    -fx-background-color: #f0f4ff;
+}
+
+/* Section des avis */
+.reviews-section {
+    -fx-background-color: white;
+    -fx-padding: 25;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 4, 0, 0, 2);
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 12;
+}
+
+.rating-value {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #003b95;
+}
+
+.rating-stars {
+    -fx-font-size: 24px;
+    -fx-text-fill: #ffc107;
+}
+
+.rating-count {
+    -fx-font-size: 12px;
+    -fx-text-fill: #666;
+}
+
+.rating-bar {
+    -fx-accent: #006ce4;
+    -fx-background-color: #f0f4ff;
+    -fx-background-radius: 2;
+    -fx-background-insets: 0;
+}
+
+.rating-bar .bar {
+    -fx-background-radius: 2;
+}
+
+/* Mode sombre */
+.dark-root {
+    -fx-background-color: linear-gradient(to bottom right, #1a1f2e, #2a3142);
+}
+
+.dark-root .nav-bar {
+    -fx-background-color: linear-gradient(to right, #002b6f, #003b95);
+}
+
+.dark-root .nav-title {
+    -fx-text-fill: white;
+}
+
+.dark-root .back-btn {
+    -fx-text-fill: white;
+}
+
+.dark-root .detail-title {
+    -fx-text-fill: #4dabf7;
+}
+
+.dark-root .detail-subtitle {
+    -fx-text-fill: #6bc5ff;
+}
+
+.dark-root .features-grid,
+.dark-root .reviews-section {
+    -fx-background-color: #2a3142;
+    -fx-border-color: #3a4152;
+}
+
+.dark-root .feature-label {
+    -fx-text-fill: #a0a0a0;
+}
+
+.dark-root .feature-value {
+    -fx-text-fill: #4dabf7;
+}
+
+.dark-root .description-text {
+    -fx-fill: #cccccc;
+}
+
+.dark-root .action-btn.secondary {
+    -fx-background-color: #2a3142;
+    -fx-text-fill: #4dabf7;
+    -fx-border-color: #4dabf7;
+}
+
+.dark-root .action-btn.secondary:hover {
+    -fx-background-color: #3a4152;
+}
+
+.dark-root .rating-bar {
+    -fx-background-color: #3a4152;
+}
+
+/* ScrollPane */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Styles pour les cartes de voiture */
+.dark-card {
+    -fx-background-color: #2a3142 !important;
+    -fx-text-fill: white !important;
+}
+
+.dark-card .label {
+    -fx-text-fill: white !important;
+}
+
+.dark-card .separator {
+    -fx-background-color: #3a4152 !important;
+}
+
+.dark-card .button {
+    -fx-background-color: #3a4152 !important;
+    -fx-text-fill: white !important;
+    -fx-border-color: #4dabf7 !important;
+}
+
+.dark-card .button:hover {
+    -fx-background-color: #4a5162 !important;
+}
+
+/* Styles pour la page de réservation */
+.form-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.form-field {
+    -fx-background-color: #f5f5f5;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-padding: 8px 12px;
+    -fx-font-size: 13px;
+}
+
+.form-field:focused {
+    -fx-border-color: #006ce4;
+    -fx-background-color: white;
+}
+
+.form-checkbox {
+    -fx-font-size: 13px;
+    -fx-text-fill: #333333;
+}
+
+.notification-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #2e7d32;
+}
+
+.separator {
+    -fx-padding: 10px 0;
+}
+
+/* Styles pour le thème sombre */
+.dark-root .form-label {
+    -fx-text-fill: #e0e0e0;
+}
+
+.dark-root .form-field {
+    -fx-background-color: #2d2d2d;
+    -fx-border-color: #404040;
+    -fx-text-fill: #e0e0e0;
+}
+
+.dark-root .form-field:focused {
+    -fx-border-color: #006ce4;
+    -fx-background-color: #333333;
+}
+
+.dark-root .form-checkbox {
+    -fx-text-fill: #e0e0e0;
+}
+
+.dark-root .notification-label {
+    -fx-text-fill: #4caf50;
+}
+
+.dark-root .separator {
+    -fx-background-color: #404040;
+}
+
+/* Styles pour les cartes */
+.detail-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.detail-subtitle {
+    -fx-font-size: 16px;
+    -fx-text-fill: #666666;
+}
+
+.price-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666666;
+}
+
+.price-value {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2e7d32;
+}
+
+.availability-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666666;
+}
+
+.availability-value {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.feature-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #666666;
+}
+
+.feature-value {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* Styles pour le thème sombre des cartes */
+.dark-root .detail-title {
+    -fx-text-fill: #e0e0e0;
+}
+
+.dark-root .detail-subtitle {
+    -fx-text-fill: #b0b0b0;
+}
+
+.dark-root .price-label,
+.dark-root .availability-label,
+.dark-root .feature-label {
+    -fx-text-fill: #b0b0b0;
+}
+
+.dark-root .price-value {
+    -fx-text-fill: #4caf50;
+}
+
+.dark-root .availability-value,
+.dark-root .feature-value {
+    -fx-text-fill: #e0e0e0;
+}
+
+/* Styles pour les conteneurs avec animations */
+.card-container {
+    -fx-background-color: white;
+    -fx-padding: 30;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 15, 0, 0, 5);
+    -fx-transition: all 0.3s ease;
+}
+
+.form-container {
+    -fx-background-color: white;
+    -fx-padding: 35;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 15, 0, 0, 5);
+    -fx-transition: all 0.3s ease;
+}
+
+/* Animations pour les conteneurs */
+.card-container:hover, .form-container:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 20, 0, 0, 8);
+    -fx-translate-y: -2;
+}
+
+/* Styles pour les champs de formulaire avec animations */
+.form-field {
+    -fx-background-color: #f5f5f5;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-padding: 10px 15px;
+    -fx-font-size: 14px;
+    -fx-transition: all 0.2s ease;
+}
+
+.form-field:hover {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #006ce4;
+}
+
+.form-field:focused {
+    -fx-border-color: #006ce4;
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,108,228,0.2), 5, 0, 0, 2);
+}
+
+/* Styles pour les boutons avec animations */
+.action-btn {
+    -fx-transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    -fx-translate-y: -2;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 3);
+}
+
+.action-btn:pressed {
+    -fx-translate-y: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 2);
+}
+
+/* Styles pour l'image avec animation */
+.detail-image {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 4);
+    -fx-transition: all 0.3s ease;
+}
+
+.detail-image:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 15, 0, 0, 6);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+/* Styles pour le thème sombre avec animations */
+.dark-root .card-container,
+.dark-root .form-container {
+    -fx-background-color: #2a3142;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 15, 0, 0, 5);
+}
+
+.dark-root .form-field {
+    -fx-background-color: #333c4a;
+    -fx-border-color: #404040;
+    -fx-text-fill: #e0e0e0;
+}
+
+.dark-root .form-field:hover {
+    -fx-background-color: #3a4152;
+    -fx-border-color: #006ce4;
+}
+
+.dark-root .form-field:focused {
+    -fx-background-color: #3a4152;
+    -fx-border-color: #006ce4;
+    -fx-effect: dropshadow(gaussian, rgba(0,108,228,0.2), 5, 0, 0, 2);
+}
+
+/* Styles pour le sélecteur de thème */
+.theme-combo {
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(255,255,255,0.3);
+    -fx-border-radius: 5;
+    -fx-padding: 5 10;
+    -fx-text-fill: white;
+}
+
+.theme-combo:hover {
+    -fx-border-color: rgba(255,255,255,0.5);
+}
+
+.dark-root .theme-combo {
+    -fx-border-color: rgba(255,255,255,0.2);
+}
+
+.dark-root .theme-combo:hover {
+    -fx-border-color: rgba(255,255,255,0.4);
+}
+
+/* Styles pour les notifications avec animation */
+.notification-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #2e7d32;
+    -fx-transition: all 0.3s ease;
+}
+
+.notification-label:hover {
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+/* Styles pour les conteneurs d'information */
+.info-container {
+    -fx-padding: 10 0;
+}
+
+.price-container, .availability-container {
+    -fx-padding: 5 0;
+}
+
+/* Styles pour les séparateurs avec animation */
+.separator {
+    -fx-padding: 15px 0;
+    -fx-opacity: 0.7;
+    -fx-transition: all 0.3s ease;
+}
+
+.separator:hover {
+    -fx-opacity: 1;
+}

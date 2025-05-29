@@ -1,11 +1,13 @@
 package utils;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.Executor;
 
-//for push
+
 public class MyDatabase {
+
 
     final String URL="jdbc:mysql://localhost:3306/travelagency?serverTimezone=UTC&jdbcCompliantTruncation=false";
 
@@ -13,25 +15,31 @@ public class MyDatabase {
 
     final String USERNAME="root";
     final String PASSWORD="";
-    Connection connection;
+    static Connection connection;
 
     static MyDatabase instance;
 
     private MyDatabase(){
         try {
             connection= DriverManager.getConnection(URL,USERNAME,PASSWORD);
-            System.out.println("Connexion établie");
+            System.out.println("MyDatabase: Connexion établie avec " + URL);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.err.println("MyDatabase: ERREUR DE CONNEXION BD: " + e.getMessage());
+            // Log the full stack trace for more details during debugging
+            e.printStackTrace();
+            // Throw a runtime exception to halt initialization if connection fails
+            // This makes the problem immediately apparent instead of causing NullPointerExceptions later.
+            throw new RuntimeException("Impossible d'établir la connexion à la base de données.", e);
         }
     }
 
-    public static   MyDatabase getInstance(){
+    public static synchronized MyDatabase getInstance(){ // Added synchronized for thread safety in singleton
         if (instance==null){
             instance= new MyDatabase();
         }
-      return instance;
+        return instance;
     }
+
 
     public Connection getConnection() {
 
@@ -42,6 +50,7 @@ public class MyDatabase {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
 
         return connection;
     }

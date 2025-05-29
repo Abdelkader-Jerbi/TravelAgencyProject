@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="Controller.DetailVoitureAdminController" prefWidth="600" prefHeight="700" stylesheets="@theme-voyage.css">
+    <children>
+        <VBox alignment="CENTER" spacing="18" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            <Label text="Détails complets de la voiture" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <ImageView fx:id="imageView" fitHeight="180" fitWidth="260" preserveRatio="true" style="-fx-border-color: gray; -fx-border-width: 1;"/>
+            <GridPane hgap="18" vgap="12" maxWidth="500">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" minWidth="160" />
+                    <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
+                </columnConstraints>
+                <Label text="Marque :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <Label fx:id="marqueLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label text="Modèle :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <Label fx:id="modeleLabel" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label text="Matricule :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <Label fx:id="matriculeLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Label text="Prix par jour :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <Label fx:id="prixLabel" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <Label text="Disponible :" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <Label fx:id="disponibleLabel" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                <Label text="Carburant :" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <Label fx:id="carburantLabel" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                <Label text="Boîte de vitesse :" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <Label fx:id="boiteVitesseLabel" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                <Label text="Nombre de places :" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                <Label fx:id="nbPlacesLabel" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+                <Label text="Nombre de portes :" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                <Label fx:id="nbPortesLabel" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+                <Label text="Couleur :" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+                <Label fx:id="couleurLabel" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
+                <Label text="Climatisation :" GridPane.rowIndex="10" GridPane.columnIndex="0"/>
+                <Label fx:id="climatisationLabel" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
+                <Label text="Kilométrage :" GridPane.rowIndex="11" GridPane.columnIndex="0"/>
+                <Label fx:id="kilometrageLabel" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
+                <Label text="Année :" GridPane.rowIndex="12" GridPane.columnIndex="0"/>
+                <Label fx:id="anneeLabel" GridPane.rowIndex="12" GridPane.columnIndex="1"/>
+                <Label text="Catégorie :" GridPane.rowIndex="13" GridPane.columnIndex="0"/>
+                <Label fx:id="categorieLabel" GridPane.rowIndex="13" GridPane.columnIndex="1"/>
+            </GridPane>
+            <Button text="❌ Fermer" onAction="#handleFermer" styleClass="button" style="-fx-background-color: #f44336; -fx-font-size: 14px; -fx-padding: 8 24;"/>
+        </VBox>
+    </children>
+</AnchorPane> 

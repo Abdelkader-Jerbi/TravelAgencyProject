@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+
+<HBox spacing="0" styleClass="main-bg" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="Controller.AfficherVoitureVisiteurController" maxWidth="900" prefWidth="900" minHeight="700" stylesheets="@theme-voyage.css">
+
+    <!-- Sidebar -->
+    <VBox fx:id="sidebar" styleClass="sidebar" prefWidth="180" maxWidth="180" spacing="14">
+        <Text styleClass="sidebar-title">Filtres avancés</Text>
+        <Separator styleClass="sidebar-separator"/>
+
+        <VBox spacing="10" styleClass="filter-group">
+            <Text styleClass="filter-group-title">Caractéristiques</Text>
+            <TextField fx:id="modeleField" promptText="Modèle" styleClass="filter-field"/>
+            <ComboBox fx:id="categorieCombo" promptText="Catégorie" styleClass="filter-field"/>
+            <ComboBox fx:id="carburantCombo" promptText="Carburant" styleClass="filter-field"/>
+            <ComboBox fx:id="boiteVitesseCombo" promptText="Boîte de vitesse" styleClass="filter-field"/>
+            <TextField fx:id="couleurField" promptText="Couleur" styleClass="filter-field"/>
+            <CheckBox fx:id="climatisationCheckBox" text="Climatisation" styleClass="filter-field"/>
+            <HBox spacing="6" alignment="CENTER_LEFT">
+                <Label text="Places:" styleClass="label"/>
+                <Spinner fx:id="nbPlacesSpinner" styleClass="filter-field"/>
+            </HBox>
+            <HBox spacing="6" alignment="CENTER_LEFT">
+                <Label text="Portes:" styleClass="label"/>
+                <Spinner fx:id="nbPortesSpinner" styleClass="filter-field"/>
+            </HBox>
+            <TextField fx:id="anneeField" promptText="Année" styleClass="filter-field"/>
+        </VBox>
+
+        <VBox spacing="10" styleClass="filter-group">
+            <Text styleClass="filter-group-title">Prix par jour</Text>
+            <Slider fx:id="prixSlider" min="0" max="1000" value="1000" showTickLabels="true" showTickMarks="true" majorTickUnit="200"/>
+            <Label fx:id="prixValueLabel" text="1000 TND" styleClass="label"/>
+        </VBox>
+
+        <VBox spacing="10" styleClass="filter-group">
+            <Text styleClass="filter-group-title">Kilométrage maximum</Text>
+            <Slider fx:id="kmSlider" min="0" max="200000" value="200000" showTickLabels="true" showTickMarks="true" majorTickUnit="50000"/>
+            <Label fx:id="kmValueLabel" text="200000 km" styleClass="label"/>
+        </VBox>
+
+        <Button fx:id="resetFiltersBtn" text="Réinitialiser" styleClass="button refresh" maxWidth="Infinity"/>
+    </VBox>
+
+    <!-- Contenu principal -->
+    <VBox styleClass="main-content" HBox.hgrow="ALWAYS" spacing="0" maxWidth="700" prefWidth="700">
+        <!-- Barre de recherche -->
+        <HBox fx:id="navBar" styleClass="search-bar nav-bar" alignment="CENTER_LEFT" spacing="10">
+            <padding><Insets top="8" right="15" bottom="8" left="15"/></padding>
+            <HBox alignment="CENTER" spacing="6" HBox.hgrow="NEVER">
+                <Label styleClass="search-icon" text="🔍"/>
+                <TextField fx:id="searchField" promptText="Rechercher une voiture..." styleClass="search-field" HBox.hgrow="ALWAYS" prefWidth="200"/>
+            </HBox>
+            <Button fx:id="searchButton" text="Rechercher" styleClass="button action-btn search"/>
+
+            <Pane HBox.hgrow="ALWAYS" /> <!-- Spacer -->
+
+            <ComboBox fx:id="themeComboBox" styleClass="filter-field" prefWidth="120" onAction="#onThemeChange"/>
+            <Button fx:id="refreshPageBtn" text="Actualiser la page" styleClass="button refresh" onAction="#refreshPage"/>
+
+            <StackPane fx:id="cartIconContainer" alignment="TOP_RIGHT" style="-fx-cursor: hand;" minWidth="40" minHeight="30">
+                <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@/images/pannier2.png"/>
+                    </image>
+                    <StackPane.margin>
+                        <Insets top="2"/>
+                    </StackPane.margin>
+                </ImageView>
+                <Label fx:id="cartItemCountLabel" text="0" alignment="CENTER"
+                       style="-fx-background-color: red; -fx-text-fill: white; -fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 1 5; -fx-background-radius: 10em; -fx-border-radius: 10em; -fx-translate-x: 8; -fx-translate-y: -4;"
+                       minWidth="18" prefWidth="18" minHeight="18" prefHeight="18" visible="false"> <!-- Initially hidden -->
+                </Label>
+            </StackPane>
+        </HBox>
+
+        <!-- Liste des voitures -->
+        <ScrollPane fx:id="voitureListScrollPane" fitToWidth="true" fitToHeight="true" styleClass="scroll-pane" VBox.vgrow="ALWAYS">
+            <VBox fx:id="voitureListVBox" alignment="CENTER" spacing="24" styleClass="voiture-list-vbox">
+                <padding><Insets top="18" right="10" bottom="18" left="10"/></padding>
+
+                <!-- Exemple de carte de voiture -->
+                <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 16; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 6, 0, 0, 4);">
+                    <HBox spacing="20" alignment="CENTER_LEFT">
+                        <!-- Image de la voiture -->
+                        <ImageView fx:id="voitureImage" fitWidth="200" fitHeight="120" preserveRatio="true"/>
+
+                        <!-- Infos de la voiture -->
+                        <VBox spacing="6" HBox.hgrow="ALWAYS">
+                            <HBox spacing="8">
+                                <Label text="Coup de cœur"
+                                       style="-fx-background-color: #003b95; -fx-text-fill: white; -fx-padding: 2 6 2 6; -fx-font-size: 10px; -fx-background-radius: 4;"/>
+                                <Label text="Idéal pour les familles"
+                                       style="-fx-background-color: #003b95; -fx-text-fill: white; -fx-padding: 2 6 2 6; -fx-font-size: 10px; -fx-background-radius: 4;"/>
+                            </HBox>
+
+                            <Label fx:id="nomVoitureLabel" text="Dacia Logan" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                            <Label text="ou voiture moyenne similaire" style="-fx-font-size: 12px; -fx-text-fill: #666666;"/>
+
+                            <GridPane hgap="20" vgap="5" style="-fx-padding: 5 0 5 0;">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                <children>
+                                    <Label text="🚗 5 sièges" style="-fx-font-size: 12px;" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                    <Label text="🧳 1 grande valise" style="-fx-font-size: 12px;" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                    <Label text="🛣️ Kilométrage illimité" style="-fx-font-size: 12px; -fx-text-fill: #444;" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+
+                                    <Label text="⚙️ Manuelle" style="-fx-font-size: 12px;" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                                    <Label text="🧳 1 petite valise" style="-fx-font-size: 12px;" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                </children>
+                            </GridPane>
+
+                            <Label fx:id="locationLabel" text="Tunis Aéroport - Dans le terminal"
+                                   style="-fx-font-size: 12px; -fx-text-fill: #003b95;"/>
+                        </VBox>
+
+                        <!-- Prix et actions -->
+                        <VBox spacing="10" alignment="CENTER_RIGHT">
+                            <Label text="Prix pour 3 jours :" style="-fx-font-size: 12px;"/>
+                            <Label fx:id="prixLabel" text="352 TND" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2e7d32;"/>
+                            <Label text="Annulation gratuite" style="-fx-font-size: 12px; -fx-text-fill: green;"/>
+                            <Button text="Voir l'offre" style="-fx-background-color: #006ce4; -fx-text-fill: white; -fx-padding: 6 12 6 12; -fx-font-size: 13px; -fx-background-radius: 4;"/>
+                        </VBox>
+                    </HBox> <!-- End of HBox for image, car_info, price_actions -->
+
+                    <Separator prefWidth="200.0" />
+
+                    <!-- Footer Section -->
+                    <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 8 0 0 0;">
+                        <HBox alignment="CENTER_LEFT" spacing="5">
+                            <Label text="Budget" style="-fx-font-weight: bold; -fx-text-fill: #e65100; -fx-font-size: 12px;"/>
+                            <Label text="7.8" style="-fx-background-color: #003b95; -fx-text-fill: white; -fx-padding: 2 5; -fx-font-size: 11px; -fx-font-weight: bold; -fx-background-radius: 3;"/>
+                            <VBox spacing="0" style="-fx-padding: 0 0 0 3px;">
+                                <Label text="Bien" style="-fx-font-size: 11px; -fx-font-weight: bold;"/>
+                                <Label text="400+ avis" style="-fx-font-size: 10px; -fx-text-fill: #666;"/>
+                            </VBox>
+                        </HBox>
+
+                        <Pane HBox.hgrow="ALWAYS"/> <!-- Spacer pushes subsequent items to the right -->
+
+                        <Label text="ⓘ Infos importantes" style="-fx-font-size: 11px; -fx-text-fill: #006ce4; -fx-cursor: hand;">
+                            <tooltip><Tooltip text="Afficher les informations importantes"/></tooltip>
+                        </Label>
+                        <Label text="✉ Envoyer le devis par e-mail" style="-fx-font-size: 11px; -fx-text-fill: #006ce4; -fx-cursor: hand;">
+                            <tooltip><Tooltip text="Envoyer le devis par e-mail"/></tooltip>
+                        </Label>
+                    </HBox>
+                </VBox> <!-- End of VBox for the entire card -->
+
+            </VBox>
+        </ScrollPane>
+    </VBox>
+</HBox>

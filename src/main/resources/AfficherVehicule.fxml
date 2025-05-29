@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="800.0" prefWidth="1200.0" styleClass="main-bg" stylesheets="@theme-voyage.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.VoitureController">
+
+   <!-- BARRE DE RECHERCHE ET FILTRES -->
+   <top>
+      <VBox spacing="10" styleClass="filter-bar" style="-fx-padding: 20;">
+         <!-- Filtres -->
+         <HBox alignment="CENTER_LEFT" spacing="14">
+            <HBox alignment="CENTER" spacing="4">
+                <Label styleClass="filter-icon" text="🔍" />
+                <TextField fx:id="searchField" promptText="Marque, Modèle, Matricule..." styleClass="filter-field" />
+            </HBox>
+            <HBox alignment="CENTER" spacing="4">
+                <Label styleClass="filter-icon" text="🎨" />
+                <TextField fx:id="colorField" promptText="Couleur..." styleClass="filter-field" />
+            </HBox>
+            <HBox alignment="CENTER" spacing="4">
+                <Label styleClass="filter-icon" text="✔" />
+                <ComboBox fx:id="disponibiliteFilter" prefHeight="32.0" prefWidth="120.0" styleClass="filter-field combo-compact" />
+            </HBox>
+            <HBox alignment="CENTER" spacing="7" style="-fx-padding: 0 0 0 18;">
+                <Button fx:id="addOrUpdateButton" styleClass="button action-btn ajouter" text="➕ Ajouter" />
+                <Button fx:id="exportPdfButton" styleClass="button action-btn export" text="🧾 Exporter PDF" />
+                <Button fx:id="refreshButton" styleClass="button action-btn refresh" text="🔄 Rafraîchir" />
+            </HBox>
+         </HBox>
+      </VBox>
+   </top>
+
+   <!-- TABLEAU PRINCIPAL + PAGINATION -->
+   <center>
+      <VBox spacing="10" style="-fx-padding: 20;">
+         <TableView fx:id="voitureTable" prefHeight="600" styleClass="table-view">
+            <columns>
+               <TableColumn fx:id="imageCol" prefWidth="110" text=" Image" />
+               <TableColumn fx:id="colMatricule" prefWidth="110" text="Matricule" />
+               <TableColumn fx:id="colModele" prefWidth="110" text="Modèle" />
+               <TableColumn fx:id="colMarque" prefWidth="110" text="Marque" />
+               <TableColumn fx:id="colPrix" prefWidth="90" text="Prix/jour" />
+               <TableColumn fx:id="colDisponible" prefWidth="116.0" text="Disponibilité" />
+               <TableColumn fx:id="colAction" prefWidth="357.60003662109375" text="Actions" />
+            </columns>
+         </TableView>
+
+         <Pagination fx:id="pagination" maxPageIndicatorCount="5" pageCount="1" styleClass="pagination" />
+      </VBox>
+   </center>
+
+</BorderPane>

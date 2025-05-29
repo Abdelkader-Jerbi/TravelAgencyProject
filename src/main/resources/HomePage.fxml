@@ -30,7 +30,9 @@
                   <Font size="14.0" />
                </font>
             </Button>
+
             <Button fx:id="VolButton" onAction="#allerPageVol" mnemonicParsing="false" styleClass="nav-button" text="Flights">
+
                <font>
                   <Font size="14.0" />
                </font>

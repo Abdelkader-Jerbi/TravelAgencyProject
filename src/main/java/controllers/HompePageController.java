@@ -46,6 +46,7 @@ public class HompePageController {
     }
 
     public void allerPageVol(ActionEvent Event) {
+
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/ChercherVol.fxml"));
             Stage stage = (Stage) ((Node) Event.getSource()).getScene().getWindow();
@@ -56,6 +57,7 @@ public class HompePageController {
             System.out.println(e.getMessage());
         }
     }
+
     
 
     public void logout(ActionEvent event) {
@@ -75,4 +77,5 @@ public class HompePageController {
             e.printStackTrace();
         }
     }
+
 }

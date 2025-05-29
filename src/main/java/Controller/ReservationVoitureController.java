@@ -1,6 +1,5 @@
 package Controller;
 
-import com.itextpdf.text.pdf.TextField;
 import entities.Reservation;
 import entities.Voiture;
 import javafx.fxml.FXML;
@@ -9,34 +8,21 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
-import services.CrudReservation;
+import services.CrudReservationVoiture;
 import services.CrudVoiture;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.FileOutputStream;
 import java.io.File;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Properties;
 import javafx.scene.Parent;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import java.io.IOException;
 import javafx.animation.ScaleTransition;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
-import java.io.ByteArrayOutputStream;
-import java.util.Base64;
 
 
 public class ReservationVoitureController {
@@ -67,7 +53,7 @@ public class ReservationVoitureController {
     @FXML private ImageView voitureImage;
 
     private Voiture voiture;
-    private final CrudReservation crudReservation = new CrudReservation();
+    private final CrudReservationVoiture crudReservationVoiture = new CrudReservationVoiture();
     private int compteurPanier = 0;
 
     // Ajout d'une méthode statique pour le compteur global du panier
@@ -487,7 +473,7 @@ public class ReservationVoitureController {
         );
 
             // Ajout de la réservation dans la base de données
-        crudReservation.ajouterReservation(reservation);
+        crudReservationVoiture.ajouterReservation(reservation);
 
             // Génération de la facture PDF
             File facture = genererFacturePDF(

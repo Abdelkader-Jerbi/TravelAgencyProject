@@ -6,12 +6,12 @@ import utils.MyDatabase;
 
 import java.sql.*;
 
-public class CrudReservation {
+public class CrudReservationVoiture {
 
     private Connection conn;
 
     // Constructeur de la classe pour obtenir la connexion à la base de données
-    public CrudReservation() {
+    public CrudReservationVoiture() {
         this.conn = MyDatabase.getInstance().getConnection();
     }
 

@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
-public class MyDatabase implements Connection {
+public class MyDatabase  {
 
     final String URL="jdbc:mysql://localhost:3306/travelagency";
 
@@ -40,7 +40,7 @@ public class MyDatabase implements Connection {
         return connection;
     }
 
-
+/*
     @Override
     public Statement createStatement() throws SQLException {
         return connection.createStatement();
@@ -309,5 +309,5 @@ public class MyDatabase implements Connection {
     @Override
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
         return false;
-    }
+    }*/
 }

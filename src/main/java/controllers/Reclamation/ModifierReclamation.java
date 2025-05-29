@@ -26,10 +26,12 @@ public class ModifierReclamation implements Initializable {
     private TableView<Reclamation> tableReclamation;
 
     @FXML
-    private TableColumn<Reclamation, Integer> idColumn;
+    private TableColumn<Reclamation, Integer> idReclamationColumn;
 
     @FXML
-    private TableColumn<Reclamation, Integer> idUserColumn;
+    private TableColumn<Reclamation, Integer> idColumn;
+
+
 
     @FXML
     private TableColumn<Reclamation, String> categorieColumn;
@@ -62,8 +64,8 @@ public class ModifierReclamation implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Configurer les colonnes
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("idReclamation"));
-        idUserColumn.setCellValueFactory(new PropertyValueFactory<>("idUser"));
+        idReclamationColumn.setCellValueFactory(new PropertyValueFactory<>("idReclamation"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         categorieColumn.setCellValueFactory(cellData -> {
             int idCategorie = cellData.getValue().getIdCategorie();
             return new SimpleStringProperty(categoriesMap.getOrDefault(idCategorie, "Inconnue"));
@@ -73,8 +75,8 @@ public class ModifierReclamation implements Initializable {
         statutColumn.setCellValueFactory(new PropertyValueFactory<>("statut"));
 
         // Configurer le style des colonnes
-        configureColumnStyle(idColumn, "ID");
-        configureColumnStyle(idUserColumn, "ID Utilisateur");
+        configureColumnStyle(idReclamationColumn, "ID Réclamation");
+        configureColumnStyle(idColumn, "ID Utilisateur");
         configureColumnStyle(categorieColumn, "Catégorie");
         configureColumnStyle(dateColumn, "Date");
         configureColumnStyle(commentaireColumn, "Commentaire");

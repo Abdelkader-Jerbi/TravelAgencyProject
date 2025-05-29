@@ -3,7 +3,7 @@ package entities;
 public class Reclamation {
 
     private int idReclamation;
-    private int idUser;
+    private int id;
     private int idCategorie;
     private String date;
     private String commentaire;
@@ -13,17 +13,17 @@ public class Reclamation {
     public Reclamation() {
     }
 
-    public Reclamation(int idReclamation, int idUser, int idCategorie, String date, String commentaire, String statut) {
+    public Reclamation(int idReclamation, int id, int idCategorie, String date, String commentaire, String statut) {
         this.idReclamation = idReclamation;
-        this.idUser = idUser;
+        this.id = id;
         this.idCategorie = idCategorie;
         this.date = date;
         this.commentaire = commentaire;
         this.statut = statut;
     }
 
-    public Reclamation(int idUser, int idCategorie, String date, String commentaire, String statut) {
-        this.idUser = idUser;
+    public Reclamation(int id, int idCategorie, String date, String commentaire, String statut) {
+        this.id = id;
         this.idCategorie = idCategorie;
         this.date = date;
         this.commentaire = commentaire;
@@ -38,13 +38,14 @@ public class Reclamation {
         this.idReclamation = idReclamation;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public int getId() {
+        return id;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setId(int id) {
+        this.id = id;
     }
+
 
     public int getIdCategorie() {
         return idCategorie;
@@ -90,7 +91,7 @@ public class Reclamation {
     public String toString() {
         return "Reclamation{" +
                 "idReclamation=" + idReclamation +
-                ", idUser=" + idUser +
+                ", id=" + id +
                 ", idCategorie=" + idCategorie +
                 ", date='" + date + '\'' +
                 ", commentaire='" + commentaire + '\'' +

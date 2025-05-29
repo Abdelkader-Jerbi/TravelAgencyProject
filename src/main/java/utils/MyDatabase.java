@@ -6,31 +6,29 @@ import java.sql.SQLException;
 //for push
 public class MyDatabase {
 
-    final String URL="jdbc:mysql://localhost:3306/travelagency?serverTimezone=UTC&jdbcCompliantTruncation=false";
+    private final String URL = "jdbc:mysql://localhost:3306/travelagency?serverTimezone=UTC&jdbcCompliantTruncation=false";
 
-    final String USERNAME="root";
-    final String PASSWORD="";
-    Connection connection;
+    private final String USERNAME = "root";
+    private final String PASSWORD = "";
+    private static MyDatabase instance;
 
-    static MyDatabase instance;
+    private MyDatabase() {
+        // Initialisation sans connexion
+    }
 
-    private MyDatabase(){
+    public static MyDatabase getInstance() {
+        if (instance == null) {
+            instance = new MyDatabase();
+        }
+        return instance;
+    }
+
+    public Connection getConnection() throws SQLException {
         try {
-            connection= DriverManager.getConnection(URL,USERNAME,PASSWORD);
-            System.out.println("Connexion établie");
+            return DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Erreur de connexion : " + e.getMessage());
+            throw e;
         }
-    }
-
-    public static   MyDatabase getInstance(){
-        if (instance==null){
-            instance= new MyDatabase();
-        }
-      return instance;
-    }
-
-    public Connection getConnection() {
-        return connection;
     }
 }

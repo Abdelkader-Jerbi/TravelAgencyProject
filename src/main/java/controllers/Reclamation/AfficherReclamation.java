@@ -79,7 +79,8 @@ public class AfficherReclamation implements Initializable {
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         categorieColumn.setCellValueFactory(cellData -> {
             int idCategorie = cellData.getValue().getIdCategorie();
-            return new SimpleStringProperty(categoriesMap.getOrDefault(idCategorie, "Inconnue"));
+            String description = categoriesMap.getOrDefault(idCategorie, "Inconnue");
+            return new SimpleStringProperty(description);
         });
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         commentaireColumn.setCellValueFactory(new PropertyValueFactory<>("commentaire"));

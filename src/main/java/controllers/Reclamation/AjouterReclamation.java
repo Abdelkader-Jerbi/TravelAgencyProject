@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import services.categorie.categorieRec;
 import services.CrudReclamation;
 import utils.MyDatabase;
+import utils.EmailUtil;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,7 +36,7 @@ public class AjouterReclamation implements Initializable {
 
     private final categorieRec categorieService = new categorieRec();
     private final CrudReclamation reclamationService = new CrudReclamation();
-    private int currentUserId;
+    private int currentId;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -49,9 +50,9 @@ public class AjouterReclamation implements Initializable {
         try {
             Connection conn = MyDatabase.getInstance().getConnection();
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT idUser FROM utilisateur LIMIT 1");
+            ResultSet rs = stmt.executeQuery("SELECT id FROM utilisateur LIMIT 1");
             if (rs.next()) {
-                currentUserId = rs.getInt("idUser");
+                currentId = rs.getInt("id");
             } else {
                 showAlert(Alert.AlertType.ERROR, "Erreur", "Aucun utilisateur trouvé dans la base de données");
             }
@@ -110,7 +111,7 @@ public class AjouterReclamation implements Initializable {
     public void handleAjouter() {
         try {
             // Vérifier si un utilisateur a été trouvé
-            if (currentUserId == 0) {
+            if (currentId == 0) {
                 showAlert(Alert.AlertType.ERROR, "Erreur", "Aucun utilisateur disponible pour créer la réclamation");
                 return;
             }
@@ -129,9 +130,20 @@ public class AjouterReclamation implements Initializable {
                 return;
             }
 
+            // Récupérer l'email de l'utilisateur actuel
+            String userEmail = "";
+            try (Connection conn = MyDatabase.getInstance().getConnection();
+                 PreparedStatement stmt = conn.prepareStatement("SELECT email FROM utilisateur WHERE id = ?")) {
+                stmt.setInt(1, currentId);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    userEmail = rs.getString("email");
+                }
+            }
+
             // Créer la réclamation
             Reclamation reclamation = new Reclamation();
-            reclamation.setIdUser(currentUserId);
+            reclamation.setId(currentId);
             reclamation.setIdCategorie(categorieComboBox.getValue().getIdCategorie());
             reclamation.setDate(datePicker.getValue().format(DateTimeFormatter.ISO_DATE));
             reclamation.setCommentaire(commentaireArea.getText().trim());
@@ -139,6 +151,24 @@ public class AjouterReclamation implements Initializable {
 
             // Ajouter la réclamation
             reclamationService.ajouter(reclamation);
+
+            // Envoyer un email aux administrateurs
+            List<String> adminEmails = reclamationService.getAdminEmails();
+            String subject = "Nouvelle Réclamation";
+            String content = String.format(
+                "Une nouvelle réclamation a été ajoutée depuis ghozlene.nezhi@esprit.com\n\n" +
+                "Détails de la réclamation :\n" +
+                "Date : %s\n" +
+                "Catégorie : %s\n" +
+                "Commentaire : %s",
+                reclamation.getDate(),
+                categorieComboBox.getValue().getDescription(),
+                reclamation.getCommentaire()
+            );
+
+            for (String adminEmail : adminEmails) {
+                EmailUtil.sendEmail(adminEmail, subject, content);
+            }
 
             showAlert(Alert.AlertType.INFORMATION, "Succès", "Réclamation ajoutée avec succès");
             handleAnnuler(); // Réinitialiser le formulaire
@@ -189,7 +219,7 @@ public class AjouterReclamation implements Initializable {
         alert.showAndWait();
     }
 
-    public void setCurrentUserId(int userId) {
-        this.currentUserId = userId;
+    public void setCurrentUserId(int Id) {
+        this.currentId = Id;
     }
 }

@@ -28,11 +28,6 @@
             <Label text="Commentaire:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
             <TextArea fx:id="commentaireArea" prefRowCount="3" prefWidth="200" 
                       GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-            <Label text="Statut:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <TextField fx:id="statutField" text="en attente" editable="false" 
-                      style="-fx-background-color: #f5f5f5;" prefWidth="200"
-                      GridPane.rowIndex="3" GridPane.columnIndex="1"/>
         </GridPane>
         
         <HBox spacing="10" alignment="CENTER_RIGHT">

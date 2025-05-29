@@ -10,22 +10,29 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import services.CrudVoiture;
+import Controller.ThemeManager;
 
-import java.io.IOException;
+import java.io.File;
 import java.sql.SQLException;
-
 import javafx.event.ActionEvent;
 
 public class DetailVoitureController {
 
+    @FXML private ImageView imageView;
     @FXML private Label marqueLabel;
     @FXML private Label modeleLabel;
     @FXML private Label prixLabel;
-    @FXML private Label matriculeLabel;
     @FXML private Label disponibleLabel;
-    @FXML private ImageView imageView;
+    @FXML private Label placesLabel;
+    @FXML private Label boiteVitesseLabel;
+    @FXML private Label carburantLabel;
+    @FXML private Label kilometrageLabel;
+    @FXML private Label couleurLabel;
+    @FXML private Label climatisationLabel;
+    @FXML private Text descriptionText;
     @FXML private Button reserverButton;
     @FXML private Button annulerButton;
 
@@ -35,22 +42,12 @@ public class DetailVoitureController {
 
     private int compteurPanier = 0;
 
+    private int voitureId;
     private final CrudVoiture crudVoiture = new CrudVoiture();
-    private Voiture currentVoiture;
 
-    public void setVoitureId(int voitureId) {
-        try {
-            Voiture voiture = crudVoiture.getVoitureById(voitureId);
-            if (voiture != null) {
-                this.currentVoiture = voiture;
-                updateDetails(voiture);
-            } else {
-                showAlert("Erreur", "Voiture non trouvée.");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert("Erreur", "Impossible de charger les détails de la voiture : " + e.getMessage());
-        }
+    public void setVoitureId(int id) {
+        this.voitureId = id;
+        loadVoitureDetails();
     }
 
     @FXML
@@ -67,68 +64,121 @@ public class DetailVoitureController {
             notificationLabel.setText(String.valueOf(compteurPanier));
         }
 
-        // 🔔 Gestion du clic sur l’icône panier (optionnel)
+        // 🔔 Gestion du clic sur l'icône panier (optionnel)
         if (panierIcon != null) {
             panierIcon.setOnMouseClicked(e -> showPanierWindow());
         }
+
+        // Listener pour appliquer le thème dynamiquement
+        annulerButton.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                Parent root = newScene.getRoot();
+                Controller.ThemeManager.darkModeProperty().addListener((o, oldVal, newVal) -> {
+                    if (newVal) {
+                        if (!root.getStyleClass().contains("dark-root")) {
+                            root.getStyleClass().add("dark-root");
+                        }
+                    } else {
+                        root.getStyleClass().remove("dark-root");
+                    }
+                });
+            }
+        });
     }
 
-    private void updateDetails(Voiture voiture) {
-        marqueLabel.setText("Marque : " + voiture.getMarque());
-        modeleLabel.setText("Modèle : " + voiture.getModele());
-        matriculeLabel.setText("Matricule : " + voiture.getMatricule());
-        prixLabel.setText("Prix: " + voiture.getPrixParJour());
-        disponibleLabel.setText("Disponibilité : " + voiture.isDisponible());
-        loadImage(voiture.getImagePath());
+    private void loadVoitureDetails() {
+        try {
+            Voiture voiture = crudVoiture.getVoitureById(voitureId);
+            if (voiture != null) {
+                // Informations de base
+                marqueLabel.setText(voiture.getMarque());
+                modeleLabel.setText(voiture.getModele());
+                prixLabel.setText(String.format("%.0f TND", voiture.getPrixParJour()));
+                disponibleLabel.setText(voiture.isDisponible() ? "Disponible" : "Non disponible");
+                disponibleLabel.setStyle(voiture.isDisponible() ? "-fx-text-fill: #2e7d32;" : "-fx-text-fill: #c62828;");
+
+                // Caractéristiques
+                placesLabel.setText(String.valueOf(voiture.getNbPlaces()));
+                boiteVitesseLabel.setText(voiture.getBoiteVitesse());
+                carburantLabel.setText(voiture.getCarburant());
+                kilometrageLabel.setText(String.format("%d km", voiture.getKilometrage()));
+                couleurLabel.setText(voiture.getCouleur());
+                climatisationLabel.setText(voiture.isClimatisation() ? "Oui" : "Non");
+
+                // Description
+                descriptionText.setText(String.format(
+                    "Cette %s %s est une voiture %s avec %d places. Elle est équipée d'une boîte de vitesse %s " +
+                    "et fonctionne au %s. Avec %d km au compteur, elle est en excellent état et prête à vous " +
+                    "accompagner dans tous vos déplacements.",
+                    voiture.getMarque(),
+                    voiture.getModele(),
+                    voiture.getCategorie().toLowerCase(),
+                    voiture.getNbPlaces(),
+                    voiture.getBoiteVitesse().toLowerCase(),
+                    voiture.getCarburant().toLowerCase(),
+                    voiture.getKilometrage()
+                ));
+
+                // Image
+                loadImage(voiture.getImagePath());
+
+                // État du bouton de réservation
+                reserverButton.setDisable(!voiture.isDisponible());
+            }
+        } catch (SQLException e) {
+            showError("Erreur lors du chargement des détails", e.getMessage());
+        }
     }
 
     private void loadImage(String imagePath) {
         try {
-            Image img;
-            if (imagePath != null && !imagePath.isEmpty()) {
-                if (imagePath.startsWith("http") || imagePath.startsWith("file:")) {
-                    img = new Image(imagePath);
-                } else {
-                    img = new Image(getClass().getResourceAsStream("/images/" + imagePath));
-                }
-            } else {
-                img = new Image(getClass().getResourceAsStream("/images/default.png"));
+            if (imagePath != null && !imagePath.trim().isEmpty()) {
+                File imgFile = new File(imagePath);
+                String fullPath = imgFile.getAbsolutePath();
+                Image img = new Image("file:" + fullPath.replace("\\", "/"), 400, 300, true, true);
+                imageView.setImage(img);
             }
-            imageView.setImage(img);
         } catch (Exception e) {
-            System.err.println("Erreur chargement image : " + e.getMessage());
+            System.err.println("Erreur lors du chargement de l'image: " + e.getMessage());
         }
     }
 
     @FXML
     private void handleReserver(ActionEvent event) {
-        if (currentVoiture == null) {
-            showAlert("Erreur", "Aucune voiture sélectionnée.");
+        if (voitureId == 0) {
+            showError("Erreur", "Aucune voiture sélectionnée.");
             return;
         }
 
         try {
+            Voiture voiture = crudVoiture.getVoitureById(voitureId);
+            if (voiture == null) {
+                showError("Erreur", "Voiture non trouvée.");
+                return;
+            }
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ReservationVoiture.fxml"));
             Parent root = loader.load();
 
             ReservationVoitureController controller = loader.getController();
-            controller.setVoiture(currentVoiture);
+            controller.setVoiture(voiture);
 
             Stage stage = new Stage();
             stage.setTitle("Réservation de la voiture");
             stage.setScene(new Scene(root));
             stage.show();
 
-            // 🔔 Incrémenter le panier
-            compteurPanier++;
-            notificationLabel.setText(String.valueOf(compteurPanier));
-
             closeWindow();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Erreur", "Impossible d’ouvrir la page de réservation : " + e.getMessage());
+            showError("Erreur", "Impossible d'ouvrir la page de réservation : " + e.getMessage());
         }
+    }
+
+    @FXML
+    private void handleRetour(ActionEvent event) {
+        closeWindow();
     }
 
     private void showPanierWindow() {
@@ -138,10 +188,16 @@ public class DetailVoitureController {
             Stage stage = new Stage();
             stage.setTitle("Mon panier");
             stage.setScene(new Scene(root));
+            // Appliquer le thème courant
+            if (ThemeManager.isDarkMode()) {
+                root.getStyleClass().add("dark-root");
+            } else {
+                root.getStyleClass().remove("dark-root");
+            }
             stage.show();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Erreur", "Impossible d’ouvrir le panier.");
+            showError("Erreur", "Impossible d'ouvrir le panier.");
         }
     }
 
@@ -152,11 +208,19 @@ public class DetailVoitureController {
         }
     }
 
-    private void showAlert(String titre, String msg) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(titre);
+    private void showError(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
         alert.setHeaderText(null);
-        alert.setContentText(msg);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    private void showInfo(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
         alert.showAndWait();
     }
 }

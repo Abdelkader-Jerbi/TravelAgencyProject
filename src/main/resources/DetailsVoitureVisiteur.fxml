@@ -1,85 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="Controller.DetailVoitureController"
-            prefWidth="800" prefHeight="600"
-            style="-fx-background-color: #f5f5f5;">
+            prefWidth="1000" prefHeight="700"
+            styleClass="main-bg" stylesheets="@theme-voyage.css">
+    <children>
+        <VBox spacing="0" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+            <!-- En-tête avec barre de navigation -->
+            <HBox styleClass="nav-bar" alignment="CENTER_LEFT" spacing="10">
+                <padding><Insets top="8" right="15" bottom="8" left="15"/></padding>
+                <Button text="← Retour" onAction="#handleRetour" styleClass="button back-btn"/>
+                <Label text="Détails de la voiture" styleClass="nav-title"/>
+            </HBox>
 
-    <!-- Barre de navigation -->
-    <HBox alignment="CENTER_LEFT" layoutX="0" layoutY="0" prefHeight="60" prefWidth="800" spacing="15"
-          style="-fx-background-color: #3e50b4; -fx-padding: 10;">
-        <ImageView fitHeight="40" fitWidth="40" preserveRatio="true">
-            <image>
-                <Image url="@images/logo2.png" />
-            </image>
-        </ImageView>
+            <!-- Contenu principal -->
+            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="scroll-pane">
+                <VBox spacing="20" style="-fx-padding: 20;">
+                    <!-- Section principale -->
+                    <HBox spacing="30" alignment="TOP_LEFT">
+                        <!-- Image de la voiture -->
+                        <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 6, 0, 0, 4);">
+                            <ImageView fx:id="imageView" fitHeight="300" fitWidth="400" preserveRatio="true" styleClass="detail-image"/>
+                            <HBox spacing="10" alignment="CENTER">
+                                <Button text="←" styleClass="button nav-image-btn"/>
+                                <Button text="→" styleClass="button nav-image-btn"/>
+                            </HBox>
+                        </VBox>
 
-        <TextField fx:id="searchField" promptText="Rechercher"
-                   style="-fx-pref-width: 250px; -fx-padding: 5;" HBox.hgrow="ALWAYS">
-            <cursor>
-                <Cursor fx:constant="DISAPPEAR" />
-            </cursor>
-        </TextField>
+                        <!-- Informations principales -->
+                        <VBox spacing="15" HBox.hgrow="ALWAYS">
+                            <!-- Titre et badges -->
+                            <VBox spacing="8">
+                                <HBox spacing="8" alignment="CENTER_LEFT">
+                                    <Label fx:id="marqueLabel" styleClass="detail-title"/>
+                                    <Label fx:id="modeleLabel" styleClass="detail-subtitle"/>
+                                </HBox>
+                                <HBox spacing="8">
+                                    <Label text="Coup de cœur" styleClass="badge"/>
+                                    <Label text="Idéal pour les familles" styleClass="badge"/>
+                                </HBox>
+                            </VBox>
 
-        <HBox alignment="CENTER_RIGHT" spacing="8">
-            <AnchorPane layoutX="580" layoutY="10">
-                <ImageView fx:id="panierIcon" fitHeight="30" fitWidth="30" preserveRatio="true">
-                    <image>
-                        <Image url="@images/pannier.png" />
-                    </image>
-                </ImageView>
-                <Label fx:id="notificationLabel"
-                       text="0"
-                       layoutX="20" layoutY="-5"
-                       style="-fx-background-color: red; -fx-text-fill: white;
-                  -fx-font-size: 10px; -fx-padding: 1 6;
-                  -fx-background-radius: 10;" />
-            </AnchorPane>
-        </HBox>
-    </HBox>
+                            <!-- Prix et disponibilité -->
+                            <HBox spacing="20" alignment="CENTER_LEFT">
+                                <VBox spacing="5">
+                                    <Label text="Prix par jour" styleClass="price-label"/>
+                                    <Label fx:id="prixLabel" styleClass="price-value"/>
+                                </VBox>
+                                <Separator orientation="VERTICAL" prefHeight="40"/>
+                                <VBox spacing="5">
+                                    <Label text="Disponibilité" styleClass="availability-label"/>
+                                    <Label fx:id="disponibleLabel" styleClass="availability-value"/>
+                                </VBox>
+                            </HBox>
 
-    <!-- Catégories -->
-    <HBox alignment="CENTER" layoutX="0" layoutY="60" prefHeight="40" prefWidth="800" spacing="25"
-          style="-fx-background-color: #5c6bc0; -fx-padding: 10;">
-        <Button fx:id="hotelButton" text="Hôtel" style="-fx-background-color: #ff9800; -fx-text-fill: white;" />
-        <Button fx:id="voitureButton" text="Voiture" style="-fx-background-color: #ff9800; -fx-text-fill: white;" />
-        <Button fx:id="billetButton" text="Billet" style="-fx-background-color: #ff9800; -fx-text-fill: white;" />
-    </HBox>
+                            <!-- Caractéristiques principales -->
+                            <GridPane fx:id="featuresGrid" hgap="30" vgap="12" styleClass="features-grid">
+                                <columnConstraints>
+                                    <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="120"/>
+                                    <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" minWidth="120"/>
+                                </columnConstraints>
+                                <children>
+                                    <Label text="🚗 Places" styleClass="feature-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                    <Label fx:id="placesLabel" styleClass="feature-value" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-    <!-- Détails de la voiture -->
-    <VBox layoutX="160" layoutY="120" prefWidth="480" spacing="15"
-          style="-fx-padding: 20; -fx-background-color: #ffffff; -fx-border-width: 1;
-                 -fx-border-color: #5c6bc0; -fx-border-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 1);">
+                                    <Label text="⚙️ Boîte de vitesse" styleClass="feature-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                    <Label fx:id="boiteVitesseLabel" styleClass="feature-value" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-        <ImageView fx:id="imageView" fitHeight="200" fitWidth="200" preserveRatio="true"
-                   style="-fx-alignment: center;" />
+                                    <Label text="⛽ Carburant" styleClass="feature-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                    <Label fx:id="carburantLabel" styleClass="feature-value" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-        <Label fx:id="marqueLabel" text="Marque : " style="-fx-font-size: 14px; -fx-font-weight: bold;" />
-        <Label fx:id="modeleLabel" text="Modèle : " style="-fx-font-size: 14px; -fx-font-weight: bold;" />
-        <Label fx:id="prixLabel" text="Prix : " style="-fx-font-size: 14px; -fx-font-weight: bold;" />
-        <Label fx:id="matriculeLabel" text="Matricule : " style="-fx-font-size: 14px; -fx-font-weight: bold;" />
-        <Label fx:id="disponibleLabel" text="Disponible : " style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                                    <Label text="🛣️ Kilométrage" styleClass="feature-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                                    <Label fx:id="kilometrageLabel" styleClass="feature-value" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-        <!-- Boutons d'action -->
-        <HBox spacing="20" alignment="CENTER">
-            <Button fx:id="reserverButton" text="Réserver"
-                    onAction="#handleReserver"
-                    style="-fx-background-color: #43A047; -fx-text-fill: white;
-                           -fx-font-size: 13px; -fx-padding: 6 12;" />
-            <Button fx:id="annulerButton" text="Annuler"
-                    style="-fx-background-color: #f44336; -fx-text-fill: white;
-                           -fx-font-size: 13px; -fx-padding: 6 12;" />
-        </HBox>
-    </VBox>
+                                    <Label text="🎨 Couleur" styleClass="feature-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                                    <Label fx:id="couleurLabel" styleClass="feature-value" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                                    <Label text="❄️ Climatisation" styleClass="feature-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                                    <Label fx:id="climatisationLabel" styleClass="feature-value" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                                </children>
+                            </GridPane>
+
+                            <!-- Description -->
+                            <VBox spacing="8">
+                                <Label text="Description" styleClass="section-title"/>
+                                <Text fx:id="descriptionText" styleClass="description-text" wrappingWidth="400"/>
+                            </VBox>
+
+                            <!-- Boutons d'action -->
+                            <HBox spacing="15" alignment="CENTER_LEFT">
+                                <Button fx:id="reserverButton" text="Réserver maintenant" onAction="#handleReserver" styleClass="button action-btn primary" prefWidth="180"/>
+                                <Button fx:id="annulerButton" text="Retour" onAction="#handleRetour" styleClass="button action-btn secondary" prefWidth="120"/>
+                            </HBox>
+                        </VBox>
+                    </HBox>
+
+                    <!-- Section des avis -->
+                    <VBox spacing="15" styleClass="reviews-section">
+                        <Label text="Avis clients" styleClass="section-title"/>
+                        <HBox spacing="20">
+                            <VBox spacing="5" alignment="CENTER">
+                                <Label text="4.8" styleClass="rating-value"/>
+                                <Label text="★★★★★" styleClass="rating-stars"/>
+                                <Label text="Basé sur 128 avis" styleClass="rating-count"/>
+                            </VBox>
+                            <VBox spacing="10" HBox.hgrow="ALWAYS">
+                                <ProgressBar progress="0.9" prefWidth="200" styleClass="rating-bar"/>
+                                <ProgressBar progress="0.7" prefWidth="200" styleClass="rating-bar"/>
+                                <ProgressBar progress="0.5" prefWidth="200" styleClass="rating-bar"/>
+                                <ProgressBar progress="0.3" prefWidth="200" styleClass="rating-bar"/>
+                                <ProgressBar progress="0.1" prefWidth="200" styleClass="rating-bar"/>
+                            </VBox>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+        </VBox>
+    </children>
 </AnchorPane>

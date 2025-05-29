@@ -1,5 +1,6 @@
 package Controller;
 
+import com.itextpdf.text.pdf.TextField;
 import entities.Reservation;
 import entities.Voiture;
 import javafx.fxml.FXML;
@@ -12,15 +13,31 @@ import services.CrudReservation;
 import services.CrudVoiture;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.FileOutputStream;
 import java.io.File;
 import java.sql.SQLException;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Properties;
+import javafx.scene.Parent;
+import javafx.animation.FadeTransition;
+import javafx.util.Duration;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import java.io.IOException;
+import javafx.animation.ScaleTransition;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import java.io.ByteArrayOutputStream;
+import java.util.Base64;
+
 
 public class ReservationVoitureController {
 
@@ -30,6 +47,11 @@ public class ReservationVoitureController {
     @FXML private Label matriculeCol;
     @FXML private Label disponibleLabel;
     @FXML private Label notificationLabel;
+    @FXML private Label carburantLabel;
+    @FXML private Label boiteVitesseLabel;
+
+    @FXML private javafx.scene.control.TextField nomClientField;
+    @FXML private javafx.scene.control.TextField prenomClientField;
 
     @FXML private DatePicker dateDebutPicker;
     @FXML private DatePicker dateFinPicker;
@@ -39,14 +61,23 @@ public class ReservationVoitureController {
 
     @FXML private CheckBox chauffeurCheckBox;
 
-    @FXML private Button reserverButton;
+    @FXML private Button btnRechercher;
     @FXML private Button annulerButton;
 
-    @FXML private ImageView imageView;
+    @FXML private ImageView voitureImage;
 
     private Voiture voiture;
     private final CrudReservation crudReservation = new CrudReservation();
     private int compteurPanier = 0;
+
+    // Ajout d'une méthode statique pour le compteur global du panier
+    private static int globalCartCount = 0;
+    public static void incrementGlobalCart() {
+        globalCartCount++;
+    }
+    public static int getGlobalCartCount() {
+        return globalCartCount;
+    }
 
     @FXML
     public void initialize() {
@@ -60,8 +91,71 @@ public class ReservationVoitureController {
         villeDepartCombo.getItems().addAll(villes);
         villeRetourCombo.getItems().addAll(villes);
 
-        if (reserverButton != null) reserverButton.setOnAction(e -> handleReservation());
-        if (annulerButton != null) annulerButton.setOnAction(e -> closeWindow());
+        // Ajouter un listener sur le CheckBox chauffeur
+        chauffeurCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            updatePrixTotal();
+        });
+
+        // Ajouter des listeners sur les DatePickers
+        dateDebutPicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+            updatePrixTotal();
+        });
+
+        dateFinPicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+            updatePrixTotal();
+        });
+
+        // Listener pour appliquer le thème dynamiquement
+        btnRechercher.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                Parent root = newScene.getRoot();
+                // Appliquer le style immédiatement selon l'état courant
+                if (ThemeManager.isDarkMode()) {
+                    if (!root.getStyleClass().contains("dark-root")) {
+                        root.getStyleClass().add("dark-root");
+                    }
+                } else {
+                    root.getStyleClass().remove("dark-root");
+                }
+                // Puis écouter les changements
+                ThemeManager.darkModeProperty().addListener((o, oldVal, newVal) -> {
+                    if (newVal) {
+                        if (!root.getStyleClass().contains("dark-root")) {
+                            root.getStyleClass().add("dark-root");
+                        }
+                    } else {
+                        root.getStyleClass().remove("dark-root");
+                    }
+                });
+            }
+        });
+    }
+
+    private void updatePrixTotal() {
+        if (dateDebutPicker.getValue() != null && dateFinPicker.getValue() != null && voiture != null) {
+            LocalDate debut = dateDebutPicker.getValue();
+            LocalDate fin = dateFinPicker.getValue();
+            
+            if (debut.isAfter(fin)) {
+                return; // Ne pas calculer si les dates sont invalides
+            }
+
+            long dureeLocation = java.time.temporal.ChronoUnit.DAYS.between(debut, fin) + 1;
+            double prixBase = dureeLocation * voiture.getPrixParJour();
+            double prixChauffeur = chauffeurCheckBox.isSelected() ? dureeLocation * 50.0 : 0;
+            double fraisService = (prixBase + prixChauffeur) * 0.05;
+            float prixTotal = (float) (prixBase + prixChauffeur + fraisService);
+
+            // Mettre à jour l'affichage du prix
+            prixLabel.setText(String.format("Prix total : %.2f DT", prixTotal));
+            
+            // Ajouter un style spécial si le chauffeur est sélectionné
+            if (chauffeurCheckBox.isSelected()) {
+                prixLabel.setStyle("-fx-text-fill: #4CAF50; -fx-font-weight: bold;");
+            } else {
+                prixLabel.setStyle("");
+            }
+        }
     }
 
     public void setVoiture(Voiture voiture) {
@@ -70,76 +164,313 @@ public class ReservationVoitureController {
             marqueLabel.setText("Marque : " + voiture.getMarque());
             modeleLabel.setText("Modèle : " + voiture.getModele());
             prixLabel.setText("Prix : " + voiture.getPrixParJour() + " DT/Jour");
+            matriculeCol.setText(voiture.getMatricule());
+            carburantLabel.setText(voiture.getCarburant());
+            boiteVitesseLabel.setText(voiture.getBoiteVitesse());
+            disponibleLabel.setText(voiture.isDisponible() ? "Disponible" : "Non disponible");
+            disponibleLabel.setStyle(voiture.isDisponible() ? "-fx-text-fill: #2e7d32;" : "-fx-text-fill: #c62828;");
             loadImage(voiture.getImagePath());
         }
     }
 
     private void loadImage(String imagePath) {
         if (imagePath != null && !imagePath.isEmpty()) {
+            try {
+                if (imagePath.startsWith("file:/")) {
+                    // Si c'est déjà une URL file:/, utiliser directement
+                    voitureImage.setImage(new Image(imagePath));
+                } else {
             File file = new File(imagePath);
+                    if (!file.isAbsolute()) {
+                        // Si le chemin est relatif, le rendre absolu par rapport au projet
+                        file = new File(System.getProperty("user.dir"), imagePath);
+                    }
             if (file.exists()) {
-                imageView.setImage(new Image(file.toURI().toString()));
+                voitureImage.setImage(new Image(file.toURI().toString()));
             } else {
-                System.out.println("Image introuvable : " + imagePath);
+                        System.out.println("Image introuvable : " + file.getAbsolutePath());
+                        loadDefaultImage();
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("Erreur lors du chargement de l'image : " + e.getMessage());
+                loadDefaultImage();
             }
         } else {
-            System.out.println("Chemin d’image invalide.");
+            System.out.println("Chemin d'image invalide.");
+            loadDefaultImage();
         }
     }
 
-    private void handleReservation() {
-        if (voiture == null) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Aucune voiture sélectionnée.");
-            return;
+    private void loadDefaultImage() {
+        try {
+            String defaultImagePath = "src/main/resources/images/default_car.png";
+            File defaultFile = new File(defaultImagePath);
+            if (defaultFile.exists()) {
+                voitureImage.setImage(new Image(defaultFile.toURI().toString()));
+            }
+        } catch (Exception e) {
+            System.out.println("Erreur lors du chargement de l'image par défaut : " + e.getMessage());
+        }
+    }
+
+    private boolean validerChamps() {
+        // Vérification des champs obligatoires
+        if (nomClientField.getText().trim().isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Le nom est obligatoire");
+            return false;
+        }
+        if (prenomClientField.getText().trim().isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Le prénom est obligatoire");
+            return false;
+        }
+        if (villeDepartCombo.getValue() == null) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "La ville de départ est obligatoire");
+            return false;
+        }
+        if (villeRetourCombo.getValue() == null) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "La ville de retour est obligatoire");
+            return false;
+        }
+        if (dateDebutPicker.getValue() == null) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "La date de début est obligatoire");
+            return false;
+        }
+        if (dateFinPicker.getValue() == null) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "La date de fin est obligatoire");
+            return false;
         }
 
+        // Vérification des dates
         LocalDate dateDebut = dateDebutPicker.getValue();
         LocalDate dateFin = dateFinPicker.getValue();
+        LocalDate aujourdhui = LocalDate.now();
 
-        if (dateDebut == null || dateFin == null) {
-            showAlert(Alert.AlertType.WARNING, "Erreur", "Veuillez sélectionner les deux dates.");
-            return;
+        if (dateDebut.isBefore(aujourdhui)) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "La date de début ne peut pas être dans le passé");
+            return false;
         }
-
         if (!dateDebut.isBefore(dateFin)) {
-            showAlert(Alert.AlertType.WARNING, "Erreur", "La date de fin doit être après la date de début.");
-            return;
+            showAlert(Alert.AlertType.ERROR, "Erreur", "La date de fin doit être après la date de début");
+            return false;
         }
 
-        if (!voiture.isDisponible()) {
-            showAlert(Alert.AlertType.WARNING, "Indisponible", "Cette voiture n'est pas disponible actuellement.");
-            return;
+        // Vérification de la durée maximale de location (30 jours)
+        long dureeLocation = java.time.temporal.ChronoUnit.DAYS.between(dateDebut, dateFin);
+        if (dureeLocation > 30) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "La durée de location ne peut pas dépasser 30 jours");
+            return false;
         }
 
-        if (crudReservation.reserverVoiture(voiture.getId())) {
-            showAlert(Alert.AlertType.INFORMATION, "Succès", "Réservation réussie !");
-            closeWindow();
-        } else {
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Réservation échouée.");
+        // Vérification de la disponibilité de la voiture
+        if (voiture != null && !voiture.isDisponible()) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Cette voiture n'est plus disponible");
+            return false;
+        }
+
+        return true;
+    }
+
+    private float calculerPrixTotal(LocalDate debut, LocalDate fin, double prixParJour, boolean chauffeur) {
+        // Calcul du nombre de jours (inclusif)
+        long dureeLocation = java.time.temporal.ChronoUnit.DAYS.between(debut, fin) + 1;
+        
+        // Calcul du prix de base
+        double prixBase = dureeLocation * prixParJour;
+        
+        // Ajout du coût du chauffeur si sélectionné
+        double prixChauffeur = 0;
+        if (chauffeur) {
+            prixChauffeur = dureeLocation * 50.0; // 50 DT/jour pour chauffeur
+        }
+        
+        // Calcul des frais de service (5%)
+        double fraisService = (prixBase + prixChauffeur) * 0.05;
+        
+        // Calcul du total
+        double total = prixBase + prixChauffeur + fraisService;
+        
+        return (float) total;
+    }
+
+    private void mettreAJourDisponibiliteVoiture(boolean disponible) {
+        try {
+            CrudVoiture crudVoiture = new CrudVoiture();
+            voiture.setDisponible(disponible);
+            crudVoiture.mettreAJourDisponibilite(voiture.getId(), disponible);
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de la mise à jour de la disponibilité : " + e.getMessage());
+        }
+    }
+
+    private File genererFacturePDF(String nom, String prenom, String matricule, String modele, String marque, String carburant, String boiteVitesse,
+                                  String villeDepart, String villeRetour, String dateDebut, String dateFin, float montant) {
+        File pdfFile = null;
+        try {
+            pdfFile = File.createTempFile("facture_", ".pdf");
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
+            document.open();
+
+            // Logo
+            try {
+                String logoPath = "src/main/resources/images/logo.png"; // adapte le chemin si besoin
+                File logoFile = new File(logoPath);
+                if (logoFile.exists()) {
+                    com.itextpdf.text.Image logo = com.itextpdf.text.Image.getInstance(logoFile.getAbsolutePath());
+                    logo.scaleToFit(100, 100);
+                    logo.setAlignment(Element.ALIGN_LEFT);
+                    document.add(logo);
+                }
+            } catch (Exception e) {
+                // Si le logo n'est pas trouvé, on continue sans
+            }
+
+            // Nom de l'agence et date
+            Paragraph agence = new Paragraph("TravelAgency", new Font(Font.FontFamily.HELVETICA, 20, Font.BOLD));
+            agence.setAlignment(Element.ALIGN_RIGHT);
+            document.add(agence);
+
+            Paragraph date = new Paragraph("Date : " + new java.text.SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date()), new Font(Font.FontFamily.HELVETICA, 12));
+            date.setAlignment(Element.ALIGN_RIGHT);
+            document.add(date);
+
+            document.add(new Paragraph(" ")); // espace
+
+            // Titre
+            Paragraph titre = new Paragraph("FACTURE", new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD));
+            titre.setAlignment(Element.ALIGN_CENTER);
+            document.add(titre);
+
+            document.add(new Paragraph(" ")); // espace
+
+            // Tableau des détails
+            PdfPTable table = new PdfPTable(2);
+            table.setWidthPercentage(100);
+            table.setSpacingBefore(10f);
+            table.setSpacingAfter(10f);
+
+            // En-têtes
+            table.addCell("Nom du client");
+            table.addCell(nom + " " + prenom);
+            table.addCell("Matricule voiture");
+            table.addCell(matricule);
+            table.addCell("Modèle");
+            table.addCell(modele);
+            table.addCell("Marque");
+            table.addCell(marque);
+            table.addCell("Carburant");
+            table.addCell(carburant);
+            table.addCell("Boîte de vitesse");
+            table.addCell(boiteVitesse);
+            table.addCell("Ville de départ");
+            table.addCell(villeDepart);
+            table.addCell("Ville de retour");
+            table.addCell(villeRetour);
+            table.addCell("Date début");
+            table.addCell(dateDebut);
+            table.addCell("Date fin");
+            table.addCell(dateFin);
+
+            document.add(table);
+
+            // Montant total
+            Paragraph montantTotal = new Paragraph("Montant total à payer : " + String.format("%.2f", montant) + " DT", new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD));
+            montantTotal.setAlignment(Element.ALIGN_RIGHT);
+            document.add(montantTotal);
+
+            document.add(new Paragraph(" ")); // espace
+
+            // Signature
+            Paragraph signature = new Paragraph("Signature de l'agence :", new Font(Font.FontFamily.HELVETICA, 12));
+            signature.setSpacingBefore(30f);
+            document.add(signature);
+
+            document.add(new Paragraph(" ")); // espace pour la signature
+            document.add(new Paragraph("_________________________", new Font(Font.FontFamily.HELVETICA, 12)));
+
+            document.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de la génération de la facture : " + e.getMessage());
+        }
+        return pdfFile;
+    }
+
+    private void sendFactureEmailWithAttachment(String toEmail, String nom, String prenom, File pdfFile) {
+        final String fromEmail = "gharbioumayma888@gmail.com";
+        final String password = "tmcfmimebhukptzi"; // mot de passe d'application SANS espace
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(fromEmail, password);
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(fromEmail));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+            message.setSubject("Votre facture de réservation - TravelAgency");
+
+            // Corps du mail
+            String text = "Bonjour " + nom + " " + prenom + ",\n\nVeuillez trouver en pièce jointe votre facture de réservation.\nMerci pour votre confiance !";
+            MimeBodyPart textPart = new MimeBodyPart();
+            textPart.setText(text);
+
+            // Pièce jointe PDF
+            MimeBodyPart attachmentPart = new MimeBodyPart();
+            attachmentPart.attachFile(pdfFile);
+
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(textPart);
+            multipart.addBodyPart(attachmentPart);
+
+            message.setContent(multipart);
+
+            Transport.send(message);
+            System.out.println("Facture envoyée par email !");
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de l'envoi de la facture par email : " + e.getMessage());
         }
     }
 
     @FXML
     private void passerAPaiement(ActionEvent event) {
         if (!validerChamps()) {
-            showAlert(Alert.AlertType.ERROR, "Champs manquants", "Veuillez remplir tous les champs correctement.");
             return;
         }
 
-        Date dateReservation = new Date(System.currentTimeMillis());
-        Date dateDebut = Date.valueOf(dateDebutPicker.getValue());
-        Date dateFin = Date.valueOf(dateFinPicker.getValue());
+        try {
+        java.sql.Date dateReservation = new java.sql.Date(System.currentTimeMillis());
+        java.sql.Date dateDebut = java.sql.Date.valueOf(dateDebutPicker.getValue());
+        java.sql.Date dateFin = java.sql.Date.valueOf(dateFinPicker.getValue());
 
         String villeDepart = villeDepartCombo.getValue();
         String villeRetour = villeRetourCombo.getValue();
+            String nom = nomClientField.getText().trim();
+            String prenom = prenomClientField.getText().trim();
 
-        float prixTotal = calculerPrixTotal(
-                dateDebutPicker.getValue(),
-                dateFinPicker.getValue(),
-                voiture.getPrixParJour(),
-                chauffeurCheckBox.isSelected()
-        );
+            // Calcul détaillé du prix
+            LocalDate debut = dateDebutPicker.getValue();
+            LocalDate fin = dateFinPicker.getValue();
+            long dureeLocation = java.time.temporal.ChronoUnit.DAYS.between(debut, fin) + 1;
+            double prixBase = dureeLocation * voiture.getPrixParJour();
+            double prixChauffeur = chauffeurCheckBox.isSelected() ? dureeLocation * 50.0 : 0;
+            double fraisService = (prixBase + prixChauffeur) * 0.05;
+            float prixTotal = (float) (prixBase + prixChauffeur + fraisService);
 
+        String matricule = voiture != null ? voiture.getMatricule() : "";
+        String modele = voiture != null ? voiture.getModele() : "";
+
+            // Création de la réservation
         Reservation reservation = new Reservation(
                 0, // ID auto-généré
                 dateReservation,
@@ -150,42 +481,99 @@ public class ReservationVoitureController {
                 prixTotal,
                 1, // Nombre de personnes
                 "En attente",
-                voiture
+                voiture,
+                nom,
+                prenom
         );
 
+            // Ajout de la réservation dans la base de données
         crudReservation.ajouterReservation(reservation);
+
+            // Génération de la facture PDF
+            File facture = genererFacturePDF(
+                nom, prenom, matricule, modele, voiture.getMarque(), voiture.getCarburant(), voiture.getBoiteVitesse(),
+                villeDepart, villeRetour, dateDebut.toString(), dateFin.toString(), prixTotal
+            );
+            if (facture != null && facture.exists()) {
+                System.out.println("Facture générée : " + facture.getAbsolutePath());
+                // Envoi de la facture par email en pièce jointe
+                sendFactureEmailWithAttachment("gharbioumayma888@gmail.com", nom, prenom, facture); // à remplacer par l'email du client si besoin
+            }
+
+            // Envoi d'un email de confirmation simple
+            sendConfirmationEmail("gharbioumayma888@gmail.com", nom, prenom); // à remplacer par l'email du client si besoin
+
+            // Mise à jour de la disponibilité de la voiture
+            mettreAJourDisponibiliteVoiture(false);
+
+            // Mise à jour du compteur de panier
         compteurPanier++;
-        notificationLabel.setText(String.valueOf(compteurPanier));
+        incrementGlobalCart();
 
-        ouvrirPagePaiement();
-        sendReservationDetailsEmail(); // Envoi d'un e-mail de confirmation après la réservation
+            // Mise à jour de l'affichage du compteur avec animation
+            if (notificationLabel != null) {
+                notificationLabel.setText(String.valueOf(compteurPanier));
+                notificationLabel.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 5px; -fx-background-radius: 5px; -fx-font-weight: bold;");
+                
+                // Animation de notification
+                FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), notificationLabel);
+                fadeIn.setFromValue(0.0);
+                fadeIn.setToValue(1.0);
+                fadeIn.play();
+
+                // Animation de rebond
+                ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(0.2), notificationLabel);
+                scaleTransition.setFromX(1.0);
+                scaleTransition.setFromY(1.0);
+                scaleTransition.setToX(1.2);
+                scaleTransition.setToY(1.2);
+                scaleTransition.setAutoReverse(true);
+                scaleTransition.setCycleCount(2);
+                scaleTransition.play();
+            }
+
+            // Génération du récapitulatif détaillé
+            String recap = "Récapitulatif de la réservation :\n" +
+                    "----------------------------------------\n" +
+                    "Informations client :\n" +
+                    "Nom : " + nom + "\n" +
+                    "Prénom : " + prenom + "\n" +
+                    "----------------------------------------\n" +
+                    "Informations véhicule :\n" +
+                    "Matricule : " + matricule + "\n" +
+                    "Modèle : " + modele + "\n" +
+                    "----------------------------------------\n" +
+                    "Détails de la location :\n" +
+                    "Ville de départ : " + villeDepart + "\n" +
+                    "Ville de retour : " + villeRetour + "\n" +
+                    "Date de début : " + dateDebut + "\n" +
+                    "Date de fin : " + dateFin + "\n" +
+                    "Durée : " + dureeLocation + " jour(s)\n" +
+                    "Avec chauffeur : " + (chauffeurCheckBox.isSelected() ? "Oui" : "Non") + "\n" +
+                    "----------------------------------------\n" +
+                    "Détail du prix :\n" +
+                    "Prix de base (" + dureeLocation + " jours × " + voiture.getPrixParJour() + " DT) : " + prixBase + " DT\n" +
+                    (chauffeurCheckBox.isSelected() ? "Prix chauffeur (" + dureeLocation + " jours × 50 DT) : " + prixChauffeur + " DT\n" : "") +
+                    "Frais de service (5%) : " + fraisService + " DT\n" +
+                    "----------------------------------------\n" +
+                    "Total à payer : " + prixTotal + " DT";
+
+            // Afficher le récapitulatif
+            showAlert(Alert.AlertType.INFORMATION, "Réservation confirmée", recap);
+
+            // Fermer la fenêtre de réservation
+            Stage stage = (Stage) btnRechercher.getScene().getWindow();
+            stage.close();
+
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur est survenue lors de la réservation : " + e.getMessage());
+        }
     }
 
-    private boolean validerChamps() {
-        return dateDebutPicker.getValue() != null &&
-                dateFinPicker.getValue() != null &&
-                villeDepartCombo.getValue() != null &&
-                villeRetourCombo.getValue() != null;
-    }
-
-    private float calculerPrixTotal(LocalDate debut, LocalDate fin, double prixParJour, boolean chauffeur) {
-        long diff = java.sql.Date.valueOf(fin).getTime() - java.sql.Date.valueOf(debut).getTime();
-        int nbJours = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
-
-        double total = nbJours * prixParJour;
-        if (chauffeur) total += nbJours * 30.0; // 30 dt/jour pour chauffeur
-
-        return (float) total;
-    }
-
-    private void ouvrirPagePaiement() {
-        System.out.println("Redirection vers la page de paiement...");
-    }
-
+    @FXML
     private void closeWindow() {
         if (annulerButton != null && annulerButton.getScene() != null) {
-            Stage stage = (Stage) annulerButton.getScene().getWindow();
-            stage.close();
+            annulerButton.getScene().getWindow().hide();
         }
     }
 
@@ -197,74 +585,36 @@ public class ReservationVoitureController {
         alert.showAndWait();
     }
 
-    // Nouvelle méthode pour envoyer un e-mail de confirmation
-    private void sendReservationDetailsEmail() {
-        final String fromEmail = "gharbioumayma888@gmail.com"; // Email de l'expéditeur
-        final String password = "000"; // Remplacer par votre mot de passe d'application ou mot de passe réel (NON recommandé de coder en dur)
+    // Méthode d'envoi d'email de confirmation simple
+    private void sendConfirmationEmail(String toEmail, String nom, String prenom) {
+        final String fromEmail = "gharbioumayma888@gmail.com"; // ton adresse Gmail
+        final String password = "tmcfmimebhukptzi"; // mot de passe d'application SANS espace
 
-        // Propriétés de configuration pour l'authentification SMTP
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
 
-        // Crée une session de messagerie
-        Session session = Session.getInstance(props, new Authenticator() {
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(fromEmail, password);
             }
         });
 
         try {
-            // Création du message
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(fromEmail));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("gharbioumayma888@gmail.com")); // Remplacer par l'email du client
-            message.setSubject("Détails de votre réservation de voiture");
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+            message.setSubject("Confirmation de réservation");
+            message.setText("Bonjour " + nom + " " + prenom + ",\n\nVotre réservation a bien été enregistrée.\nMerci pour votre confiance !");
 
-            // Contenu du message
-            String messageContent = generateReservationMessage();
-
-            MimeBodyPart textPart = new MimeBodyPart();
-            textPart.setText(messageContent); // Corps du message avec détails de la réservation
-
-            // Envoi de l'email sans pièce jointe
-            Multipart multipart = new MimeMultipart();
-            multipart.addBodyPart(textPart);
-
-            message.setContent(multipart);
-
-            // Envoi de l'email
             Transport.send(message);
-            System.out.println("E-mail avec détails de réservation envoyé avec succès.");
-
+            System.out.println("Email de confirmation envoyé !");
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Envoi de l'e-mail de réservation échoué.");
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de l'envoi de l'email : " + e.getMessage());
         }
-    }
-
-    // Générer le contenu de l'email avec les détails de la réservation
-    private String generateReservationMessage() {
-        float totalPrice = calculerPrixTotal(
-                dateDebutPicker.getValue(),
-                dateFinPicker.getValue(),
-                voiture.getPrixParJour(),
-                chauffeurCheckBox.isSelected()
-        );
-
-        return "Votre réservation a été confirmée ! Voici les détails :\n\n" +
-                "Voiture réservée : " + voiture.getMarque() + " " + voiture.getModele() + "\n" +
-                "Prix par jour : " + voiture.getPrixParJour() + " DT\n" +
-                "Date de début : " + dateDebutPicker.getValue() + "\n" +
-                "Date de fin : " + dateFinPicker.getValue() + "\n" +
-                "Ville de départ : " + villeDepartCombo.getValue() + "\n" +
-                "Ville de retour : " + villeRetourCombo.getValue() + "\n" +
-                "Chauffeur inclus : " + (chauffeurCheckBox.isSelected() ? "Oui" : "Non") + "\n" +
-                "Prix total : " + totalPrice + " DT\n\n" +
-                "Merci pour votre réservation !\n" +
-                "L'équipe de location de voiture";
     }
 
 }

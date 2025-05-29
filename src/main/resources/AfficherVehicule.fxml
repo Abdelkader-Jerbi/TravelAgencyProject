@@ -1,52 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controller.VoitureController"
-            style="-fx-background-color: #F5F7FA;">
+<BorderPane prefHeight="800.0" prefWidth="1200.0" styleClass="main-bg" stylesheets="@theme-voyage.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.VoitureController">
 
+   <!-- BARRE DE RECHERCHE ET FILTRES -->
    <top>
-      <HBox spacing="15" style="-fx-background-color: white; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);">
-         <children>
-            <Label text="Recherche :" style="-fx-font-weight: bold; -fx-text-fill: #333333; -fx-font-size: 14px;"/>
-            <TextField fx:id="searchField" promptText="Marque, Modèle, Matricule..." style="-fx-pref-width: 250px; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #CCC;"/>
-
-            <Label text="Disponibilité :" style="-fx-font-weight: bold; -fx-text-fill: #333333; -fx-font-size: 14px;"/>
-            <ComboBox fx:id="disponibiliteFilter" prefWidth="150" style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
-
-            <Region HBox.hgrow="ALWAYS"/>
-
-            <Button fx:id="refreshButton" text="Rafraîchir"
-                    style="-fx-background-color: #27AE60; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-cursor: hand;"/>
-
-            <Button fx:id="addOrUpdateButton" text="Ajouter"
-                    style="-fx-background-color: #4A90E2; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-cursor: hand;"/>
-
-            <Button fx:id="btnExportPdf" text="Exporter PDF"
-                    style="-fx-background-color: #D35400; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-cursor: hand;"/>
-         </children>
-      </HBox>
+      <VBox spacing="10" styleClass="filter-bar" style="-fx-padding: 20;">
+         <!-- Filtres -->
+         <HBox alignment="CENTER_LEFT" spacing="14">
+            <HBox alignment="CENTER" spacing="4">
+                <Label styleClass="filter-icon" text="🔍" />
+                <TextField fx:id="searchField" promptText="Marque, Modèle, Matricule..." styleClass="filter-field" />
+            </HBox>
+            <HBox alignment="CENTER" spacing="4">
+                <Label styleClass="filter-icon" text="🎨" />
+                <TextField fx:id="colorField" promptText="Couleur..." styleClass="filter-field" />
+            </HBox>
+            <HBox alignment="CENTER" spacing="4">
+                <Label styleClass="filter-icon" text="✔" />
+                <ComboBox fx:id="disponibiliteFilter" prefHeight="32.0" prefWidth="120.0" styleClass="filter-field combo-compact" />
+            </HBox>
+            <HBox alignment="CENTER" spacing="7" style="-fx-padding: 0 0 0 18;">
+                <Button fx:id="addOrUpdateButton" styleClass="button action-btn ajouter" text="➕ Ajouter" />
+                <Button fx:id="exportPdfButton" styleClass="button action-btn export" text="🧾 Exporter PDF" />
+                <Button fx:id="refreshButton" styleClass="button action-btn refresh" text="🔄 Rafraîchir" />
+            </HBox>
+         </HBox>
+      </VBox>
    </top>
 
+   <!-- TABLEAU PRINCIPAL + PAGINATION -->
    <center>
-      <VBox spacing="5" style="-fx-padding: 20;">
-         <TableView fx:id="voitureTable" prefHeight="420" style="-fx-background-color: white; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);">
+      <VBox spacing="10" style="-fx-padding: 20;">
+         <TableView fx:id="voitureTable" prefHeight="600" styleClass="table-view">
             <columns>
-               <TableColumn fx:id="imagePath" text="Image" prefWidth="130" />
-               <TableColumn fx:id="marqueCol" text="Marque" prefWidth="130"/>
-               <TableColumn fx:id="modelCol" text="Modèle" prefWidth="130"/>
-               <TableColumn fx:id="prixCol" text="Prix par jour" prefWidth="110"/>
-               <TableColumn fx:id="matriculeCol" text="Matricule" prefWidth="130"/>
-               <TableColumn fx:id="disponible" text="Disponible" prefWidth="110"/>
-               <TableColumn fx:id="actionCol" text="Actions" prefWidth="180"/>
+               <TableColumn fx:id="imageCol" prefWidth="110" text=" Image" />
+               <TableColumn fx:id="colMatricule" prefWidth="110" text="Matricule" />
+               <TableColumn fx:id="colModele" prefWidth="110" text="Modèle" />
+               <TableColumn fx:id="colMarque" prefWidth="110" text="Marque" />
+               <TableColumn fx:id="colPrix" prefWidth="90" text="Prix/jour" />
+               <TableColumn fx:id="colDisponible" prefWidth="116.0" text="Disponibilité" />
+               <TableColumn fx:id="colAction" prefWidth="357.60003662109375" text="Actions" />
             </columns>
          </TableView>
 
-         <Pagination fx:id="pagination" pageCount="1" maxPageIndicatorCount="7" style="-fx-background-color: transparent;" />
+         <Pagination fx:id="pagination" maxPageIndicatorCount="5" pageCount="1" styleClass="pagination" />
       </VBox>
    </center>
 

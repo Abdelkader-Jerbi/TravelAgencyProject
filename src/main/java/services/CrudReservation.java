@@ -18,8 +18,8 @@ public class CrudReservation {
     // Méthode pour ajouter une réservation
     public void ajouterReservation(Reservation res) {
         // Requête SQL avec les noms de colonnes comme dans ta table
-        String sql = "INSERT INTO reservation (dateReservation, dateDebut, dateFin, villeRetour, villeDepart, prixTotal, nbPersonnes, statut, idvoiture) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO reservation (dateReservation, dateDebut, dateFin, villeRetour, villeDepart, prixTotal, nbPersonnes, statut, idvoiture, nom, prenom) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pst = conn.prepareStatement(sql)) {
             // ✅ Si dateReservation est null, on met la date du jour
@@ -37,6 +37,8 @@ public class CrudReservation {
             pst.setInt(7, res.getNbPersonnes());  // nbPersonnes
             pst.setString(8, res.getStatut());  // statut
             pst.setInt(9, res.getVoiture().getId());  // idvoiture
+            pst.setString(10, res.getNom()); // nom
+            pst.setString(11, res.getPrenom()); // prenom
 
             // Exécution de la requête
             pst.executeUpdate();

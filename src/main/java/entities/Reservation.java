@@ -13,11 +13,13 @@ public class Reservation {
     private Voiture voiture;
     private String villeRetour;
     private String villeDepart;
+    private String nom;
+    private String prenom;
 
     // ✅ Constructeur principal
     public Reservation(int idReservation, Date dateReservation, Date dateDebut, Date dateFin,
                        String villeRetour, String villeDepart, Float prixTotal,
-                       int nbPersonnes, String statut, Voiture voiture) {
+                       int nbPersonnes, String statut, Voiture voiture, String nom, String prenom) {
         this.idReservation = idReservation;
         this.dateReservation = dateReservation;
         this.dateDebut = dateDebut;
@@ -28,6 +30,8 @@ public class Reservation {
         this.nbPersonnes = nbPersonnes;
         this.statut = statut;
         this.voiture = voiture;
+        this.nom = nom;
+        this.prenom = prenom;
     }
 
     // ✅ (Optionnel) constructeur sans ID (utile avant insertion en base)
@@ -126,6 +130,22 @@ public class Reservation {
         this.villeDepart = villeDepart;
     }
 
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
     @Override
     public String toString() {
         return "Reservation{" +
@@ -139,6 +159,8 @@ public class Reservation {
                 ", voiture=" + voiture +
                 ", villeRetour='" + villeRetour + '\'' +
                 ", villeDepart='" + villeDepart + '\'' +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
                 '}';
     }
 }

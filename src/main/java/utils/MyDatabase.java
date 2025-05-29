@@ -18,13 +18,18 @@ public class MyDatabase implements Connection {
     private MyDatabase(){
         try {
             connection= DriverManager.getConnection(URL,USERNAME,PASSWORD);
-            System.out.println("Connexion établie");
+            System.out.println("MyDatabase: Connexion établie avec " + URL);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.err.println("MyDatabase: ERREUR DE CONNEXION BD: " + e.getMessage());
+            // Log the full stack trace for more details during debugging
+            e.printStackTrace();
+            // Throw a runtime exception to halt initialization if connection fails
+            // This makes the problem immediately apparent instead of causing NullPointerExceptions later.
+            throw new RuntimeException("Impossible d'établir la connexion à la base de données.", e);
         }
     }
 
-    public static   MyDatabase getInstance(){
+    public static synchronized MyDatabase getInstance(){ // Added synchronized for thread safety in singleton
         if (instance==null){
             instance= new MyDatabase();
         }
@@ -38,17 +43,17 @@ public class MyDatabase implements Connection {
 
     @Override
     public Statement createStatement() throws SQLException {
-        return null;
+        return connection.createStatement();
     }
 
     @Override
     public PreparedStatement prepareStatement(String sql) throws SQLException {
-        return null;
+        return connection.prepareStatement(sql);
     }
 
     @Override
     public CallableStatement prepareCall(String sql) throws SQLException {
-        return null;
+        return connection.prepareCall(sql);
     }
 
     @Override

@@ -1,0 +1,37 @@
+/* --- THEME SOMBRE --- */
+.root, .main-bg {
+    -fx-background-color: #181a1b;
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+}
+.label, .sidebar-title, .filter-group-title, .label-title {
+    -fx-text-fill: #f5f7fa;
+}
+.sidebar {
+    -fx-background-color: #23272b;
+}
+.filter-group {
+    -fx-background-color: #23272b;
+}
+.filter-field, .filter-field:focused {
+    -fx-background-color: #23272b;
+    -fx-text-fill: #f5f7fa;
+    -fx-prompt-text-fill: #b0b0b0;
+    -fx-border-color: #444;
+}
+.button, .button.filtrer, .button.refresh {
+    -fx-background-color: #333c4a;
+    -fx-text-fill: #f5f7fa;
+}
+.button:hover, .button.filtrer:hover, .button.refresh:hover {
+    -fx-background-color: #444c5a;
+}
+.check-box .box {
+    -fx-background-color: #23272b;
+    -fx-border-color: #666;
+}
+.check-box:selected .box .mark {
+    -fx-background-color: #7c4dff;
+}
+.scroll-pane .viewport {
+    -fx-background-color: #181a1b;
+} 

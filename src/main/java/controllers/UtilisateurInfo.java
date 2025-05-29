@@ -63,7 +63,7 @@ public class UtilisateurInfo {
 
     public void retourAfficherUtilisateurss(ActionEvent Event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/AfficherUtilisateur.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/TravelAgencyDashboard.fxml"));
             Stage stage = (Stage) ((Node) Event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);

@@ -15,4 +15,9 @@ public class Session {
     public static void setLoggedInUser(Utilisateur user) {
         loggedInUser = user;
     }
+    
+    // Clear the session (logout)
+    public static void clearSession() {
+        loggedInUser = null;
+    }
 }

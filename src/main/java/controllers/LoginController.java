@@ -294,15 +294,16 @@ public class LoginController implements Initializable {
 
     private void loadDashboardAdmin() {
         try {
-
-            Parent root = FXMLLoader.load(getClass().getResource("/ListVol.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/TravelAgencyDashboard.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            stage.setTitle("Travel Agency Admin Dashboard");
             stage.show();
 
             ((Stage) emailUsername.getScene().getWindow()).close();
         } catch (IOException e) {
             e.printStackTrace();
+            loginErrorMsg.setText("Error loading admin dashboard.");
         }
     }
 

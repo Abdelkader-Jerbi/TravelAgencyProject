@@ -25,29 +25,29 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Button fx:id="ProfileButton" onAction="#allerPageProfile" mnemonicParsing="false" styleClass="nav-button" text="Profile">
+            <Button fx:id="ProfileButton" onAction="#allerPageProfile" mnemonicParsing="false" styleClass="nav-button" text="Profil">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
 
-            <Button fx:id="VolButton" onAction="#allerPageVol" mnemonicParsing="false" styleClass="nav-button" text="Flights">
+            <Button fx:id="VolButton" onAction="#allerPageVol" mnemonicParsing="false" styleClass="nav-button" text="Vols">
 
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="HotelButton" onAction="#allerPageHotel" mnemonicParsing="false" styleClass="nav-button" text="Hotels">
+            <Button fx:id="HotelButton" onAction="#allerPageHotel" mnemonicParsing="false" styleClass="nav-button" text="Hôtels">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="VoituresButton" mnemonicParsing="false" styleClass="nav-button" text="Cars">
+            <Button fx:id="VoituresButton" onAction="#allerPageVoiture" mnemonicParsing="false" styleClass="nav-button" text="Voitures">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="ReservButton" mnemonicParsing="false" styleClass="nav-button" text="Reservations">
+            <Button fx:id="ReservButton" mnemonicParsing="false" styleClass="nav-button" text="Réservations">
                <font>
                   <Font size="14.0" />
                </font>
@@ -57,7 +57,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="LogoutButton" onAction="#logout" mnemonicParsing="false" styleClass="nav-button" text="Logout">
+            <Button fx:id="LogoutButton" onAction="#logout" mnemonicParsing="false" styleClass="nav-button" text="Déconnexion">
                <font>
                   <Font size="14.0" />
                </font>
@@ -71,12 +71,12 @@
    <center>
       <AnchorPane prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="30.0" layoutY="20.0" text="Welcome to Last Minute Travel" textFill="#f46624">
+            <Label layoutX="30.0" layoutY="20.0" text="Bienvenue chez Last Minute Travel" textFill="#f46624">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label layoutX="30.0" layoutY="60.0" text="Find the best deals for your next trip" textFill="#7f8c8d">
+            <Label layoutX="30.0" layoutY="60.0" text="Trouvez les meilleures offres pour votre prochain voyage" textFill="#7f8c8d">
                <font>
                   <Font size="16.0" />
                </font>
@@ -84,7 +84,7 @@
             
             <AnchorPane layoutX="30.0" layoutY="100.0" prefHeight="200.0" prefWidth="840.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 10;">
                <children>
-                  <Label layoutX="20.0" layoutY="20.0" text="Featured Destinations" textFill="#2c3e50">
+                  <Label layoutX="20.0" layoutY="20.0" text="Destinations Populaires" textFill="#2c3e50">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -99,44 +99,44 @@
                                     <Font name="System Bold" size="16.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="10.0" layoutY="40.0" text="From $499" textFill="#f46624">
+                              <Label layoutX="10.0" layoutY="40.0" text="À partir de 499€" textFill="#f46624">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="10.0" layoutY="80.0" mnemonicParsing="false" text="View Details" />
+                              <Button layoutX="10.0" layoutY="80.0" mnemonicParsing="false" text="Voir Détails" />
                            </children>
                         </AnchorPane>
                         
                         <AnchorPane prefHeight="120.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 5;">
                            <children>
-                              <Label layoutX="10.0" layoutY="10.0" text="Rome, Italy" textFill="#2c3e50">
+                              <Label layoutX="10.0" layoutY="10.0" text="Rome, Italie" textFill="#2c3e50">
                                  <font>
                                     <Font name="System Bold" size="16.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="10.0" layoutY="40.0" text="From $549" textFill="#f46624">
+                              <Label layoutX="10.0" layoutY="40.0" text="À partir de 549€" textFill="#f46624">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="10.0" layoutY="80.0" mnemonicParsing="false" text="View Details" />
+                              <Button layoutX="10.0" layoutY="80.0" mnemonicParsing="false" text="Voir Détails" />
                            </children>
                         </AnchorPane>
                         
                         <AnchorPane prefHeight="120.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 5;">
                            <children>
-                              <Label layoutX="10.0" layoutY="10.0" text="Barcelona, Spain" textFill="#2c3e50">
+                              <Label layoutX="10.0" layoutY="10.0" text="Barcelone, Espagne" textFill="#2c3e50">
                                  <font>
                                     <Font name="System Bold" size="16.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="10.0" layoutY="40.0" text="From $479" textFill="#f46624">
+                              <Label layoutX="10.0" layoutY="40.0" text="À partir de 479€" textFill="#f46624">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="10.0" layoutY="80.0" mnemonicParsing="false" text="View Details" />
+                              <Button layoutX="10.0" layoutY="80.0" mnemonicParsing="false" text="Voir Détails" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -146,31 +146,31 @@
             
             <AnchorPane layoutX="30.0" layoutY="320.0" prefHeight="150.0" prefWidth="840.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 10;">
                <children>
-                  <Label layoutX="20.0" layoutY="20.0" text="Quick Search" textFill="#2c3e50">
+                  <Label layoutX="20.0" layoutY="20.0" text="Recherche Rapide" textFill="#2c3e50">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                   
-                  <Button layoutX="20.0" layoutY="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="FLIGHTS">
+                  <Button layoutX="20.0" layoutY="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="VOLS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
                   
-                  <Button layoutX="220.0" layoutY="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="HOTELS">
+                  <Button layoutX="220.0" layoutY="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="HÔTELS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
                   
-                  <Button layoutX="420.0" layoutY="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="CAR RENTALS">
+                  <Button layoutX="420.0" layoutY="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="LOCATION DE VOITURES">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
                   
-                  <Button layoutX="620.0" layoutY="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="PACKAGES">
+                  <Button layoutX="620.0" layoutY="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="FORFAITS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -186,7 +186,7 @@
    <bottom>
       <AnchorPane prefHeight="40.0" prefWidth="900.0" style="-fx-background-color: #f46624;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="350.0" layoutY="12.0" text="© 2024 Last Minute Travel" textFill="WHITE">
+            <Label layoutX="350.0" layoutY="12.0" text="© 2024 Last Minute Travel - Tous droits réservés" textFill="WHITE">
                <font>
                   <Font size="12.0" />
                </font>

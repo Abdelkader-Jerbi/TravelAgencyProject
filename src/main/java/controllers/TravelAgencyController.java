@@ -101,7 +101,7 @@ public class TravelAgencyController implements Initializable {
     public void navigateToCars(ActionEvent event) {
         try {
             // Assuming there will be a Cars interface
-            URL resource = getClass().getResource("/ListCar.fxml");
+            URL resource = getClass().getResource("/AfficherVehicule.fxml");
             if (resource != null) {
                 Parent root = FXMLLoader.load(resource);
                 mainPane.setCenter(root);

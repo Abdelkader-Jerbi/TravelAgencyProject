@@ -24,7 +24,7 @@
                   </ImageView>
                </children>
             </HBox>
-            <Label alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="Admin Dashboard" textFill="WHITE">
+            <Label alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="Tableau de Bord Admin" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -34,7 +34,7 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </Separator>
-            <Button fx:id="usersButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToUsers" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Users" textFill="WHITE">
+            <Button fx:id="usersButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToUsers" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Utilisateurs" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -42,7 +42,7 @@
                   <Insets left="30.0" />
                </padding>
             </Button>
-            <Button fx:id="flightsButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToFlights" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Flights" textFill="WHITE">
+            <Button fx:id="flightsButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToFlights" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Vols" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -50,7 +50,7 @@
                   <Insets left="30.0" />
                </padding>
             </Button>
-            <Button fx:id="hotelsButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToHotels" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Hotels" textFill="WHITE">
+            <Button fx:id="hotelsButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToHotels" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Hôtels" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -58,7 +58,7 @@
                   <Insets left="30.0" />
                </padding>
             </Button>
-            <Button fx:id="carsButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToCars" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Cars" textFill="WHITE">
+            <Button fx:id="carsButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToCars" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Voitures" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -66,7 +66,7 @@
                   <Insets left="30.0" />
                </padding>
             </Button>
-            <Button fx:id="reclamationsButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToReclamations" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Reclamations" textFill="WHITE">
+            <Button fx:id="reclamationsButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToReclamations" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Réclamations" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -74,7 +74,7 @@
                   <Insets left="30.0" />
                </padding>
             </Button>
-            <Button fx:id="reservationsButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToReservations" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Reservations" textFill="WHITE">
+            <Button fx:id="reservationsButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToReservations" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Réservations" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -87,7 +87,7 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </Separator>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#logout" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Logout" textFill="WHITE">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#logout" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Déconnexion" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -109,7 +109,7 @@
                   <Image url="@Images/lastMinuteTravel.jpg" />
                </image>
             </ImageView>
-            <Label text="Welcome to Travel Agency Admin Dashboard" textAlignment="CENTER">
+            <Label text="Bienvenue au Tableau de Bord d'Administration" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -117,7 +117,7 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </Label>
-            <Label text="Please select an option from the sidebar to manage your travel agency" textAlignment="CENTER">
+            <Label text="Veuillez sélectionner une option dans la barre latérale pour gérer votre agence de voyage" textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>
@@ -131,7 +131,7 @@
    <top>
       <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #2D3447;" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Admin" textFill="WHITE">
+            <Label text="Administrateur" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>

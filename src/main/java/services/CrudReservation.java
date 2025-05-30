@@ -1,6 +1,6 @@
 package services;
 
-import entities.reservation;
+import entities.ReservationVol;
 import utils.MyDatabase;
 
 import java.sql.Connection;
@@ -14,7 +14,7 @@ public class CrudReservation {
         this.cnx = MyDatabase.getInstance().getConnection();
     }
 
-    public void ajouterReservationVolSeulement(reservation r) {
+    public void ajouterReservationVolSeulement(ReservationVol r) {
         String sql = "INSERT INTO reservation (date_reservation, id_vol, status) VALUES (?, ?, ?)";
 
         try (PreparedStatement pst = cnx.prepareStatement(sql)) {

@@ -2,7 +2,7 @@ package entities;
 
 import java.util.Date;
 
-public class reservation {
+public class ReservationVol {
     private int idReservation;
     private double prixTotal;
     private String status;
@@ -12,7 +12,7 @@ public class reservation {
     private int idUser;
     private int idVoiture;
 
-    public reservation(int idReservation, double prixTotal, String status, Date dateReservation, int idHotel, int idVol, int idUser, int idVoiture) {
+    public ReservationVol(int idReservation, double prixTotal, String status, Date dateReservation, int idHotel, int idVol, int idUser, int idVoiture) {
         this.idReservation = idReservation;
         this.prixTotal = prixTotal;
         this.status = status;

@@ -3,6 +3,7 @@ package services;
 
 import entities.Role;
 
+import entities.Utilisateur;
 import utils.MyDatabase;
 
 import java.sql.*;

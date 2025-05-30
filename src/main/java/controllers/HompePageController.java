@@ -90,5 +90,4 @@ public class HompePageController {
             e.printStackTrace();
         }
     }
-
 }

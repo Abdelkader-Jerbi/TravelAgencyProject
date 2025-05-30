@@ -579,4 +579,22 @@ public class AllHotels implements Initializable {
             alert.showAndWait();
         });
     }
+
+    @FXML
+    private void handleReturnToHome() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/HomePage.fxml"));
+            Parent root = loader.load();
+            
+            // Get the current stage
+            Stage currentStage = (Stage) hotelGrid.getScene().getWindow();
+            
+            // Create new scene and set it
+            Scene scene = new Scene(root);
+            currentStage.setScene(scene);
+            currentStage.show();
+        } catch (IOException e) {
+            showError("Navigation Error", "Could not return to home page: " + e.getMessage());
+        }
+    }
 }

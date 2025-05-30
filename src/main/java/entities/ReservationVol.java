@@ -19,7 +19,7 @@ public class ReservationVol {
     private String prenom;
 
 
-    public ReservationVol(int idReservation, double prixTotal, String status, Date dateReservation, int idHotel, int idVol, int idUser, int idVoiture) {
+    public ReservationVol(int idReservation, float prixTotal, String statut, Date dateReservation, int idHotel, int idVol, int idUser, int idVoiture) {
 
         this.idReservation = idReservation;
         this.dateReservation = dateReservation;
@@ -35,8 +35,8 @@ public class ReservationVol {
         this.prenom = prenom;
     }
 
-    // ✅ (Optionnel) constructeur sans ID (utile avant insertion en base)
-    public Reservation(Date dateReservation, Date dateDebut, Date dateFin,
+    // ✅ (Optionnel) constructeur ReservationVol sans ID (utile avant insertion en base)
+    public ReservationVol(Date dateReservation, Date dateDebut, Date dateFin,
                        String villeRetour, String villeDepart, Float prixTotal,
                        int nbPersonnes, String statut, Voiture voiture) {
         this.dateReservation = dateReservation;
@@ -149,7 +149,7 @@ public class ReservationVol {
 
     @Override
     public String toString() {
-        return "Reservation{" +
+        return "ReservationVol{" +
                 "idReservation=" + idReservation +
                 ", dateReservation=" + dateReservation +
                 ", dateDebut=" + dateDebut +

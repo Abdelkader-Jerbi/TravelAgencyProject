@@ -83,7 +83,7 @@ public class TravelAgencyController implements Initializable {
     public void navigateToHotels(ActionEvent event) {
         try {
             // Assuming there will be a Hotels interface
-            URL resource = getClass().getResource("/ListHotel.fxml");
+            URL resource = getClass().getResource("/View/hoteltable.fxml");
             if (resource != null) {
                 Parent root = FXMLLoader.load(resource);
                 mainPane.setCenter(root);

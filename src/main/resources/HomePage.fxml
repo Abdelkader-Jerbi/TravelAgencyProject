@@ -37,7 +37,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="HotelButton" mnemonicParsing="false" styleClass="nav-button" text="Hotels">
+            <Button fx:id="HotelButton" onAction="#allerPageHotel" mnemonicParsing="false" styleClass="nav-button" text="Hotels">
                <font>
                   <Font size="14.0" />
                </font>

@@ -22,6 +22,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import javafx.scene.control.ComboBox;
 import entities.StatutVol;
+import javafx.animation.ScaleTransition;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -51,6 +53,9 @@ public class ChercherVolController implements Initializable {
     private ChoiceBox<Enumnom> categorieChoiceBox;
     @FXML
     private VBox dateRetourContainer;
+    
+    @FXML
+    private Button retourAccueilButton;
     
     private final CrudVol crudVol = new CrudVol();
 
@@ -244,5 +249,42 @@ public class ChercherVolController implements Initializable {
         alert.setHeaderText(enTete);
         alert.setContentText(contenu);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void handleRetourAccueil() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/HomePage.fxml"));
+            Parent root = loader.load();
+            
+            Stage stage = (Stage) rechercherButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            afficherAlerte("Erreur", "Erreur de navigation", "Impossible de retourner à la page d'accueil.");
+        }
+    }
+
+    @FXML
+    private void handleRetourAccueilHover() {
+        ScaleTransition st = new ScaleTransition(Duration.millis(200), retourAccueilButton);
+        st.setToX(1.05);
+        st.setToY(1.05);
+        st.play();
+        retourAccueilButton.setStyle("-fx-background-color: #2980b9; -fx-text-fill: white; -fx-font-weight: bold; " +
+                                   "-fx-background-radius: 8; -fx-padding: 8 15; -fx-font-size: 14px; " +
+                                   "-fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0, 0, 3);");
+    }
+
+    @FXML
+    private void handleRetourAccueilExit() {
+        ScaleTransition st = new ScaleTransition(Duration.millis(200), retourAccueilButton);
+        st.setToX(1.0);
+        st.setToY(1.0);
+        st.play();
+        retourAccueilButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; " +
+                                   "-fx-background-radius: 8; -fx-padding: 8 15; -fx-font-size: 14px; " +
+                                   "-fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);");
     }
 }

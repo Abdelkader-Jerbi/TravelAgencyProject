@@ -1,7 +1,8 @@
 package services;
 
+
 import entities.Role;
-import entities.Utilisateur;
+
 import utils.MyDatabase;
 
 import java.sql.*;
@@ -17,8 +18,10 @@ public class CrudUtilisateur implements CrudMethods<Utilisateur> {
     @Override
     public void ajouter(Utilisateur utilisateur) throws SQLException {
 
+
         String req="insert into utilisateur (nom,prenom,email,tel,password,role)"+
                 "values('"+ utilisateur.getNom()+"','"+ utilisateur.getPrenom()+"','"+ utilisateur.getEmail()+"','"+utilisateur.getTel()+"','"+utilisateur.getPassword()+"','"+utilisateur.getRole()+"')";
+
 
         Statement statement=connection.createStatement();
         statement.executeUpdate(req);
@@ -43,6 +46,7 @@ public class CrudUtilisateur implements CrudMethods<Utilisateur> {
 
     @Override
     public void supprimer(int id) throws SQLException {
+
         String req = "DELETE FROM utilisateur WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(req)) {
             preparedStatement.setInt(1, id);
@@ -53,6 +57,7 @@ public class CrudUtilisateur implements CrudMethods<Utilisateur> {
                 System.out.println("Aucun utilisateur trouvé avec cet ID.");
             }
         }
+
     }
 
     @Override
@@ -67,12 +72,15 @@ public class CrudUtilisateur implements CrudMethods<Utilisateur> {
            utilisateur.setNom(rs.getString("nom"));
            utilisateur.setPrenom(rs.getString("prenom"));
            utilisateur.setEmail(rs.getString("email"));
+
            utilisateur.setRole(Role.valueOf(rs.getString("role")));
+
            utilisateur.setTel(rs.getInt("tel"));
            utilisateur.setId(rs.getInt("id"));
 
            utilisateurs.add(utilisateur);
        }
+
 
         return utilisateurs;
     }
@@ -96,9 +104,11 @@ public class CrudUtilisateur implements CrudMethods<Utilisateur> {
                 user.setPassword(resultSet.getString("password"));
                 user.setRole(Role.valueOf(resultSet.getString("role").toUpperCase())); // Assuming roles are stored as "USER", "ADMIN", etc.
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
 
         return user;
     }
@@ -122,4 +132,5 @@ public class CrudUtilisateur implements CrudMethods<Utilisateur> {
             return emails;
         }
 }
+
 

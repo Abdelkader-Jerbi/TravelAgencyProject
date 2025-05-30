@@ -2,7 +2,9 @@ package entities;
 
 import java.sql.Date;
 
-public class Reservation {
+
+public class ReservationVol {
+
     private int idReservation;
     private Date dateReservation;
     private Date dateDebut;
@@ -16,10 +18,9 @@ public class Reservation {
     private String nom;
     private String prenom;
 
-    // ✅ Constructeur principal
-    public Reservation(int idReservation, Date dateReservation, Date dateDebut, Date dateFin,
-                       String villeRetour, String villeDepart, Float prixTotal,
-                       int nbPersonnes, String statut, Voiture voiture, String nom, String prenom) {
+
+    public ReservationVol(int idReservation, double prixTotal, String status, Date dateReservation, int idHotel, int idVol, int idUser, int idVoiture) {
+
         this.idReservation = idReservation;
         this.dateReservation = dateReservation;
         this.dateDebut = dateDebut;

@@ -43,7 +43,7 @@ public class CrudVol implements VoLInterface {
         List<Vol> vols = new ArrayList<>();
        String sql = "SELECT v.id_vol, v.depart, v.destination, v.date, v.dateRetour, v.prix, v.statut, " +
                "v.enpromotion, v.pourcentagePromotion, c.id, c.nom " + // Ajout des champs
-               "FROM vol v JOIN categorie c ON v.categorie_id = c.id";
+               "FROM vol v JOIN categorieVol c ON v.categorie_id = c.id";
 
        try (Connection conn = MyDatabase.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);

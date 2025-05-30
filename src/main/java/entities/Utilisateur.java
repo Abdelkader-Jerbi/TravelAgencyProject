@@ -2,23 +2,29 @@ package entities;
 
 public class Utilisateur {
    private int id,age,tel;
+
    private String nom,prenom,email,password;
    private Role role;
+
 
     public Utilisateur() {
     }
 
+
     public Utilisateur(int id,String nom, String prenom, String email, int tel, String password, Role role) {
+
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.tel = tel;
+
         this.password = password;
         this.role = role;
     }
 
     public Utilisateur(int tel, String nom, String prenom,String email,String password, Role role) {
+
         this.age = age;
         this.nom = nom;
         this.prenom = prenom;
@@ -35,6 +41,7 @@ public class Utilisateur {
         this.tel = tel;
 
     }
+
 
 
     public int getId() {
@@ -78,6 +85,7 @@ public class Utilisateur {
         this.email = email;
     }
 
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -90,6 +98,7 @@ public class Utilisateur {
     }
 
     public void setRole(Role role) {
+
         this.role = role;
     }
 

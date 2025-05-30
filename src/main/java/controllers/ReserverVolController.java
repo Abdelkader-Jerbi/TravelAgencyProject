@@ -1,7 +1,7 @@
 package controllers;
 
 import entities.Vol;
-import entities.reservation;
+import entities.ReservationVol;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -172,7 +172,7 @@ public class ReserverVolController implements Initializable {
         try {
             // Enregistrer la réservation dans la base
             CrudReservation crudReservation = new CrudReservation();
-            reservation r = new reservation(
+            ReservationVol r = new ReservationVol(
                     0, // idReservation (auto-incrémenté)
                     vol.getPrix(), // prix total = prix du vol
                     "En attente", // statut

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.Reclamation.HistoriqueReclamations"
+            style="-fx-background-color: linear-gradient(to bottom, #e3f2fd, #ffffff);">
+    
+    <VBox spacing="20" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" 
+          AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+        
+        <Label text="Mon Historique de Réclamations" 
+               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1976D2; -fx-font-family: 'Segoe UI';"/>
+        
+        <TableView fx:id="tableReclamation" VBox.vgrow="ALWAYS"
+                  style="-fx-background-color: white; -fx-border-color: #E0E0E0; -fx-border-radius: 5;">
+            <columns>
+                <TableColumn fx:id="categorieColumn" text="Catégorie" prefWidth="150"/>
+                <TableColumn fx:id="dateColumn" text="Date" prefWidth="100"/>
+                <TableColumn fx:id="commentaireColumn" text="Commentaire" prefWidth="200"/>
+                <TableColumn fx:id="statutColumn" text="Statut" prefWidth="150"/>
+            </columns>
+        </TableView>
+        
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button fx:id="fermerButton" text="Fermer" onAction="#handleFermer"
+                    style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold;"/>
+        </HBox>
+    </VBox>
+</AnchorPane> 

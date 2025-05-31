@@ -185,7 +185,7 @@
    <bottom>
       <AnchorPane prefHeight="40.0" prefWidth="900.0" style="-fx-background-color: #f46624;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="350.0" layoutY="12.0" text="© 2024 Last Minute Travel - Tous droits réservés" textFill="WHITE">
+            <Label layoutX="350.0" layoutY="12.0" text="© 2025 Last Minute Travel - Tous droits réservés" textFill="WHITE">
                <font>
                   <Font size="12.0" />
                </font>

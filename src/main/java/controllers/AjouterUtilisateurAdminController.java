@@ -139,7 +139,7 @@ public class AjouterUtilisateurAdminController {
     @FXML
     public void AfficherUtilisateur(ActionEvent actionEvent) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/AfficherUtilisateur.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/TravelAgencyDashboard.fxml"));
             nomTF.getScene().setRoot(root);
 
         } catch (IOException e) {

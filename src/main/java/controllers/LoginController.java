@@ -22,8 +22,6 @@ import services.CrudUtilisateur;
 import utils.CaptchaBridge;
 import utils.MyDatabase;
 
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ResourceBundle;

@@ -23,6 +23,17 @@
 
         <!-- En-tête -->
         <VBox alignment="CENTER" spacing="15">
+            <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 0 0 20 0;">
+                <Button fx:id="retourAccueilButton" text="Retour à l'accueil"
+                        style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;
+                               -fx-background-radius: 8; -fx-padding: 8 15; -fx-font-size: 14px;
+                               -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);"
+                        onMouseEntered="#handleRetourAccueilHover"
+                        onMouseExited="#handleRetourAccueilExit"
+                        onAction="#handleRetourAccueil">
+                
+                </Button>
+            </HBox>
             <Label text="✈️" style="-fx-font-size: 64px;"/>
             <Label text="Rechercher un Vol" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
             <Label text="Trouvez le vol qui correspond à vos besoins" style="-fx-font-size: 16px; -fx-text-fill: #7f8c8d;"/>

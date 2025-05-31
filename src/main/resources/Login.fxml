@@ -17,9 +17,9 @@
    <left>
       <AnchorPane prefHeight="920.0" prefWidth="361.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="brandingView" fitHeight="211.0" fitWidth="236.0" layoutX="65.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="720.0" fitWidth="361.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../Images/lastMinuteTravel.jpg" />
+                  <Image url="@../../Images/avion.jpg" />
                </image>
             </ImageView>
          </children>
@@ -28,9 +28,9 @@
    <center>
       <AnchorPane prefHeight="920.0" prefWidth="1238.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="lockView" fitHeight="33.0" fitWidth="26.0" layoutX="25.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" scaleX="1.3">
+            <ImageView fx:id="brandingView" fitHeight="68.0" fitWidth="75.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../Images/lock.png" />
+                  <Image url="@../../Images/lastMinuteTravel.jpg" />
                </image>
             </ImageView>
             <Label layoutX="159.0" layoutY="36.0" text="Bienvenue chez Last Minute Travel" textFill="#f46624">

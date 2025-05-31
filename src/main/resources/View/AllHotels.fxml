@@ -20,9 +20,15 @@
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
             
-            <Text style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2c3e50;">
-              Découvrir nos meilleurs hôtels
-            </Text>
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <Button fx:id="homeButton" 
+                        text="Return to Home"
+                        onAction="#handleReturnToHome"
+                        style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 20px; -fx-border-radius: 20px; -fx-padding: 8 15;"/>
+                <Text style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2c3e50;">
+                  Découvrir nos meilleurs hôtels
+                </Text>
+            </HBox>
             
             <HBox spacing="15" alignment="CENTER_LEFT">
                 <TextField fx:id="searchField" 

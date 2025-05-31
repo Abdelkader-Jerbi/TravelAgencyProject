@@ -14,7 +14,7 @@
    <top>
       <HBox prefHeight="60.0" prefWidth="900.0" spacing="10.0" styleClass="nav-bar" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Last Minute Travel - Admin Dashboard" textFill="WHITE">
+            <Label text="Last Minute Travel - Tableau de Bord Admin" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -25,7 +25,7 @@
    <center>
       <AnchorPane prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="30.0" layoutY="20.0" text="User Management" textFill="#f46624">
+            <Label layoutX="30.0" layoutY="20.0" text="Gestion des Utilisateurs" textFill="#f46624">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -33,28 +33,28 @@
             
             <HBox layoutX="30.0" layoutY="70.0" spacing="10.0">
                <children>
-                  <TextField fx:id="searchField" prefHeight="35.0" prefWidth="300.0" promptText="Search users..." />
-                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#handleSearch" prefHeight="35.0" text="Search" />
-                  <Button fx:id="afficherUtilisateur" mnemonicParsing="false" onAction="#afficherUtilisateur" prefHeight="35.0" text="Show User" />
-                  <Button fx:id="exportPdfButton" mnemonicParsing="false" onAction="#exportToPdf" prefHeight="35.0" styleClass="register-button" text="Export to PDF" />
+                  <TextField fx:id="searchField" prefHeight="35.0" prefWidth="300.0" promptText="Rechercher des utilisateurs..." />
+                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#handleSearch" prefHeight="35.0" text="Rechercher" />
+                  <Button fx:id="afficherUtilisateur" mnemonicParsing="false" onAction="#afficherUtilisateur" prefHeight="35.0" text="Afficher Utilisateur" />
+                  <Button fx:id="exportPdfButton" mnemonicParsing="false" onAction="#exportToPdf" prefHeight="35.0" styleClass="register-button" text="Exporter en PDF" />
                </children>
             </HBox>
             
             <TableView fx:id="tvpersonne" layoutX="30.0" layoutY="120.0" prefHeight="350.0" prefWidth="840.0" styleClass="table-view">
               <columns>
-                <TableColumn fx:id="colnom" prefWidth="160.0" text="Name" />
-                <TableColumn fx:id="colprenom" prefWidth="160.0" text="First Name" />
-                <TableColumn fx:id="coltel" prefWidth="160.0" text="Phone" />
+                <TableColumn fx:id="colnom" prefWidth="160.0" text="Nom" />
+                <TableColumn fx:id="colprenom" prefWidth="160.0" text="Prénom" />
+                <TableColumn fx:id="coltel" prefWidth="160.0" text="Téléphone" />
                 <TableColumn fx:id="colemail" prefWidth="200.0" text="Email" />
-                <TableColumn fx:id="colrole" prefWidth="160.0" text="Role" />
+                <TableColumn fx:id="colrole" prefWidth="160.0" text="Rôle" />
               </columns>
             </TableView>
             
             <HBox layoutX="30.0" layoutY="490.0" spacing="10.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#RetourAjoutUtilisateur" prefHeight="35.0" styleClass="cancel-button" text="Add New User" />
-                  <Button mnemonicParsing="false" onAction="#modifierUtilisateur" prefHeight="35.0" styleClass="register-button" text="Edit Selected User" />
-                  <Button mnemonicParsing="false" onAction="#supprimerUtilisateur" prefHeight="35.0" styleClass="cancel-button" text="Delete Selected User" />
+                  <Button mnemonicParsing="false" onAction="#RetourAjoutUtilisateur" prefHeight="35.0" styleClass="cancel-button" text="Ajouter Nouvel Utilisateur" />
+                  <Button mnemonicParsing="false" onAction="#modifierUtilisateur" prefHeight="35.0" styleClass="register-button" text="Modifier Utilisateur Sélectionné" />
+                  <Button mnemonicParsing="false" onAction="#supprimerUtilisateur" prefHeight="35.0" styleClass="cancel-button" text="Supprimer Utilisateur Sélectionné" />
                </children>
             </HBox>
          </children>
@@ -63,7 +63,7 @@
    <bottom>
       <AnchorPane prefHeight="40.0" prefWidth="900.0" style="-fx-background-color: #f46624;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="350.0" layoutY="12.0" text="© 2024 Last Minute Travel" textFill="WHITE">
+            <Label layoutX="350.0" layoutY="12.0" text="© 2024 Last Minute Travel - Tous droits réservés" textFill="WHITE">
                <font>
                   <Font size="12.0" />
                </font>

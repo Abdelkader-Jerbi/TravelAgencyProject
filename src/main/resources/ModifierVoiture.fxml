@@ -4,61 +4,100 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.Node?>
-<?import javafx.stage.Stage?>
-<?import javafx.event.ActionEvent?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="Controller.ModifierVoitureController" stylesheets="@theme-voyage.css">
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="Controller.ModifierVoitureController" 
+            styleClass="main-bg" stylesheets="@theme-voyage.css" prefWidth="700" prefHeight="750">
     <children>
-        <VBox spacing="10" alignment="CENTER"
-              AnchorPane.topAnchor="0"
-              AnchorPane.leftAnchor="0"
-              AnchorPane.rightAnchor="0"
-              AnchorPane.bottomAnchor="0">
-            <VBox spacing="7" maxWidth="440" style="-fx-background-color: #fff; -fx-background-radius: 14; -fx-padding: 16 22 14 22; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 6, 0, 0, 1);">
-                <Label text="Modifier la Voiture" styleClass="label-title" alignment="CENTER" />
-                <GridPane hgap="10" vgap="7">
-                    <columnConstraints>
-                        <ColumnConstraints halignment="RIGHT" minWidth="120" />
-                        <ColumnConstraints hgrow="ALWAYS" />
-                    </columnConstraints>
-                    <Label text="Marque :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                    <TextField fx:id="marqueField" GridPane.rowIndex="0" GridPane.columnIndex="1" promptText="Ex : Renault" styleClass="filter-field"/>
-                    <Label text="Modèle :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                    <TextField fx:id="modeleField" GridPane.rowIndex="1" GridPane.columnIndex="1" promptText="Ex : Clio" styleClass="filter-field"/>
-                    <Label text="Matricule :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                    <TextField fx:id="matriculeField" GridPane.rowIndex="2" GridPane.columnIndex="1" promptText="Ex : 1234 TU 567" styleClass="filter-field"/>
-                    <Label text="Prix par jour :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                    <TextField fx:id="prixParJourField" GridPane.rowIndex="3" GridPane.columnIndex="1" promptText="Ex : 120" styleClass="filter-field"/>
-                    <Label text="Image :" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                    <Button text="Importer Image" fx:id="importImageButton" onAction="#importerImage" GridPane.rowIndex="4" GridPane.columnIndex="1" styleClass="button action-btn export"/>
-                    <Label text="Disponible :" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                    <CheckBox fx:id="disponibleCheckBox" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-                    <Label text="Carburant :" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-                    <ComboBox fx:id="carburantComboBox" GridPane.rowIndex="6" GridPane.columnIndex="1" styleClass="filter-field combo-compact"/>
-                    <Label text="Boîte de Vitesse :" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
-                    <ComboBox fx:id="boiteVitesseComboBox" GridPane.rowIndex="7" GridPane.columnIndex="1" styleClass="filter-field combo-compact"/>
-                    <Label text="Nombre de Places :" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
-                    <Spinner fx:id="nbPlacesSpinner" GridPane.rowIndex="8" GridPane.columnIndex="1" styleClass="filter-field spinner-compact"/>
-                    <Label text="Nombre de Portes :" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
-                    <Spinner fx:id="nbPortesSpinner" GridPane.rowIndex="9" GridPane.columnIndex="1" styleClass="filter-field spinner-compact"/>
-                    <Label text="Couleur :" GridPane.rowIndex="10" GridPane.columnIndex="0"/>
-                    <TextField fx:id="couleurField" GridPane.rowIndex="10" GridPane.columnIndex="1" promptText="Ex : Bleu" styleClass="filter-field"/>
-                    <Label text="Climatisation :" GridPane.rowIndex="11" GridPane.columnIndex="0"/>
-                    <CheckBox fx:id="climatisationCheckBox" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
-                    <Label text="Kilométrage :" GridPane.rowIndex="12" GridPane.columnIndex="0"/>
-                    <TextField fx:id="kilometrageField" GridPane.rowIndex="12" GridPane.columnIndex="1" promptText="Ex : 50000" styleClass="filter-field"/>
-                    <Label text="Année :" GridPane.rowIndex="13" GridPane.columnIndex="0"/>
-                    <TextField fx:id="anneeField" GridPane.rowIndex="13" GridPane.columnIndex="1" promptText="Ex : 2022" styleClass="filter-field"/>
-                    <Label text="Catégorie :" GridPane.rowIndex="14" GridPane.columnIndex="0"/>
-                    <ComboBox fx:id="categorieComboBox" GridPane.rowIndex="14" GridPane.columnIndex="1" styleClass="filter-field combo-compact"/>
-                    <ImageView fx:id="imageView" fitHeight="70" fitWidth="90" preserveRatio="true" GridPane.rowIndex="15" GridPane.columnIndex="1" style="-fx-border-color: #0097A7; -fx-border-width: 1;"/>
-                </GridPane>
-                <HBox spacing="10" alignment="CENTER" style="-fx-padding: 8 0 0 0;">
-                    <Button fx:id="enregistrerButton" text="Enregistrer" onAction="#enregistrerModification" styleClass="button action-btn refresh" prefWidth="120"/>
-                    <Button text="Annuler" onAction="#handleAnnuler" styleClass="button action-btn export" prefWidth="100"/>
-                </HBox>
-            </VBox>
+        <VBox spacing="0" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+            <!-- En-tête avec barre de navigation -->
+            <HBox styleClass="nav-bar" alignment="CENTER_LEFT" spacing="10">
+                <padding><Insets top="8" right="15" bottom="8" left="15"/></padding>
+                <Label text="Modifier la voiture" styleClass="nav-title"/>
+            </HBox>
+            
+            <!-- Contenu principal -->
+            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="scroll-pane">
+                <VBox alignment="CENTER" spacing="20" style="-fx-padding: 20;">
+                    <!-- Formulaire de modification -->
+                    <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 6, 0, 0, 4);">
+                        <Label text="Informations du véhicule" styleClass="label-section"/>
+                        <Separator/>
+                        
+                        <GridPane hgap="15" vgap="12">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="RIGHT" minWidth="150" />
+                                <ColumnConstraints hgrow="ALWAYS" minWidth="250" />
+                            </columnConstraints>
+                            
+                            <Label text="Marque :" styleClass="feature-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <TextField fx:id="marqueField" promptText="Ex : Renault" styleClass="filter-field" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Modèle :" styleClass="feature-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <TextField fx:id="modeleField" promptText="Ex : Clio" styleClass="filter-field" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Matricule :" styleClass="feature-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                            <TextField fx:id="matriculeField" promptText="Ex : 1234 TU 567" styleClass="filter-field" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Prix par jour :" styleClass="feature-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                            <TextField fx:id="prixParJourField" promptText="Ex : 120" styleClass="filter-field" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Disponible :" styleClass="feature-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                            <CheckBox fx:id="disponibleCheckBox" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Catégorie :" styleClass="feature-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                            <ComboBox fx:id="categorieComboBox" styleClass="filter-field combo-compact" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                        </GridPane>
+                        
+                        <Separator/>
+                        <Label text="Caractéristiques techniques" styleClass="label-section"/>
+                        
+                        <GridPane hgap="15" vgap="12">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="RIGHT" minWidth="150" />
+                                <ColumnConstraints hgrow="ALWAYS" minWidth="250" />
+                            </columnConstraints>
+                            
+                            <Label text="Carburant :" styleClass="feature-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <ComboBox fx:id="carburantComboBox" styleClass="filter-field combo-compact" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Boîte de Vitesse :" styleClass="feature-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <ComboBox fx:id="boiteVitesseComboBox" styleClass="filter-field combo-compact" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Nombre de Places :" styleClass="feature-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                            <Spinner fx:id="nbPlacesSpinner" styleClass="filter-field spinner-compact" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Nombre de Portes :" styleClass="feature-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                            <Spinner fx:id="nbPortesSpinner" styleClass="filter-field spinner-compact" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Couleur :" styleClass="feature-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                            <TextField fx:id="couleurField" promptText="Ex : Bleu" styleClass="filter-field" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Climatisation :" styleClass="feature-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                            <CheckBox fx:id="climatisationCheckBox" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Kilométrage :" styleClass="feature-label" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                            <TextField fx:id="kilometrageField" promptText="Ex : 50000" styleClass="filter-field" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Année :" styleClass="feature-label" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                            <TextField fx:id="anneeField" promptText="Ex : 2022" styleClass="filter-field" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+                        </GridPane>
+                        
+                        <Separator/>
+                        <Label text="Image du véhicule" styleClass="label-section"/>
+                        
+                        <VBox alignment="CENTER" spacing="10">
+                            <ImageView fx:id="imageView" fitHeight="150" fitWidth="200" preserveRatio="true" style="-fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-background-color: #f5f5f5;"/>
+                            <Button text="Importer Image" fx:id="importImageButton" onAction="#importerImage" styleClass="button action-btn export" prefWidth="150"/>
+                        </VBox>
+                    </VBox>
+                    
+                    <!-- Boutons d'action -->
+                    <HBox alignment="CENTER" spacing="15">
+                        <Button fx:id="enregistrerButton" text="Enregistrer" onAction="#enregistrerModification" styleClass="action-btn" prefWidth="150"/>
+                        <Button text="Annuler" onAction="#handleAnnuler" styleClass="action-btn supprimer" prefWidth="120"/>
+                    </HBox>
+                </VBox>
+            </ScrollPane>
         </VBox>
     </children>
 </AnchorPane>

@@ -32,7 +32,6 @@
             </Button>
 
             <Button fx:id="VolButton" onAction="#allerPageVol" mnemonicParsing="false" styleClass="nav-button" text="Vols">
-
                <font>
                   <Font size="14.0" />
                </font>

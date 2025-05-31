@@ -9,14 +9,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #f0f0f0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ModifierUtilisateur">
+<AnchorPane prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #f0f0f0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ModifierUtilisateur">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="0.0" layoutY="0.0" prefHeight="500.0" prefWidth="700.0" spacing="20.0">
+      <VBox alignment="TOP_CENTER" layoutX="0.0" layoutY="0.0" prefHeight="720.0" prefWidth="1080.0" spacing="20.0">
          <children>
             <!-- Header -->
             <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="700.0" style="-fx-background-color: #f46624;">
                <children>
-                  <Button fx:id="retourUpdateButton" onAction="#retourAfficherUtilisateursUpdate" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-radius: 5;" text="Retour">
+                  <Button fx:id="retourUpdateButton" mnemonicParsing="false" onAction="#retourAfficherUtilisateursUpdate" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-radius: 5;" text="Retour">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -24,7 +24,7 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Label alignment="CENTER" prefHeight="60.0" prefWidth="600.0" text="Modifier Utilisateur" textAlignment="CENTER" textFill="WHITE">
+                  <Label alignment="CENTER" prefHeight="60.0" prefWidth="865.0" text="Modifier Utilisateur" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
@@ -33,7 +33,7 @@
             </HBox>
             
             <!-- Edit Form Card -->
-            <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="650.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
+            <VBox alignment="TOP_CENTER" prefHeight="354.0" prefWidth="1030.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
                <children>
                   <!-- Form Fields -->
                   <VBox alignment="CENTER_LEFT" prefHeight="300.0" prefWidth="600.0" spacing="15.0">
@@ -60,7 +60,7 @@
                         <!-- First Name -->
                         <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="600.0">
                            <children>
-                              <Label prefHeight="30.0" prefWidth="150.0" text="Prenom:">
+                              <Label prefHeight="30.0" prefWidth="150.0" text="Prénom:">
                                  <font>
                                     <Font name="System Bold" size="16.0" />
                                  </font>
@@ -117,7 +117,7 @@
                         <!-- Submit Button -->
                         <HBox alignment="CENTER" prefHeight="80.0" prefWidth="600.0">
                            <children>
-                              <Button fx:id="buttonModifier" onAction="#modifierUtilisateur" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #f46624; -fx-text-fill: white; -fx-background-radius: 5;" text="ENREGISTRER">
+                              <Button fx:id="buttonModifier" mnemonicParsing="false" onAction="#modifierUtilisateur" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #f46624; -fx-text-fill: white; -fx-background-radius: 5;" text="ENREGISTRER">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>

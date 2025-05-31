@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HompePageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HompePageController">
    <top>
-      <HBox prefHeight="60.0" prefWidth="900.0" spacing="10.0" styleClass="nav-bar" BorderPane.alignment="CENTER">
+      <HBox prefHeight="44.0" prefWidth="1080.0" spacing="10.0" styleClass="nav-bar" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -94,20 +94,20 @@
       <AnchorPane prefHeight="318.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
    </left>
    <center>
-      <AnchorPane prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="500.0" prefWidth="1080.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="30.0" layoutY="20.0" text="Bienvenue chez Last Minute Travel" textFill="#f46624">
+            <Label layoutX="30.0" layoutY="31.0" text="Bienvenue chez Last Minute Travel" textFill="#f46624">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label layoutX="30.0" layoutY="60.0" text="Trouvez les meilleures offres pour votre prochain voyage" textFill="#7f8c8d">
+            <Label layoutX="30.0" layoutY="71.0" text="Trouvez les meilleures offres pour votre prochain voyage" textFill="#7f8c8d">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
 
-            <AnchorPane layoutX="30.0" layoutY="100.0" prefHeight="200.0" prefWidth="840.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 10;">
+            <AnchorPane layoutX="30.0" layoutY="142.0" prefHeight="200.0" prefWidth="918.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 10;">
                <children>
                   <Label layoutX="20.0" layoutY="20.0" text="Destinations Populaires" textFill="#2c3e50">
                      <font>
@@ -169,7 +169,7 @@
                </children>
             </AnchorPane>
 
-            <AnchorPane layoutX="30.0" layoutY="320.0" prefHeight="150.0" prefWidth="840.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 10;">
+            <AnchorPane layoutX="30.0" layoutY="386.0" prefHeight="150.0" prefWidth="917.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 10;">
                <children>
                   <Label layoutX="20.0" layoutY="20.0" text="Recherche Rapide" textFill="#2c3e50">
                      <font>
@@ -209,7 +209,7 @@
       <AnchorPane prefHeight="318.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
    </right>
    <bottom>
-      <AnchorPane prefHeight="40.0" prefWidth="900.0" style="-fx-background-color: #f46624;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="71.0" prefWidth="1033.0" style="-fx-background-color: #f46624;" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="350.0" layoutY="12.0" text="© 2025 Last Minute Travel - Tous droits réservés" textFill="WHITE">
                <font>

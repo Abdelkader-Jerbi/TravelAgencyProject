@@ -19,7 +19,7 @@
          <children>
             <ImageView fitHeight="720.0" fitWidth="361.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../Images/avion.jpg" />
+                  <Image url="@Images/avion.jpg" />
                </image>
             </ImageView>
          </children>
@@ -68,7 +68,7 @@
             <TextField fx:id="emailUsername" layoutX="224.0" layoutY="96.0" prefHeight="36.0" prefWidth="276.0" promptText="Entrez votre email" styleClass="text-field" />
             <CheckBox fx:id="showPasswordCheckBox" layoutX="225.0" layoutY="215.0" mnemonicParsing="false" onAction="#showPassword" text="Afficher le mot de passe" />
             <Hyperlink layoutX="376.0" layoutY="212.0" onAction="#openForgotPassword" text="Mot de passe oublié ?" />
-            <TextField fx:id="showPasswordField" layoutX="146.0" layoutY="100.0" managed="false" prefHeight="35.0" prefWidth="250.0" promptText="Entrez votre mot de passe" styleClass="text-field" visible="false" />
+            <TextField fx:id="showPasswordField" layoutX="224.0" layoutY="144.0" managed="false" prefHeight="36.0" prefWidth="277.0" promptText="Entrez votre mot de passe" styleClass="text-field" visible="false" />
 
             <WebView fx:id="captchaWebView" layoutX="182.0" layoutY="310.0" prefHeight="389.0" prefWidth="345.0" visible="false" />
          </children>

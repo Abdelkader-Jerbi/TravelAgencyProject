@@ -25,7 +25,7 @@ public class MainFx extends Application {
         try {
             Parent parent = loader.load();
             Scene scene = new Scene(parent);
-           // primaryStage.initStyle(StageStyle.UNDECORATED);
+            primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.setScene(scene);
 
             primaryStage.setTitle("Login");

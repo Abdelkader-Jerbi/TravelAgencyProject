@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="650.0" prefWidth="900.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherUtilisateurController">
+<BorderPane prefHeight="720.0" prefWidth="1080.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherUtilisateurController">
    <top>
       <HBox prefHeight="60.0" prefWidth="900.0" spacing="10.0" styleClass="nav-bar" BorderPane.alignment="CENTER">
          <children>
@@ -25,22 +25,15 @@
    <center>
       <AnchorPane prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="30.0" layoutY="20.0" text="Gestion des Utilisateurs" textFill="#f46624">
+            <Label layoutX="30.0" layoutY="15.0" text="Gestion des Utilisateurs" textFill="#f46624">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
             
-            <HBox layoutX="30.0" layoutY="70.0" spacing="10.0">
-               <children>
-                  <TextField fx:id="searchField" prefHeight="35.0" prefWidth="300.0" promptText="Rechercher des utilisateurs..." />
-                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#handleSearch" prefHeight="35.0" text="Rechercher" />
-                  <Button fx:id="afficherUtilisateur" mnemonicParsing="false" onAction="#afficherUtilisateur" prefHeight="35.0" text="Afficher Utilisateur" />
-                  <Button fx:id="exportPdfButton" mnemonicParsing="false" onAction="#exportToPdf" prefHeight="35.0" styleClass="register-button" text="Exporter en PDF" />
-               </children>
-            </HBox>
+            <HBox layoutX="30.0" layoutY="70.0" spacing="10.0" />
             
-            <TableView fx:id="tvpersonne" layoutX="30.0" layoutY="120.0" prefHeight="350.0" prefWidth="840.0" styleClass="table-view">
+            <TableView fx:id="tvpersonne" layoutX="126.0" layoutY="122.0" prefHeight="361.0" prefWidth="828.0" styleClass="table-view">
               <columns>
                 <TableColumn fx:id="colnom" prefWidth="160.0" text="Nom" />
                 <TableColumn fx:id="colprenom" prefWidth="160.0" text="Prénom" />
@@ -50,20 +43,21 @@
               </columns>
             </TableView>
             
-            <HBox layoutX="30.0" layoutY="490.0" spacing="10.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#RetourAjoutUtilisateur" prefHeight="35.0" styleClass="cancel-button" text="Ajouter Nouvel Utilisateur" />
-                  <Button mnemonicParsing="false" onAction="#modifierUtilisateur" prefHeight="35.0" styleClass="register-button" text="Modifier Utilisateur Sélectionné" />
-                  <Button mnemonicParsing="false" onAction="#supprimerUtilisateur" prefHeight="35.0" styleClass="cancel-button" text="Supprimer Utilisateur Sélectionné" />
-               </children>
-            </HBox>
+            <HBox layoutX="30.0" layoutY="490.0" spacing="10.0" />
+            <Button layoutX="263.0" layoutY="528.0" mnemonicParsing="false" onAction="#RetourAjoutUtilisateur" prefHeight="35.0" styleClass="cancel-button" text="Ajouter Nouvel Utilisateur" />
+            <Button layoutX="437.0" layoutY="528.0" mnemonicParsing="false" onAction="#modifierUtilisateur" prefHeight="35.0" styleClass="register-button" text="Modifier Utilisateur Sélectionné" />
+            <Button layoutX="643.0" layoutY="528.0" mnemonicParsing="false" onAction="#supprimerUtilisateur" prefHeight="35.0" styleClass="cancel-button" text="Supprimer Utilisateur Sélectionné" />
+            <TextField fx:id="searchField" layoutX="126.0" layoutY="70.0" prefHeight="35.0" prefWidth="300.0" promptText="Rechercher des utilisateurs..." />
+            <Button fx:id="searchButton" layoutX="437.0" layoutY="70.0" mnemonicParsing="false" onAction="#handleSearch" prefHeight="35.0" text="Rechercher" />
+            <Button fx:id="afficherUtilisateur" layoutX="707.0" layoutY="71.0" mnemonicParsing="false" onAction="#afficherUtilisateur" prefHeight="35.0" text="Afficher Utilisateur" />
+            <Button fx:id="exportPdfButton" layoutX="840.0" layoutY="71.0" mnemonicParsing="false" onAction="#exportToPdf" prefHeight="35.0" styleClass="register-button" text="Exporter en PDF" />
          </children>
       </AnchorPane>
    </center>
    <bottom>
       <AnchorPane prefHeight="40.0" prefWidth="900.0" style="-fx-background-color: #f46624;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="350.0" layoutY="12.0" text="© 2024 Last Minute Travel - Tous droits réservés" textFill="WHITE">
+            <Label layoutX="350.0" layoutY="12.0" text="© 2025 Last Minute Travel - Tous droits réservés" textFill="WHITE">
                <font>
                   <Font size="12.0" />
                </font>

@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #f0f0f0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UtilisateurInfo">
+<AnchorPane prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #f0f0f0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UtilisateurInfo">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="0.0" layoutY="0.0" prefHeight="500.0" prefWidth="700.0" spacing="20.0">
+      <VBox alignment="TOP_CENTER" layoutX="0.0" layoutY="0.0" prefHeight="720.0" prefWidth="1080.0" spacing="20.0">
          <children>
             <!-- Header -->
-            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="700.0" style="-fx-background-color: #f46624;">
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="1057.0" style="-fx-background-color: #f46624;">
                <children>
-                  <Button fx:id="retourAfficherUtilisateurss" onAction="#retourAfficherUtilisateurss" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-radius: 5;" text="Retour">
+                  <Button fx:id="retourAfficherUtilisateurss" mnemonicParsing="false" onAction="#retourAfficherUtilisateurss" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-radius: 5;" text="Retour">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -23,7 +23,7 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Label alignment="CENTER" prefHeight="60.0" prefWidth="600.0" text="Profil Utilisateur" textAlignment="CENTER" textFill="WHITE">
+                  <Label alignment="CENTER" prefHeight="60.0" prefWidth="912.0" text="Profil Utilisateur" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
@@ -32,7 +32,7 @@
             </HBox>
             
             <!-- Profile Card -->
-            <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="650.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
+            <VBox alignment="TOP_CENTER" prefHeight="387.0" prefWidth="908.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
                <children>
                   <!-- Role Badge -->
                   <Label fx:id="roleFieldLabel" alignment="CENTER" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #f46624; -fx-background-radius: 15; -fx-text-fill: white;" text="UTILISATEUR">
@@ -45,7 +45,7 @@
                   </Label>
                   
                   <!-- User Info -->
-                  <VBox alignment="CENTER_LEFT" prefHeight="300.0" prefWidth="600.0" spacing="15.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="300.0" prefWidth="1030.0" spacing="15.0">
                      <children>
                         <!-- Name -->
                         <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="600.0">

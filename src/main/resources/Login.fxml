@@ -13,11 +13,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="920.0" prefWidth="1600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="920.0" prefWidth="1600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="282.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="brandingView" fitHeight="209.0" fitWidth="242.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="brandingView" fitHeight="263.0" fitWidth="352.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../Images/lastMinuteTravel.jpg" />
                </image>
@@ -38,12 +38,12 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label layoutX="58.0" layoutY="120.0" styleClass="form-label" text="Nom d'utilisateur : ">
+            <Label layoutX="10.0" layoutY="120.0" styleClass="form-label" text="Nom d'utilisateur : ">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="58.0" layoutY="162.0" styleClass="form-label" text="Mot de passe :">
+            <Label layoutX="35.0" layoutY="162.0" styleClass="form-label" text="Mot de passe :">
                <font>
                   <Font size="14.0" />
                </font>
@@ -66,8 +66,8 @@
                </font>
             </Button>
             <TextField fx:id="emailUsername" layoutX="150.0" layoutY="116.0" prefHeight="35.0" prefWidth="250.0" promptText="Entrez votre email" styleClass="text-field" />
-            <CheckBox fx:id="showPasswordCheckBox" layoutX="58.0" layoutY="206.0" mnemonicParsing="false" onAction="#showPassword" text="Afficher le mot de passe" />
-            <Hyperlink layoutX="191.0" layoutY="203.0" onAction="#openForgotPassword" text="Mot de passe oublié ?" />
+            <CheckBox fx:id="showPasswordCheckBox" layoutX="50.0" layoutY="206.0" mnemonicParsing="false" onAction="#showPassword" text="Afficher le mot de passe" />
+            <Hyperlink layoutX="234.0" layoutY="203.0" onAction="#openForgotPassword" text="Mot de passe oublié ?" />
             <TextField fx:id="showPasswordField" layoutX="149.0" layoutY="158.0" managed="false" prefHeight="35.0" prefWidth="250.0" promptText="Entrez votre mot de passe" styleClass="text-field" visible="false" />
 
             <WebView fx:id="captchaWebView" layoutX="55.0" layoutY="282.0" prefHeight="517.0" prefWidth="384.0" visible="false" />

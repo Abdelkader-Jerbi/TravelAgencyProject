@@ -5,49 +5,84 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="Controller.DetailVoitureAdminController" prefWidth="600" prefHeight="700" stylesheets="@theme-voyage.css">
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="Controller.DetailVoitureAdminController" 
+            prefWidth="700" prefHeight="700" styleClass="main-bg" stylesheets="@theme-voyage.css">
     <children>
-        <VBox alignment="CENTER" spacing="18" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
-            <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
-            </padding>
-            <Label text="Détails complets de la voiture" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-            <ImageView fx:id="imageView" fitHeight="180" fitWidth="260" preserveRatio="true" style="-fx-border-color: gray; -fx-border-width: 1;"/>
-            <GridPane hgap="18" vgap="12" maxWidth="500">
-                <columnConstraints>
-                    <ColumnConstraints halignment="RIGHT" minWidth="160" />
-                    <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
-                </columnConstraints>
-                <Label text="Marque :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <Label fx:id="marqueLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-                <Label text="Modèle :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <Label fx:id="modeleLabel" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-                <Label text="Matricule :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <Label fx:id="matriculeLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-                <Label text="Prix par jour :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                <Label fx:id="prixLabel" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-                <Label text="Disponible :" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                <Label fx:id="disponibleLabel" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-                <Label text="Carburant :" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                <Label fx:id="carburantLabel" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-                <Label text="Boîte de vitesse :" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-                <Label fx:id="boiteVitesseLabel" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
-                <Label text="Nombre de places :" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
-                <Label fx:id="nbPlacesLabel" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
-                <Label text="Nombre de portes :" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
-                <Label fx:id="nbPortesLabel" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
-                <Label text="Couleur :" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
-                <Label fx:id="couleurLabel" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
-                <Label text="Climatisation :" GridPane.rowIndex="10" GridPane.columnIndex="0"/>
-                <Label fx:id="climatisationLabel" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
-                <Label text="Kilométrage :" GridPane.rowIndex="11" GridPane.columnIndex="0"/>
-                <Label fx:id="kilometrageLabel" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
-                <Label text="Année :" GridPane.rowIndex="12" GridPane.columnIndex="0"/>
-                <Label fx:id="anneeLabel" GridPane.rowIndex="12" GridPane.columnIndex="1"/>
-                <Label text="Catégorie :" GridPane.rowIndex="13" GridPane.columnIndex="0"/>
-                <Label fx:id="categorieLabel" GridPane.rowIndex="13" GridPane.columnIndex="1"/>
-            </GridPane>
-            <Button text="❌ Fermer" onAction="#handleFermer" styleClass="button" style="-fx-background-color: #f44336; -fx-font-size: 14px; -fx-padding: 8 24;"/>
+        <VBox spacing="0" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+            <!-- En-tête avec barre de navigation -->
+            <HBox styleClass="nav-bar" alignment="CENTER_LEFT" spacing="10">
+                <padding><Insets top="8" right="15" bottom="8" left="15"/></padding>
+                <Label text="Détails de la voiture" styleClass="nav-title"/>
+            </HBox>
+            
+            <!-- Contenu principal -->
+            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="scroll-pane">
+                <VBox alignment="CENTER" spacing="20" style="-fx-padding: 20;">
+                    <!-- Image de la voiture -->
+                    <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 6, 0, 0, 4);">
+                        <ImageView fx:id="imageView" fitHeight="200" fitWidth="300" preserveRatio="true" styleClass="detail-image"/>
+                    </VBox>
+                    
+                    <!-- Informations détaillées -->
+                    <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 6, 0, 0, 4);">
+                        <Label text="Caractéristiques du véhicule" styleClass="label-section"/>
+                        <Separator/>
+                        <GridPane hgap="18" vgap="12" styleClass="features-grid">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="RIGHT" minWidth="160" />
+                                <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
+                            </columnConstraints>
+                            
+                            <Label text="Marque :" styleClass="feature-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <Label fx:id="marqueLabel" styleClass="feature-value" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Modèle :" styleClass="feature-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <Label fx:id="modeleLabel" styleClass="feature-value" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Matricule :" styleClass="feature-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                            <Label fx:id="matriculeLabel" styleClass="feature-value" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Prix par jour :" styleClass="feature-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                            <Label fx:id="prixLabel" styleClass="feature-value" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Disponible :" styleClass="feature-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                            <Label fx:id="disponibleLabel" styleClass="feature-value" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Carburant :" styleClass="feature-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                            <Label fx:id="carburantLabel" styleClass="feature-value" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Boîte de vitesse :" styleClass="feature-label" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                            <Label fx:id="boiteVitesseLabel" styleClass="feature-value" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Nombre de places :" styleClass="feature-label" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                            <Label fx:id="nbPlacesLabel" styleClass="feature-value" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Nombre de portes :" styleClass="feature-label" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                            <Label fx:id="nbPortesLabel" styleClass="feature-value" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Couleur :" styleClass="feature-label" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+                            <Label fx:id="couleurLabel" styleClass="feature-value" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Climatisation :" styleClass="feature-label" GridPane.rowIndex="10" GridPane.columnIndex="0"/>
+                            <Label fx:id="climatisationLabel" styleClass="feature-value" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Kilométrage :" styleClass="feature-label" GridPane.rowIndex="11" GridPane.columnIndex="0"/>
+                            <Label fx:id="kilometrageLabel" styleClass="feature-value" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Année :" styleClass="feature-label" GridPane.rowIndex="12" GridPane.columnIndex="0"/>
+                            <Label fx:id="anneeLabel" styleClass="feature-value" GridPane.rowIndex="12" GridPane.columnIndex="1"/>
+                            
+                            <Label text="Catégorie :" styleClass="feature-label" GridPane.rowIndex="13" GridPane.columnIndex="0"/>
+                            <Label fx:id="categorieLabel" styleClass="feature-value" GridPane.rowIndex="13" GridPane.columnIndex="1"/>
+                        </GridPane>
+                    </VBox>
+                    
+                    <!-- Bouton de fermeture -->
+                    <HBox alignment="CENTER">
+                        <Button text="Fermer" onAction="#handleFermer" styleClass="action-btn" prefWidth="150"/>
+                    </HBox>
+                </VBox>
+            </ScrollPane>
         </VBox>
     </children>
-</AnchorPane> 
+</AnchorPane>

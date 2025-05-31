@@ -37,12 +37,38 @@ public class TravelAgencyController implements Initializable {
     private Button reclamationsButton;
     
     @FXML
+    private Button categoriesButton;
+    
+    @FXML
+    private VBox reclamationsSubMenu;
+    
+    @FXML
+    private VBox categoriesSubMenu;
+    
+    @FXML
     private Button reservationsButton;
+
+    @FXML
+    private Label reclamationsChevron;
+    
+    @FXML
+    private Label categoriesChevron;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Initialize dashboard - could load a default view
         System.out.println("Travel Agency Dashboard initialized");
+        
+        // Add click handlers for menu buttons
+        reclamationsButton.setOnAction(e -> toggleSubMenu(reclamationsSubMenu, reclamationsChevron));
+        categoriesButton.setOnAction(e -> toggleSubMenu(categoriesSubMenu, categoriesChevron));
+    }
+    
+    private void toggleSubMenu(VBox subMenu, Label chevron) {
+        boolean isVisible = !subMenu.isVisible();
+        subMenu.setVisible(isVisible);
+        subMenu.setManaged(isVisible);
+        chevron.setText(isVisible ? "▲" : "▼");
     }
 
     @FXML
@@ -117,19 +143,113 @@ public class TravelAgencyController implements Initializable {
 
     @FXML
     public void navigateToReclamations(ActionEvent event) {
+        toggleSubMenu(reclamationsSubMenu, reclamationsChevron);
+    }
+
+    @FXML
+    public void navigateToCategories(ActionEvent event) {
+        toggleSubMenu(categoriesSubMenu, categoriesChevron);
+    }
+
+    @FXML
+    public void navigateToAfficherReclamations(ActionEvent event) {
         try {
-            // Assuming there will be a Reclamations interface
-            URL resource = getClass().getResource("/Reclamation/ListReclamation.fxml");
+            URL resource = getClass().getResource("/Reclamation/AfficherReclamation.fxml");
             if (resource != null) {
                 Parent root = FXMLLoader.load(resource);
                 mainPane.setCenter(root);
             } else {
-                showNotImplementedMessage("Reclamations Management");
+                showNotImplementedMessage("Afficher Réclamations");
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Error loading Reclamations interface: " + e.getMessage());
-            showNotImplementedMessage("Reclamations Management");
+            System.err.println("Error loading Afficher Réclamations interface: " + e.getMessage());
+            showNotImplementedMessage("Afficher Réclamations");
+        }
+    }
+
+    @FXML
+    public void navigateToModifierReclamations(ActionEvent event) {
+        try {
+            URL resource = getClass().getResource("/Reclamation/ModifierReclamation.fxml");
+            if (resource != null) {
+                Parent root = FXMLLoader.load(resource);
+                mainPane.setCenter(root);
+            } else {
+                showNotImplementedMessage("Modifier Réclamations");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading Modifier Réclamations interface: " + e.getMessage());
+            showNotImplementedMessage("Modifier Réclamations");
+        }
+    }
+
+    @FXML
+    public void navigateToAfficherCategories(ActionEvent event) {
+        try {
+            URL resource = getClass().getResource("/Categorie/AfficherCategorie.fxml");
+            if (resource != null) {
+                Parent root = FXMLLoader.load(resource);
+                mainPane.setCenter(root);
+            } else {
+                showNotImplementedMessage("Afficher Catégories");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading Afficher Catégories interface: " + e.getMessage());
+            showNotImplementedMessage("Afficher Catégories");
+        }
+    }
+
+    @FXML
+    public void navigateToAjouterCategorie(ActionEvent event) {
+        try {
+            URL resource = getClass().getResource("/Categorie/AjouterCategorie.fxml");
+            if (resource != null) {
+                Parent root = FXMLLoader.load(resource);
+                mainPane.setCenter(root);
+            } else {
+                showNotImplementedMessage("Ajouter Catégorie");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading Ajouter Catégorie interface: " + e.getMessage());
+            showNotImplementedMessage("Ajouter Catégorie");
+        }
+    }
+
+    @FXML
+    public void navigateToModifierCategorie(ActionEvent event) {
+        try {
+            URL resource = getClass().getResource("/Categorie/ModifierCategorie.fxml");
+            if (resource != null) {
+                Parent root = FXMLLoader.load(resource);
+                mainPane.setCenter(root);
+            } else {
+                showNotImplementedMessage("Modifier Catégorie");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading Modifier Catégorie interface: " + e.getMessage());
+            showNotImplementedMessage("Modifier Catégorie");
+        }
+    }
+
+    @FXML
+    public void navigateToSupprimerCategorie(ActionEvent event) {
+        try {
+            URL resource = getClass().getResource("/Categorie/SupprimerCategorie.fxml");
+            if (resource != null) {
+                Parent root = FXMLLoader.load(resource);
+                mainPane.setCenter(root);
+            } else {
+                showNotImplementedMessage("Supprimer Catégorie");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading Supprimer Catégorie interface: " + e.getMessage());
+            showNotImplementedMessage("Supprimer Catégorie");
         }
     }
 

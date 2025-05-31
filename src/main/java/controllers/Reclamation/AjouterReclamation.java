@@ -36,6 +36,7 @@ public class AjouterReclamation implements Initializable {
     private final categorieRec categorieService = new categorieRec();
     private final CrudReclamation reclamationService = new CrudReclamation();
     private int currentUserId;
+    private int userId;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -131,7 +132,7 @@ public class AjouterReclamation implements Initializable {
 
             // Créer la réclamation
             Reclamation reclamation = new Reclamation();
-            reclamation.setIdUser(currentUserId);
+            reclamation.setId(currentUserId);
             reclamation.setIdCategorie(categorieComboBox.getValue().getIdCategorie());
             reclamation.setDate(datePicker.getValue().format(DateTimeFormatter.ISO_DATE));
             reclamation.setCommentaire(commentaireArea.getText().trim());
@@ -191,5 +192,9 @@ public class AjouterReclamation implements Initializable {
 
     public void setCurrentUserId(int userId) {
         this.currentUserId = userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

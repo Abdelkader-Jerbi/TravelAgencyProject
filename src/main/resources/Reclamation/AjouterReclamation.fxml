@@ -28,22 +28,17 @@
             <Label text="Commentaire:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
             <TextArea fx:id="commentaireArea" prefRowCount="3" prefWidth="200" 
                       GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-            <Label text="Statut:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <TextField fx:id="statutField" text="en attente" editable="false" 
-                      style="-fx-background-color: #f5f5f5;" prefWidth="200"
-                      GridPane.rowIndex="3" GridPane.columnIndex="1"/>
         </GridPane>
         
         <HBox spacing="10" alignment="CENTER_RIGHT">
-            <Button fx:id="afficherButton" text="Afficher Réclamations" onAction="#handleAfficher"
-                    style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
-            <Button fx:id="annulerButton" text="Annuler" onAction="#handleAnnuler"
-                    style="-fx-background-color: #9E9E9E; -fx-text-fill: white;"/>
             <Button fx:id="ajouterButton" text="Ajouter" onAction="#handleAjouter"
-                    style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"/>
+            <Button fx:id="annulerButton" text="Annuler" onAction="#handleAnnuler"
+                    style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold;"/>
+            <Button fx:id="afficherButton" text="Afficher" onAction="#handleAfficher"
+                    style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;"/>
         </HBox>
         
-        <Label fx:id="messageLabel" style="-fx-text-fill: #F44336;"/>
+        <Label fx:id="messageLabel" style="-fx-text-fill: #666;"/>
     </VBox>
 </AnchorPane>

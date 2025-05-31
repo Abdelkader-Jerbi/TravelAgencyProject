@@ -66,14 +66,102 @@
                   <Insets left="30.0" />
                </padding>
             </Button>
-            <Button fx:id="reclamationsButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToReclamations" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Reclamations" textFill="WHITE">
+            <Button fx:id="reclamationsButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToReclamations" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
                <padding>
                   <Insets left="30.0" />
                </padding>
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" spacing="5">
+                     <Label text="Reclamations" textFill="WHITE">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="reclamationsChevron" text="▼" textFill="WHITE">
+                        <font>
+                           <Font size="10.0" />
+                        </font>
+                     </Label>
+                  </HBox>
+               </graphic>
             </Button>
+            <VBox fx:id="reclamationsSubMenu" visible="false" managed="false" style="-fx-background-color: #1E2433;">
+               <Button fx:id="afficherReclamationsButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToAfficherReclamations" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Afficher Réclamations" textFill="WHITE">
+                  <font>
+                     <Font size="12.0" />
+                  </font>
+                  <padding>
+                     <Insets left="50.0" />
+                  </padding>
+               </Button>
+               <Button fx:id="modifierReclamationsButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToModifierReclamations" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Modifier Réclamations" textFill="WHITE">
+                  <font>
+                     <Font size="12.0" />
+                  </font>
+                  <padding>
+                     <Insets left="50.0" />
+                  </padding>
+               </Button>
+            </VBox>
+            <Button fx:id="categoriesButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToCategories" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" spacing="5">
+                     <Label text="Catégories Réclamations" textFill="WHITE">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="categoriesChevron" text="▼" textFill="WHITE">
+                        <font>
+                           <Font size="10.0" />
+                        </font>
+                     </Label>
+                  </HBox>
+               </graphic>
+            </Button>
+            <VBox fx:id="categoriesSubMenu" visible="false" managed="false" style="-fx-background-color: #1E2433;">
+               <Button fx:id="afficherCategoriesButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToAfficherCategories" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Afficher Catégories" textFill="WHITE">
+                  <font>
+                     <Font size="12.0" />
+                  </font>
+                  <padding>
+                     <Insets left="50.0" />
+                  </padding>
+               </Button>
+               <Button fx:id="ajouterCategorieButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToAjouterCategorie" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Ajouter Catégorie" textFill="WHITE">
+                  <font>
+                     <Font size="12.0" />
+                  </font>
+                  <padding>
+                     <Insets left="50.0" />
+                  </padding>
+               </Button>
+               <Button fx:id="modifierCategorieButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToModifierCategorie" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Modifier Catégorie" textFill="WHITE">
+                  <font>
+                     <Font size="12.0" />
+                  </font>
+                  <padding>
+                     <Insets left="50.0" />
+                  </padding>
+               </Button>
+               <Button fx:id="supprimerCategorieButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToSupprimerCategorie" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Supprimer Catégorie" textFill="WHITE">
+                  <font>
+                     <Font size="12.0" />
+                  </font>
+                  <padding>
+                     <Insets left="50.0" />
+                  </padding>
+               </Button>
+            </VBox>
             <Button fx:id="reservationsButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#navigateToReservations" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Reservations" textFill="WHITE">
                <font>
                   <Font size="14.0" />

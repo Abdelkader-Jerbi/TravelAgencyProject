@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class AfficherReclamation implements Initializable {
 
@@ -51,13 +52,11 @@ public class AfficherReclamation implements Initializable {
     @FXML
     private TableColumn<Reclamation, String> actionColumn;
 
-
-
     @FXML
     private DatePicker dateFilterPicker;
 
     @FXML
-    private ComboBox<Categorie> categorieFilterComboBox;
+    private ComboBox<String> categorieFilterComboBox;
 
     @FXML
     private TextField emailFilterField;
@@ -71,7 +70,7 @@ public class AfficherReclamation implements Initializable {
     private final CrudReclamation reclamationService = new CrudReclamation();
     private final categorieRec categorieService = new categorieRec();
     private Map<Integer, String> categoriesMap = new HashMap<>();
-    private ObservableList<Reclamation> allReclamations = FXCollections.observableArrayList();
+    private List<Reclamation> allReclamations = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -85,19 +84,33 @@ public class AfficherReclamation implements Initializable {
         commentaireColumn.setCellValueFactory(new PropertyValueFactory<>("commentaire"));
         statutColumn.setCellValueFactory(new PropertyValueFactory<>("statut"));
 
+        // Configurer le style des colonnes
         configureColumnStyle(emailColumn, "Email Utilisateur");
         configureColumnStyle(categorieColumn, "Catégorie");
         configureColumnStyle(dateColumn, "Date");
         configureColumnStyle(commentaireColumn, "Commentaire");
         configureColumnStyle(statutColumn, "Statut");
+        configureColumnStyle(actionColumn, "Action");
 
+        // Charger les catégories
         loadCategories();
+        
+        // Ajouter l'option "Toutes les catégories" au début de la liste
+        categorieFilterComboBox.getItems().add(0, "Toutes les catégories");
+        categorieFilterComboBox.setValue("Toutes les catégories");
+        
+        // Configurer les filtres
+        setupFilters();
+        
+        // Configurer le filtre par email en temps réel
+        emailFilterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            applyFilters();
+        });
+
         loadReclamations();
         configureActionColumn();
         setupStatutFilter();
-        setupFilters();
         translateButton.setOnAction(e -> handleTranslate());
-        emailFilterField.setOnKeyReleased(this::onEmailFilterKeyReleased);
     }
 
     private void configureColumnStyle(TableColumn<?, ?> column, String title) {
@@ -109,11 +122,11 @@ public class AfficherReclamation implements Initializable {
 
     private void loadCategories() {
         try {
-            List<Categorie> categories = categorieService.afficher();
-            for (Categorie categorie : categories) {
+            List<entities.Categorie> categories = categorieService.afficher();
+            for (entities.Categorie categorie : categories) {
                 categoriesMap.put(categorie.getIdCategorie(), categorie.getDescription());
+                categorieFilterComboBox.getItems().add(categorie.getDescription());
             }
-            categorieFilterComboBox.setItems(FXCollections.observableArrayList(categories));
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger les catégories: " + e.getMessage());
         }
@@ -122,8 +135,8 @@ public class AfficherReclamation implements Initializable {
     private void loadReclamations() {
         try {
             List<Reclamation> reclamations = reclamationService.afficher();
-            allReclamations = FXCollections.observableArrayList(reclamations);
-            tableReclamation.setItems(allReclamations);
+            allReclamations = new ArrayList<>(reclamations);
+            tableReclamation.setItems(FXCollections.observableArrayList(allReclamations));
             // Remplir le filtre email
             ObservableList<String> emails = FXCollections.observableArrayList();
             for (Reclamation r : allReclamations) {
@@ -151,35 +164,51 @@ public class AfficherReclamation implements Initializable {
     }
 
     private void setupFilters() {
-        // Email filter: handled by key event
-        dateFilterPicker.setOnAction(e -> applyFilters());
+        // Filtre par catégorie
         categorieFilterComboBox.setOnAction(e -> applyFilters());
+        
+        // Filtre par date
+        dateFilterPicker.setOnAction(e -> applyFilters());
+        
+        // Filtre par statut
         statutFilterComboBox.setOnAction(e -> applyFilters());
-    }
-
-    private void onEmailFilterKeyReleased(KeyEvent event) {
-        applyFilters();
     }
 
     private void applyFilters() {
         ObservableList<Reclamation> filtered = FXCollections.observableArrayList(allReclamations);
-        String emailText = emailFilterField.getText();
+        String emailText = emailFilterField.getText().toLowerCase();
         LocalDate selectedDate = dateFilterPicker.getValue();
-        Categorie selectedCategorie = categorieFilterComboBox.getValue();
+        String selectedCategory = categorieFilterComboBox.getValue();
         String selectedStatut = statutFilterComboBox.getValue();
 
-        if (emailText != null && !emailText.isEmpty()) {
-            filtered.removeIf(r -> r.getEmail() == null || !r.getEmail().toLowerCase().contains(emailText.toLowerCase()));
+        // Filtre par email (en temps réel)
+        if (!emailText.isEmpty()) {
+            filtered.removeIf(r -> r.getEmail() == null || !r.getEmail().toLowerCase().contains(emailText));
         }
+
+        // Filtre par date
         if (selectedDate != null) {
             filtered.removeIf(r -> !selectedDate.toString().equals(r.getDate()));
         }
-        if (selectedCategorie != null) {
-            filtered.removeIf(r -> r.getIdCategorie() != selectedCategorie.getIdCategorie());
+
+        // Filtre par catégorie
+        if (selectedCategory != null && !selectedCategory.equals("Toutes les catégories")) {
+            final int selectedCategoryId = categoriesMap.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(selectedCategory))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(-1);
+                
+            if (selectedCategoryId != -1) {
+                filtered.removeIf(r -> r.getIdCategorie() != selectedCategoryId);
+            }
         }
-        if (selectedStatut != null && !selectedStatut.equals("Toutes les réclamations") && !selectedStatut.isEmpty()) {
+
+        // Filtre par statut
+        if (selectedStatut != null && !selectedStatut.equals("Toutes les réclamations")) {
             filtered.removeIf(r -> !selectedStatut.equalsIgnoreCase(r.getStatut()));
         }
+
         tableReclamation.setItems(filtered);
     }
 

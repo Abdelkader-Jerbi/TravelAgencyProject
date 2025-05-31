@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 import services.CrudReclamation;
 import services.categorie.categorieRec;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -24,12 +26,6 @@ public class ModifierReclamation implements Initializable {
 
     @FXML
     private TableView<Reclamation> tableReclamation;
-
-    @FXML
-    private TableColumn<Reclamation, Integer> idColumn;
-
-    @FXML
-    private TableColumn<Reclamation, Integer> idUserColumn;
 
     @FXML
     private TableColumn<Reclamation, String> categorieColumn;
@@ -61,20 +57,22 @@ public class ModifierReclamation implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Configurer les colonnes
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("idReclamation"));
-        idUserColumn.setCellValueFactory(new PropertyValueFactory<>("idUser"));
+        // Configurer les colonnes avec des cellules personnalisées
         categorieColumn.setCellValueFactory(cellData -> {
             int idCategorie = cellData.getValue().getIdCategorie();
             return new SimpleStringProperty(categoriesMap.getOrDefault(idCategorie, "Inconnue"));
         });
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        commentaireColumn.setCellValueFactory(new PropertyValueFactory<>("commentaire"));
-        statutColumn.setCellValueFactory(new PropertyValueFactory<>("statut"));
+        
+        dateColumn.setCellValueFactory(cellData -> 
+            new SimpleStringProperty(cellData.getValue().getDate()));
+        
+        commentaireColumn.setCellValueFactory(cellData -> 
+            new SimpleStringProperty(cellData.getValue().getCommentaire()));
+        
+        statutColumn.setCellValueFactory(cellData -> 
+            new SimpleStringProperty(cellData.getValue().getStatut()));
 
         // Configurer le style des colonnes
-        configureColumnStyle(idColumn, "ID");
-        configureColumnStyle(idUserColumn, "ID Utilisateur");
         configureColumnStyle(categorieColumn, "Catégorie");
         configureColumnStyle(dateColumn, "Date");
         configureColumnStyle(commentaireColumn, "Commentaire");
@@ -177,8 +175,16 @@ public class ModifierReclamation implements Initializable {
             selectedReclamation.setStatut(nouveauStatut);
             reclamationService.modifier(selectedReclamation);
             showAlert(Alert.AlertType.INFORMATION, "Succès", "Réclamation modifiée avec succès");
+            
+            // Recharger les réclamations pour mettre à jour la vue
+            loadReclamations();
+            
+            // Notifier que la réclamation a été modifiée
             notifyReclamationModified();
-            handleFermer();
+            
+            // Réinitialiser la sélection
+            selectedReclamation = null;
+            statutComboBox.setValue(null);
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de modifier la réclamation: " + e.getMessage());
         }

@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="920.0" prefWidth="1600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="920.0" prefWidth="1600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="282.0" BorderPane.alignment="CENTER">
          <children>
@@ -70,7 +70,7 @@
             <Hyperlink layoutX="191.0" layoutY="203.0" onAction="#openForgotPassword" text="Forgot password?" />
             <TextField fx:id="showPasswordField" layoutX="149.0" layoutY="158.0" managed="false" prefHeight="35.0" prefWidth="250.0" promptText="Enter your password" styleClass="text-field" visible="false" />
 
-            <WebView fx:id="captchaWebView" layoutX="55.0" layoutY="282.0" prefHeight="517.0" prefWidth="384.0" styleClass="captcha-webview" visible="false" />
+            <WebView fx:id="captchaWebView" layoutX="55.0" layoutY="282.0" prefHeight="517.0" prefWidth="384.0" visible="false" />
          </children>
       </AnchorPane>
    </right>

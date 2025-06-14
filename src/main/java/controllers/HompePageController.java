@@ -59,6 +59,7 @@ public class HompePageController {
             Parent root = loader.load();
             AjouterReclamation controller = loader.getController();
             controller.setCurrentUserId(getLoggedInUser().getId());
+            controller.setCurrentUserEmail(getLoggedInUser().getEmail());
             Stage stage = (Stage) ((Node) Event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);

@@ -1,10 +1,14 @@
 package controllers.Reclamation;
 
+import entities.Categorie;
 import entities.Reclamation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -12,6 +16,7 @@ import services.CrudReclamation;
 import services.categorie.categorieRec;
 import javafx.beans.property.SimpleStringProperty;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -37,6 +42,9 @@ public class HistoriqueReclamations implements Initializable {
     private TableColumn<Reclamation, String> statutColumn;
 
     @FXML
+    private TableColumn<Reclamation, String> reponseColumn;
+
+    @FXML
     private Button fermerButton;
 
     private final CrudReclamation reclamationService = new CrudReclamation();
@@ -60,12 +68,22 @@ public class HistoriqueReclamations implements Initializable {
         
         statutColumn.setCellValueFactory(cellData -> 
             new SimpleStringProperty(cellData.getValue().getStatut()));
+            
+        reponseColumn.setCellValueFactory(cellData -> {
+            String reponse = cellData.getValue().getReponse();
+            String statut = cellData.getValue().getStatut();
+            if ("Résolu".equals(statut) && reponse != null && !reponse.isEmpty()) {
+                return new SimpleStringProperty(reponse);
+            }
+            return new SimpleStringProperty("Pas encore répondu");
+        });
 
         // Configurer le style des colonnes
         configureColumnStyle(categorieColumn, "Catégorie");
         configureColumnStyle(dateColumn, "Date");
         configureColumnStyle(commentaireColumn, "Commentaire");
         configureColumnStyle(statutColumn, "Statut");
+        configureColumnStyle(reponseColumn, "Réponse");
 
         // Charger les catégories
         loadCategories();
@@ -73,7 +91,7 @@ public class HistoriqueReclamations implements Initializable {
         loadReclamations();
 
         // Configurer le bouton fermer
-        fermerButton.setOnAction(e -> handleFermer());
+        fermerButton.setOnAction(e -> handleRetour());
     }
 
     private void configureColumnStyle(TableColumn<?, ?> column, String title) {
@@ -85,8 +103,8 @@ public class HistoriqueReclamations implements Initializable {
 
     private void loadCategories() {
         try {
-            List<entities.Categorie> categories = categorieService.afficher();
-            for (entities.Categorie categorie : categories) {
+            List<Categorie> categories = categorieService.afficher();
+            for (Categorie categorie : categories) {
                 categoriesMap.put(categorie.getIdCategorie(), categorie.getDescription());
             }
         } catch (SQLException e) {
@@ -99,6 +117,30 @@ public class HistoriqueReclamations implements Initializable {
             List<Reclamation> reclamations = reclamationService.getReclamationsByUserId(userId);
             ObservableList<Reclamation> observableList = FXCollections.observableArrayList(reclamations);
             tableReclamation.setItems(observableList);
+
+            // Configurer les colonnes
+            categorieColumn.setCellValueFactory(cellData -> {
+                int idCategorie = cellData.getValue().getIdCategorie();
+                return new SimpleStringProperty(categoriesMap.getOrDefault(idCategorie, "Inconnue"));
+            });
+            
+            dateColumn.setCellValueFactory(cellData -> 
+                new SimpleStringProperty(cellData.getValue().getDate()));
+            
+            commentaireColumn.setCellValueFactory(cellData -> 
+                new SimpleStringProperty(cellData.getValue().getCommentaire()));
+            
+            statutColumn.setCellValueFactory(cellData -> 
+                new SimpleStringProperty(cellData.getValue().getStatut()));
+                
+            reponseColumn.setCellValueFactory(cellData -> {
+                String reponse = cellData.getValue().getReponse();
+                String statut = cellData.getValue().getStatut();
+                if ("Résolu".equals(statut) && reponse != null && !reponse.isEmpty()) {
+                    return new SimpleStringProperty(reponse);
+                }
+                return new SimpleStringProperty("Pas encore répondu");
+            });
 
             // Charger le style CSS
             String cssPath = getClass().getResource("/styles/table.css").toExternalForm();
@@ -114,15 +156,14 @@ public class HistoriqueReclamations implements Initializable {
     }
 
     @FXML
-    private void handleFermer() {
+    private void handleRetour() {
         try {
-            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("/HomePage.fxml"));
-            javafx.scene.Parent root = loader.load();
-            javafx.scene.Scene scene = new javafx.scene.Scene(root);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/HomePage.fxml"));
+            Parent root = loader.load();
             Stage stage = (Stage) fermerButton.getScene().getWindow();
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
             stage.show();
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de retourner à la page d'accueil: " + e.getMessage());
         }
     }

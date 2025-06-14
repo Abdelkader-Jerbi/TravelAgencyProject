@@ -22,13 +22,20 @@
                 <TableColumn fx:id="categorieColumn" text="Catégorie" prefWidth="150"/>
                 <TableColumn fx:id="dateColumn" text="Date" prefWidth="100"/>
                 <TableColumn fx:id="commentaireColumn" text="Commentaire" prefWidth="200"/>
-                <TableColumn fx:id="statutColumn" text="Statut" prefWidth="150"/>
+                <TableColumn fx:id="statutColumn" text="Statut" prefWidth="100"/>
+                <TableColumn fx:id="reponseColumn" text="Réponse" prefWidth="200"/>
             </columns>
         </TableView>
         
         <HBox spacing="10" alignment="CENTER_LEFT">
             <Label text="Nouveau statut:"/>
             <ComboBox fx:id="statutComboBox" prefWidth="150"/>
+            <VBox fx:id="reponseContainer" spacing="5" visible="false" managed="false">
+                <Label text="Réponse:"/>
+                <TextArea fx:id="reponseTextArea" prefWidth="300" prefHeight="100" 
+                         promptText="Entrez votre réponse ici..."
+                         style="-fx-background-color: white; -fx-border-color: #E0E0E0; -fx-border-radius: 5;"/>
+            </VBox>
             <Button fx:id="modifierButton" text="Modifier" 
                     style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"/>
             <Button fx:id="fermerButton" text="Fermer" 

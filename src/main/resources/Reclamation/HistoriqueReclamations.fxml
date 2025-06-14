@@ -13,7 +13,7 @@
     <VBox spacing="20" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" 
           AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
         
-        <Label text="Mon Historique de Réclamations" 
+        <Label text="Historique des Réclamations" 
                style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1976D2; -fx-font-family: 'Segoe UI';"/>
         
         <TableView fx:id="tableReclamation" VBox.vgrow="ALWAYS"
@@ -22,12 +22,13 @@
                 <TableColumn fx:id="categorieColumn" text="Catégorie" prefWidth="150"/>
                 <TableColumn fx:id="dateColumn" text="Date" prefWidth="100"/>
                 <TableColumn fx:id="commentaireColumn" text="Commentaire" prefWidth="200"/>
-                <TableColumn fx:id="statutColumn" text="Statut" prefWidth="150"/>
+                <TableColumn fx:id="statutColumn" text="Statut" prefWidth="100"/>
+                <TableColumn fx:id="reponseColumn" text="Réponse" prefWidth="200"/>
             </columns>
         </TableView>
         
         <HBox spacing="10" alignment="CENTER_RIGHT">
-            <Button fx:id="fermerButton" text="Fermer" onAction="#handleFermer"
+            <Button fx:id="fermerButton" text="Retour" onAction="#handleRetour"
                     style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold;"/>
         </HBox>
     </VBox>

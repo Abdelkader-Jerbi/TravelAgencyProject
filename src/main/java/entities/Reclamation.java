@@ -9,6 +9,7 @@ public class Reclamation {
     private String commentaire;
     private String statut;
     private String email;
+    private String reponse;
 
     public Reclamation() {
     }
@@ -84,6 +85,14 @@ public class Reclamation {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getReponse() {
+        return reponse;
+    }
+
+    public void setReponse(String reponse) {
+        this.reponse = reponse;
     }
 
     @Override

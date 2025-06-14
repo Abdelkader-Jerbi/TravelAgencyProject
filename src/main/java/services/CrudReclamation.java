@@ -29,14 +29,15 @@ public class CrudReclamation implements CrudRec<Reclamation> {
 
     @Override
     public void modifier(Reclamation reclamation) throws SQLException {
-        String sql = "UPDATE reclamation SET id=?, idCategorie=?, date=?, commentaire=?, statut=? WHERE idReclamation=?";
+        String sql = "UPDATE reclamation SET id=?, idCategorie=?, date=?, commentaire=?, statut=?, reponse=? WHERE idReclamation=?";
         PreparedStatement stmt = connection.prepareStatement(sql);
         stmt.setInt(1, reclamation.getId());
         stmt.setInt(2, reclamation.getIdCategorie());
         stmt.setString(3, reclamation.getDate());
         stmt.setString(4, reclamation.getCommentaire());
         stmt.setString(5, reclamation.getStatut());
-        stmt.setInt(6, reclamation.getIdReclamation());
+        stmt.setString(6, reclamation.getReponse());
+        stmt.setInt(7, reclamation.getIdReclamation());
         stmt.executeUpdate();
     }
 
@@ -64,6 +65,7 @@ public class CrudReclamation implements CrudRec<Reclamation> {
             r.setCommentaire(rs.getString("commentaire"));
             r.setStatut(rs.getString("statut"));
             r.setEmail(rs.getString("email"));
+            r.setReponse(rs.getString("reponse"));
             list.add(r);
         }
 
@@ -84,6 +86,7 @@ public class CrudReclamation implements CrudRec<Reclamation> {
                 reclamation.setDate(rs.getString("date"));
                 reclamation.setCommentaire(rs.getString("commentaire"));
                 reclamation.setStatut(rs.getString("statut"));
+                reclamation.setReponse(rs.getString("reponse"));
                 return reclamation;
             }
         } catch (SQLException e) {
@@ -115,5 +118,27 @@ public class CrudReclamation implements CrudRec<Reclamation> {
         }
         
         return reclamations;
+    }
+
+    public List<String> getAdminEmails() throws SQLException {
+        List<String> adminEmails = new ArrayList<>();
+        String sql = "SELECT email FROM utilisateur WHERE role = 'ADMIN'";
+        
+        System.out.println("Recherche des emails des administrateurs...");
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            
+            while (rs.next()) {
+                String email = rs.getString("email");
+                adminEmails.add(email);
+                System.out.println("Email admin trouvé : " + email);
+            }
+        }
+        
+        if (adminEmails.isEmpty()) {
+            System.out.println("Aucun email d'administrateur trouvé dans la base de données");
+        }
+        
+        return adminEmails;
     }
 }

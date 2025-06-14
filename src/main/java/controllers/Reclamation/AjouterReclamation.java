@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import services.categorie.categorieRec;
 import services.CrudReclamation;
+import utils.EmailRec;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +31,7 @@ public class AjouterReclamation implements Initializable {
     private final CrudReclamation reclamationService = new CrudReclamation();
     private final categorieRec categorieService = new categorieRec();
     private int currentUserId;
+    private String currentUserEmail;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -73,6 +75,27 @@ public class AjouterReclamation implements Initializable {
             // Ajouter la réclamation
             reclamationService.ajouter(reclamation);
             
+            // Envoyer un email aux administrateurs
+            List<String> adminEmails = reclamationService.getAdminEmails();
+            String subject = "Nouvelle Réclamation";
+            String content = String.format(
+                "Une nouvelle réclamation a été ajoutée\n\n" +
+                "Email de l'utilisateur : %s\n" +
+                "Date : %s\n" +
+                "Catégorie : %s\n" +
+                "Commentaire : %s\n" +
+                "Statut : %s",
+                currentUserEmail,
+                reclamation.getDate(),
+                categorie,
+                reclamation.getCommentaire(),
+                reclamation.getStatut()
+            );
+
+            for (String adminEmail : adminEmails) {
+                EmailRec.sendEmail(adminEmail, subject, content);
+            }
+            
             // Afficher un message de succès
             showAlert(Alert.AlertType.INFORMATION, "Succès", "Réclamation ajoutée avec succès");
             
@@ -113,6 +136,10 @@ public class AjouterReclamation implements Initializable {
 
     public void setCurrentUserId(int userId) {
         this.currentUserId = userId;
+    }
+
+    public void setCurrentUserEmail(String email) {
+        this.currentUserEmail = email;
     }
 
     private void showAlert(Alert.AlertType type, String title, String content) {

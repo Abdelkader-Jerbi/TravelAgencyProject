@@ -59,13 +59,16 @@ public class ModifierVolController {
         categorieComboBox.setItems(FXCollections.observableArrayList(Enumnom.values()));
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://restcountries.com/v3.1/all"))
+                .uri(URI.create("https://restcountries.com/v3.1/all?fields=name"))
+                .header("User-Agent", "Mozilla/5.0")
                 .build();
 
         client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
                 .thenAccept(json -> {
+                    System.out.println("Réponse brute de l'API : " + json);
                     try {
+                    
                         JSONArray array = new JSONArray(json);
                         List<String> pays = new ArrayList<>();
                         for (int i = 0; i < array.length(); i++) {
@@ -73,6 +76,8 @@ public class ModifierVolController {
                             String name = country.getJSONObject("name").getString("common");
                             pays.add(name);
                         }
+                        System.out.println("Réponse API reçue");
+                        System.out.println("Nombre de pays trouvés : " + pays.size());
                         Platform.runLater(() -> {
                             departField.getItems().addAll(pays);
                             destinationField.getItems().addAll(pays);
@@ -80,6 +85,10 @@ public class ModifierVolController {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                })
+                .exceptionally(e -> {
+                    e.printStackTrace();
+                    return null;
                 });
 
     }
@@ -106,7 +115,11 @@ public class ModifierVolController {
     private void modifierVol() {
         try {
             // Récupérer l'ancien état avant modification
-            boolean etaitEnPromotionAvant = "enpromotion".equalsIgnoreCase(vol.getEnpromotion());
+            boolean etaitEnPromotionAvant = "enpromotion".equalsIgnoreCase(
+                    vol.getEnpromotion() != null ? vol.getEnpromotion() : ""
+            );
+
+
 
             System.out.println("Bouton Enregistrer cliqué");
 

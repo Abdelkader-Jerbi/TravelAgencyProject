@@ -141,7 +141,7 @@ public class CrudVol implements VoLInterface {
 
     @Override
     public CategorieVol getCategorieByNom(String nom) throws SQLException {
-        String sql = "SELECT * FROM categorie WHERE nom = ?";
+        String sql = "SELECT * FROM categorievol WHERE nom = ?";
         try (Connection conn = MyDatabase.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 

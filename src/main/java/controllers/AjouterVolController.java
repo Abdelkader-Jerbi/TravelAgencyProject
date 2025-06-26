@@ -64,7 +64,8 @@ public class AjouterVolController  implements Initializable {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://restcountries.com/v3.1/all"))
+                .uri(URI.create("https://restcountries.com/v3.1/all?fields=name"))
+                .header("User-Agent", "Mozilla/5.0")
                 .build();
 
         client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
